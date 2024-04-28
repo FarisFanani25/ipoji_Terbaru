@@ -53,6 +53,25 @@ const Shop = () => {
     setPageNumber(selected);
   };
 
+  const handleAddToCart = async (productId) => {
+    try {
+      // Kirim permintaan POST untuk menambahkan produk ke keranjang
+      const response = await axios.post('http://localhost:8080/cart/add', {
+        id_produk: productId,
+        jumlah: 1, // Atur jumlah produk yang ditambahkan ke 1, atau sesuai kebutuhan
+        harga_total: products.find(product => product.id_produk === productId).harga,
+        id_user: 1 // Ganti dengan ID pengguna yang sesuai jika Anda memiliki sistem autentikasi
+      });
+      
+      // Tampilkan pesan sukses jika produk berhasil ditambahkan ke keranjang
+      alert('Product added to cart successfully!');
+    } catch (error) {
+      // Tangani kesalahan jika terjadi
+      console.error('Error adding product to cart:', error);
+      alert('Failed to add product to cart. Please try again later.');
+    }
+  };
+
   return (
     <Helmet title="Product">
       <CommonSection title="Product" />
@@ -72,7 +91,7 @@ const Shop = () => {
           <Row>
             {displayPage.map((item) => (
               <Col lg="3" md="4" sm="6" xs="6" key={item.id_produk} className="mb-4">
-                <ProductCard item={item} />
+                <ProductCard item={item} onAddToCart={handleAddToCart} />
               </Col>
             ))}
           </Row>
