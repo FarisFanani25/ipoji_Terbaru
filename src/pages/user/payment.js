@@ -95,8 +95,6 @@ const Payment = () => {
   );
 };
 
-<<<<<<< HEAD
+
 export default Payment;
-=======
-export default Payment;
->>>>>>> fabd4a95c54ee6571a7b012ef06f4ce9915273b9
+

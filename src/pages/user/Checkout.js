@@ -15,10 +15,22 @@ const Checkout = () => {
   const navigate = useNavigate(); // Initialize useNavigate
 
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
-  const shippingCost = 0;
-  const totalAmount = cartTotalAmount + Number(shippingCost);
+  // Inisialisasi cartTotalAmount dengan nilai 0 jika tidak ada item di keranjang belanja
+  const cartTotalAmount = useSelector((state) => {
+    if (state.cart.cartItems.length === 0) {
+      return 0;
+    } else {
+      // Hitung totalAmount jika ada item di keranjang belanja
+      return state.cart.totalAmount;
+    }
+  });
 
+  const cartTotalAmountString = typeof cartTotalAmount === 'number' ? cartTotalAmount.toFixed(2) : cartTotalAmount;
+  const shippingCost = 0;
+  const totalAmount = 123.45; // Contoh nilai numerik
+  const formattedTotal = totalAmount.toFixed(2); // Memanggil metode toFixed untuk memformat angka dengan dua angka di belakang koma
+  console.log(formattedTotal); // Output: "123.45"
+  
   const submitHandler = async (e) => {
     e.preventDefault();
 
@@ -29,8 +41,6 @@ const Checkout = () => {
       price: item.price,
     }));
 
-    const calculatedTotalAmount = cartTotalAmount + shippingCost;
-
     try {
       const response = await axios.post('http://localhost:8080/api/order', {
         name: enterName,
@@ -38,7 +48,7 @@ const Checkout = () => {
         address: enterAddress,
         paymentMethod,
         items: JSON.stringify(itemsInCart),
-        totalAmount: calculatedTotalAmount.toFixed(2),
+        totalAmount: totalAmount.toFixed(2),
       });
 
       console.log('Respon API:', response.data);
@@ -50,6 +60,7 @@ const Checkout = () => {
       console.error('Error:', error);
     }
   };
+
 
   return (
     <Helmet title="Checkout">
@@ -88,7 +99,8 @@ const Checkout = () => {
 
               <div className="checkout__bill mt-4">
                 <h6 className="d-flex align-items-center justify-content-between mb-3">
-                  Subtotal : <span>Rp. {cartTotalAmount.toFixed(2)}</span>
+                  Subtotal : <span>Rp. {cartTotalAmountString}</span>
+
                 </h6>
                 <h6 className="d-flex align-items-center justify-content-between mb-3 ">
                   Ongkos Kirim : <span>Rp. {shippingCost.toFixed(2)}</span>
@@ -145,3 +157,4 @@ const Checkout = () => {
 };
 
 export default Checkout;
+

@@ -11,7 +11,7 @@ import Login from '../pages/user/Login';
 import Signup from '../pages/user/Signup';
 import Payment from '../pages/user/payment';
 import ArtikelDetails from '../pages/user/ArtikelDetails';
-import Payment from '../pages/user/payment';
+
 
 // Admin Components
 import AdminHome from '../pages/admin/Component/Home/Home';
