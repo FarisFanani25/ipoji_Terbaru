@@ -1,147 +1,121 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Container, Row, Col } from 'reactstrap';
-import CommonSection from '../../components/UI/CommonSection';
-import Helmet from '../../components/Helmet/Helmet';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import '../../styles/checkout.css';
 
 const Checkout = () => {
-  const [enterName, setEnterName] = useState('');
-  const [enterNumber, setEnterNumber] = useState('');
-  const [enterAddress, setEnterAddress] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('cash');
-  const navigate = useNavigate(); // Initialize useNavigate
+    const [cities, setCities] = useState([]);
+    const [shippingCosts, setShippingCosts] = useState([]);
+    const [formData, setFormData] = useState({
+        kota_asal: '',
+        kota_tujuan: '',
+        kurir: '',
+        berat: ''
+    });
 
-  const cartItems = useSelector((state) => state.cart.cartItems);
-  const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
-  const shippingCost = 0;
-  const totalAmount = cartTotalAmount + Number(shippingCost);
+    useEffect(() => {
+        // Load list of cities when component mounts
+        fetchCities();
+    }, []);
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
+    const fetchCities = async () => {
+        try {
+            const response = await axios.get('/api/ongkir/getKota');
+            setCities(response.data.rajaongkir.results);
+        } catch (error) {
+            console.error('Error fetching cities:', error);
+        }
+    };
 
-    const itemsInCart = cartItems.map((item) => ({
-      id: item.id,
-      title: item.title,
-      quantity: item.quantity,
-      price: item.price,
-    }));
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('/api/ongkir/cekOngkir', formData);
+            setShippingCosts(response.data.rajaongkir.results);
+        } catch (error) {
+            console.error('Error calculating shipping costs:', error);
+        }
+    };
 
-    const calculatedTotalAmount = cartTotalAmount + shippingCost;
-
-    try {
-      const response = await axios.post('http://localhost:8080/api/order', {
-        name: enterName,
-        phone: enterNumber,
-        address: enterAddress,
-        paymentMethod,
-        items: JSON.stringify(itemsInCart),
-        totalAmount: calculatedTotalAmount.toFixed(2),
-      });
-
-      console.log('Respon API:', response.data);
-
-      if (response.data.status === 201) {
-        navigate('/payment'); // Navigate to /payment after successful order
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-
-  return (
-    <Helmet title="Checkout">
-      <CommonSection title="Checkout" />
-      <section>
-        <Container>
-          <Row>
-            <Col lg="12">
-              {cartItems.length > 0 && (
-                <Row className="mt-4">
-                  <Col lg="12">
-                    <h4>Items in Your Cart:</h4>
-                    <ul>
-                      {cartItems.map((item) => (
-                        <li key={item.id}>
-                          <div className="checkout__product-item">
-                            <img
-                              src={`http://localhost:8080/gambar/${item.image01}`}
-                              alt={item.title}
-                              className="checkout__product-image"
-                            />
-                            <div className="checkout__product-details">
-                              <div className="product-details-right">
-                                <h5>{item.title}</h5>
-                                <p>Quantity: {item.quantity}</p>
-                                <p>Price: Rp.{(item.price * item.quantity).toFixed(2)}</p>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                  </Col>
-                </Row>
-              )}
-
-              <div className="checkout__bill mt-4">
-                <h6 className="d-flex align-items-center justify-content-between mb-3">
-                  Subtotal : <span>Rp. {cartTotalAmount.toFixed(2)}</span>
-                </h6>
-                <h6 className="d-flex align-items-center justify-content-between mb-3 ">
-                  Ongkos Kirim : <span>Rp. {shippingCost.toFixed(2)}</span>
-                </h6>
-                <div className="checkout__total">
-                  <h5 className="d-flex align-items-center justify-content-between ">
-                    Total : <span>Rp. {totalAmount.toFixed(2)}</span>
-                  </h5>
+    return (
+        <div className="container mt-4">
+            <h2>Checkout</h2>
+            <form onSubmit={handleSubmit}>
+                <div className="form-group mb-3">
+                    <label htmlFor="kota_asal">Kota Asal:</label>
+                    <select
+                        id="kota_asal"
+                        className="form-control"
+                        value={formData.kota_asal}
+                        onChange={(e) => setFormData({ ...formData, kota_asal: e.target.value })}
+                        required
+                    >
+                        <option value="">Pilih Kota Asal</option>
+                        {cities.map((city) => (
+                            <option key={city.city_id} value={city.city_id}>
+                                {city.city_name}
+                            </option>
+                        ))}
+                    </select>
                 </div>
-              </div>
-            </Col>
-          </Row>
-
-          <Row className="mt-4">
-            <Col lg="12">
-              <h6>Shipping Address:</h6>
-              <form className="checkout__form" onSubmit={submitHandler}>
-                <div className="form__group">
-                  <input
-                    type="text"
-                    placeholder="Enter your name"
-                    required
-                    onChange={(e) => setEnterName(e.target.value)}
-                  />
+                <div className="form-group mb-3">
+                    <label htmlFor="kota_tujuan">Kota Tujuan:</label>
+                    <select
+                        id="kota_tujuan"
+                        className="form-control"
+                        value={formData.kota_tujuan}
+                        onChange={(e) => setFormData({ ...formData, kota_tujuan: e.target.value })}
+                        required
+                    >
+                        <option value="">Pilih Kota Tujuan</option>
+                        {cities.map((city) => (
+                            <option key={city.city_id} value={city.city_id}>
+                                {city.city_name}
+                            </option>
+                        ))}
+                    </select>
                 </div>
-                <div className="form__group">
-                  <input
-                    type="number"
-                    placeholder="Enter your phone number"
-                    required
-                    onChange={(e) => setEnterNumber(e.target.value)}
-                  />
+                <div className="form-group mb-3">
+                    <label htmlFor="kurir">Kurir:</label>
+                    <select
+                        id="kurir"
+                        className="form-control"
+                        value={formData.kurir}
+                        onChange={(e) => setFormData({ ...formData, kurir: e.target.value })}
+                        required
+                    >
+                        <option value="">Pilih Kurir</option>
+                        <option value="jne">JNE</option>
+                        <option value="pos">POS Indonesia</option>
+                        <option value="tiki">TIKI</option>
+                    </select>
                 </div>
-                <div className="form__group">
-                  <input
-                    type="text"
-                    placeholder="Enter your address"
-                    required
-                    onChange={(e) => setEnterAddress(e.target.value)}
-                  />
+                <div className="form-group mb-3">
+                    <label htmlFor="berat">Berat (kg):</label>
+                    <input
+                        type="number"
+                        id="berat"
+                        className="form-control"
+                        value={formData.berat}
+                        onChange={(e) => setFormData({ ...formData, berat: e.target.value })}
+                        required
+                    />
                 </div>
-
-                <button type="submit" className="addTOCart__btn">
-                  Lanjut Ke Pembayaran
+                <button type="submit" className="btn btn-primary">
+                    Cek Ongkir
                 </button>
-              </form>
-              
-            </Col>
-          </Row>
-        </Container>
-      </section>
-    </Helmet>
-  );
+            </form>
+            {/* Display shipping costs */}
+            <div className="mt-4">
+                <h4>Biaya Pengiriman:</h4>
+                <ul>
+                    {shippingCosts.map((cost) => (
+                        <li key={cost.service}>
+                            <strong>{cost.service}</strong>: {cost.cost[0].value} - {cost.cost[0].etd} hari
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </div>
+    );
 };
 
 export default Checkout;

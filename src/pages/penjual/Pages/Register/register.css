@@ -1,0 +1,27 @@
+.gradient-custom-2 {
+    background: #FF7F3F;
+    padding: 15px 30px; /* Sesuaikan padding sesuai kebutuhan */
+    color: white;
+    transition: background-color 0.3s ease; /* Tambahkan efek transisi pada warna latar belakang */
+  }
+  
+  .gradient-custom-2:hover {
+    background: #FF6F2F; /* Atur warna latar belakang hover sesuai kebutuhan */
+  }
+  
+  @media (min-width: 768px) {
+    .gradient-form {
+      height: 100vh !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+    
+  @media (min-width: 769px) {
+    .gradient-custom-2 {
+      border-top-right-radius: .3rem;
+      border-bottom-right-radius: .3rem;
+    }
+  }
+  

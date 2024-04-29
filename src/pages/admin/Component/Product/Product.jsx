@@ -19,11 +19,13 @@ function ProdukPage() {
   const [deskripsiProduk, setDeskripsiProduk] = useState("");
   const [hargaProduk, setHargaProduk] = useState("");
   const [gambarProduk, setGambarProduk] = useState("");
-  const [BeratProduk, setBeratProduk] = useState("");
-  const [StokProduk, setStokProduk] = useState("");
+  const [beratProduk, setBeratProduk] = useState("");
+  const [stokProduk, setStokProduk] = useState("");
   const [show, setShow] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [editingData, setEditingData] = useState(null);
 
   // State untuk form tambah data
   const [newNamaProduk, setNewNamaProduk] = useState("");
@@ -32,10 +34,6 @@ function ProdukPage() {
   const [newGambarProduk, setNewGambarProduk] = useState("");
   const [newBeratProduk, setNewBeratProduk] = useState("");
   const [newStokProduk, setNewStokProduk] = useState("");
-
-  // State untuk form tambah data
-  
-
 
   useEffect(() => {
     getDataProduk();
@@ -82,7 +80,6 @@ function ProdukPage() {
     setShowAdd(true);
   };
 
-
   const closeAddModal = () => {
     setNewNamaProduk("");
     setNewDeskripsiProduk("");
@@ -125,8 +122,6 @@ function ProdukPage() {
       alert("Data Gagal Ditambahkan. Lihat konsol untuk detail.");
     }
   };
-  
-  
 
   const showModalDelete = (data) => {
     setId(data.id_produk);
@@ -152,10 +147,42 @@ function ProdukPage() {
     }
 };
 
+  const showEditModal = (data) => {
+    setEditingData(data);
+    setShowEdit(true);
+  };
 
+  const closeEditModal = () => {
+    setEditingData(null);
+    setShowEdit(false);
+  };
+
+  const editDataProduk = async () => {
+    try {
+      const response = await axios.put(`http://localhost:8080/edit/produk/${editingData.id_produk}`, {
+        nama_produk: editingData.nama_produk,
+        deskripsi_produk: editingData.deskripsi_produk,
+        harga_produk: editingData.harga_produk,
+        gambar_produk: editingData.gambar_produk,
+        berat_produk: editingData.berat_produk,
+        stok_produk: editingData.stok_produk
+      });
+      console.log('Edit response:', response.data);
+
+      if (response.data.status === 200) {
+        alert(response.data.messages.success);
+        getDataProduk();
+        closeEditModal();
+      } else {
+        alert("Gagal menyimpan perubahan: " + response.data.messages.error);
+      }
+    } catch (error) {
+      console.error("Error editing data:", error);
+      alert("Gagal menyimpan perubahan. Lihat konsol untuk detail.");
+    }
+  };
 
   return (
-    
     <div className='body-flex'>
       <div className="flex">
         <div className='col-10 p-5'>
@@ -166,7 +193,6 @@ function ProdukPage() {
             </CButton>
           </div>
           <CTable striped>
-            
             <CTableHead>
               <CTableRow>
                 <CTableDataCell>Nama Produk</CTableDataCell>
@@ -194,12 +220,12 @@ function ProdukPage() {
                   <CTableDataCell>{item.berat_produk}</CTableDataCell>
                   <CTableDataCell>{item.stok_produk}</CTableDataCell>
                   <CTableDataCell>
-                     <CButton
+                    <CButton
                       className='btn btn-primary text-white me-2'
-                      onClick={() => showModal(item)}
+                      onClick={() => showEditModal(item)}
                     >
                       Edit
-                    </CButton> 
+                    </CButton>
                     <CButton
                       className='btn btn-danger text-white'
                       onClick={() => showModalDelete(item)}
@@ -211,7 +237,6 @@ function ProdukPage() {
               ))}
               <CTableRow>
                 <CTableDataCell colSpan="5" className="text-center">
-                 
                 </CTableDataCell>
               </CTableRow>
             </CTableBody>
@@ -295,6 +320,69 @@ function ProdukPage() {
             Batal
           </Button>
         </Modal.Footer>
+      </Modal>
+
+      <Modal show={showEdit} onHide={closeEditModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Form Edit Data Produk</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {editingData && (
+            <Form onSubmit={editDataProduk}>
+              <Form.Group className="mb-3" controlId="formEditNamaProduk">
+                <Form.Label>Nama Produk</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={editingData.nama_produk}
+                  onChange={(e) => setEditingData({ ...editingData, nama_produk: e.target.value })}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formEditDeskripsiProduk">
+                <Form.Label>Deskripsi Produk</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  value={editingData.deskripsi_produk}
+                  onChange={(e) => setEditingData({ ...editingData, deskripsi_produk: e.target.value })}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formEditHargaProduk">
+                <Form.Label>Harga Produk</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={editingData.harga_produk}
+                  onChange={(e) => setEditingData({ ...editingData, harga_produk: e.target.value })}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formEditGambarProduk">
+                <Form.Label>Gambar Produk</Form.Label>
+                <Form.Control
+                  type="file"
+                  onChange={(e) => setEditingData({ ...editingData, gambar_produk: e.target.files[0] })}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formEditBeratProduk">
+                <Form.Label>Berat Produk</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={editingData.berat_produk}
+                  onChange={(e) => setEditingData({ ...editingData, berat_produk: e.target.value })}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formEditStokProduk">
+                <Form.Label>Stok Produk</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={editingData.stok_produk}
+                  onChange={(e) => setEditingData({ ...editingData, stok_produk: e.target.value })}
+                />
+              </Form.Group>
+              <Button type='submit' color="primary" className="px-4">
+                Simpan Perubahan
+              </Button>
+            </Form>
+          )}
+        </Modal.Body>
       </Modal>
     </div>
   );

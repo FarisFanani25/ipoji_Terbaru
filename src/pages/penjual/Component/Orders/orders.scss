@@ -1,0 +1,49 @@
+.orders {
+  display: grid;
+  grid-template-columns: 17% 83%;
+  justify-content: center;
+}
+
+/* Perlu di luar media query */
+.action-buttons {
+  display: flex;
+  margin-top: 10px;
+}
+
+.accept-button {
+  background-color: #28a745;
+  color: #fff;
+  margin-right: 5px; /* Atur margin jika diperlukan */
+}
+
+.reject-button {
+  background-color: #dc3545;
+  color: #fff;
+}
+/* Akhir dari luar media query */
+
+@media screen and (max-width: 992px) {
+  .orders {
+    display: grid;
+    grid-template-columns: 100%;
+    justify-content: center;
+  }
+
+  .home_sidebar {
+    display: none;
+  }
+}
+
+
+
+@media screen and (max-width: 992px) {
+  .orders {
+    display: grid;
+    grid-template-columns: 100%;
+    justify-content: center;
+
+    .home_sidebar {
+      display: none;
+    }
+  }
+}
