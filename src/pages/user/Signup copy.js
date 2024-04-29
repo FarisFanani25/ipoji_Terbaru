@@ -5,38 +5,33 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import padiImage from "../../assets/images/padi2.png"; // Import gambar padi
 
-const Signup = () => {
+const Signupcopy = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const saveUser = async (e) => {
     e.preventDefault();
-
+  
     try {
-      const response = await axios.post('http://localhost:8080/api/register', {
+      const response = await axios.post('http://localhost:8080/api/registertoko', {
         name: name,
         email: email,
         password: password
       });
-
+  
       // Handle successful response
       console.log('Data Inserted', response.data);
-
+      
       // Show success alert
       window.alert('Registration successful!');
-
+  
       // Redirect after successful registration
       navigate("/");
     } catch (error) {
       // Handle error
-      if (error.response.status === 409) {
-        setError('Email sudah pernah digunakan');
-      } else {
-        console.error('Error inserting data', error);
-      }
+      console.error('Error inserting data', error);
     }
   };
 
@@ -65,7 +60,6 @@ const Signup = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
-                  {error && <p className="text-danger">{error}</p>}
                 </div>
                 <div className="form-group">
                   <input
@@ -92,4 +86,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Signupcopy;

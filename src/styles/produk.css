@@ -27,3 +27,20 @@
     font-size: 0.8rem;
   }
 }
+
+.product-animation {
+  position: fixed;
+  z-index: 1000;
+  animation: floatProduct 1s ease forwards;
+}
+
+@keyframes floatProduct {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) translateX(200px);
+    opacity: 0;
+  }
+}

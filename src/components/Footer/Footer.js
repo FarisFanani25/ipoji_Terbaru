@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
 
-    const year = new Date().getFullYear()
+    const year = new Date().getFullYear();
+
     return (
     <footer className="footer">
         <Container>
@@ -23,9 +24,9 @@ const Footer = () => {
                     </p>
                 </Col>
                 
-                <Col lg="2">
+                <Col lg="2" className="d-flex justify-content-end">
                     <div className="footer__quick-links">
-                        <h4 className="quick__links-title">UseFul Links</h4>
+                        <h4 className="quick__links-title">Useful Links</h4>
                         <ListGroup>
                             <ListGroupItem className="ps-0 border-0">
                                 <Link to='/shop'>Shop</Link>
@@ -46,8 +47,7 @@ const Footer = () => {
                     </div>
                 </Col>
 
-
-                <Col lg="4">
+                <Col lg="4" className="d-flex justify-content-end">
                     <div className="footer__quick-links">
                         <h4 className="quick__links-title">Contact</h4>
                         <ListGroup className="footer__contact">

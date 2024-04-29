@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Helmet from "../../components/Helmet/Helmet";
 import CommonSection from "../../components/UI/CommonSection";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Button } from "reactstrap";
 import ProductCard from "../../components/UI/ProductCard";
 import ReactPaginate from "react-paginate";
 import axios from 'axios';
@@ -13,6 +13,7 @@ const Shop = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
   const [products, setProducts] = useState([]);
+  const [addedProduct, setAddedProduct] = useState(null);
 
   useEffect(() => {
     getDataProduk();
@@ -30,6 +31,15 @@ const Shop = () => {
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
     setPageNumber(0); // Reset page number when search term changes
+  };
+
+  const handleAddToCart = async (productId) => {
+    try {
+      await axios.post('http://localhost:8080/cart/add', { productId });
+      setAddedProduct(productId);
+    } catch (error) {
+      console.error('Error adding product to cart:', error);
+    }
   };
 
   const searchedProduct = products.filter((item) => {
@@ -72,7 +82,9 @@ const Shop = () => {
           <Row>
             {displayPage.map((item) => (
               <Col lg="3" md="4" sm="6" xs="6" key={item.id_produk} className="mb-4">
-                <ProductCard item={item} />
+                <ProductCard item={item}>
+                  <Button color="primary" onClick={() => handleAddToCart(item.id_produk)}>Add to Cart</Button>
+                </ProductCard>
               </Col>
             ))}
           </Row>
@@ -89,6 +101,15 @@ const Shop = () => {
           </Row>
         </Container>
       </section>
+      
+      {/* Animasi gambar produk melayang ke ikon keranjang */}
+      {addedProduct && (
+        <img
+          src={`gambar-produk/${addedProduct}.jpg`} // Ubah sesuai dengan alamat gambar produk
+          alt="Added to Cart"
+          className="product-animation"
+        />
+      )}
     </Helmet>
   );
 };

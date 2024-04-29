@@ -27,11 +27,11 @@ const cartSlice = createSlice({
         });
       } else {
         existingItem.quantity++;
-        existingItem.totalPrice = Number(existingItem.totalPrice) + Number(newItem.price);
+        existingItem.totalPrice = Number(existingItem.price) * existingItem.quantity; // Perubahan disini
       }
 
       state.totalAmount = state.cartItems.reduce(
-        (total, item) => total + Number(item.totalPrice), // Perubahan disini
+        (total, item) => total + Number(item.totalPrice),
         0
       );
     },
@@ -45,11 +45,11 @@ const cartSlice = createSlice({
         state.cartItems = state.cartItems.filter((item) => item.id !== id);
       } else {
         existingItem.quantity--;
-        existingItem.totalPrice = Number(existingItem.totalPrice) - Number(existingItem.price);
+        existingItem.totalPrice = Number(existingItem.price) * existingItem.quantity; // Perubahan disini
       }
 
       state.totalAmount = state.cartItems.reduce(
-        (total, item) => total + Number(item.totalPrice), // Perubahan disini
+        (total, item) => total + Number(item.totalPrice),
         0
       );
     },
@@ -64,7 +64,7 @@ const cartSlice = createSlice({
       }
 
       state.totalAmount = state.cartItems.reduce(
-        (total, item) => total + Number(item.totalPrice), // Perubahan disini
+        (total, item) => total + Number(item.totalPrice),
         0
       );
     },

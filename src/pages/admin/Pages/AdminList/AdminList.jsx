@@ -129,11 +129,11 @@ const [editGambarArtikel, setEditGambarArtikel] = useState("");
       console.log('Response:', response.data);
     
       if (response.data.status === 200) {
-        alert(response.data.messages.success);
+        alert(response.data.messages);
         getDataArtikel();
         closeModal();
       } else {
-        alert("Data Gagal Diupdate: " + response.data.messages.error);
+        alert("Data Gagal Diupdate: " + response.data.messages);
       }
     } catch (error) {
       console.error("Error updating data:", error);

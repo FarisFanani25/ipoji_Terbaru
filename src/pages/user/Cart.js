@@ -1,28 +1,46 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Row, Col, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { cartActions } from '../../shop/shop-cart/cartSlice';
+import axios from 'axios';
 
 const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
 
+  useEffect(() => {
+    fetchCartItems();
+  }, []);
+
+  const fetchCartItems = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/api/cart');
+      dispatch(cartActions.setCartItems(response.data));
+    } catch (error) {
+      console.error('Error fetching cart items:', error);
+    }
+  };
+
   const handleIncrement = (id) => {
-    dispatch(cartActions.incrementItem(id));
+    // Implement your logic for incrementing item quantity
   };
 
   const handleDecrement = (id) => {
-    dispatch(cartActions.decrementItem(id));
+    // Implement your logic for decrementing item quantity
   };
 
   const handleRemove = (id) => {
-    dispatch(cartActions.removeItem(id));
+    // Implement your logic for removing item from cart
+  };
+
+  const getTotalPrice = () => {
+    // Implement your logic for calculating total price
   };
 
   return (
     <Container>
-      <h1>Shopping Cart</h1>
+      <h1>Cart</h1>
       {cartItems.length === 0 ? (
         <p>Your cart is empty</p>
       ) : (
@@ -50,8 +68,9 @@ const Cart = () => {
           ))}
           <Row>
             <Col sm="12">
-              <Link to="/checkout">
-                <Button color="primary">Checkout</Button>
+              <p>Total: Rp.{getTotalPrice()}</p>
+              <Link to="/Checkout">
+                <Button color="primary">Proceed to Checkout</Button>
               </Link>
             </Col>
           </Row>

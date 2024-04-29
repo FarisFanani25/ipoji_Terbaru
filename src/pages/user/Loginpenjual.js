@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import padiImage from "../../assets/images/padi2.png"; // Import gambar padi
+import padiImage from "../../assets/images/petanii.png"; // Import gambar padi
 
-const Login = () => {
+const Loginpenjual = () => {
   const loginNameRef = useRef();
   const loginPasswordRef = useRef();
   const [errorMessage, setErrorMessage] = useState('');
@@ -16,16 +16,16 @@ const Login = () => {
       const email = loginNameRef.current.value;
       const password = loginPasswordRef.current.value;
   
-      const response = await axios.post('http://localhost:8080/login', { email, password });
+      const response = await axios.post('http://localhost:8080/loginpenjual', { email, password });
 
   
       if (response.data && response.data.token) {
         // Simpan token ke localStorage
         localStorage.setItem('token', response.data.token);
         // Simpan data pengguna ke localStorage (jika diperlukan)
-        localStorage.setItem('user_id', response.data.user_id);
-        localStorage.setItem('user_name', response.data.user_name);
-        localStorage.setItem('user_email', response.data.user_email);
+        localStorage.setItem('penjual_id', response.data.penjual_id);
+        localStorage.setItem('penjual_name', response.data.penjual_name);
+        localStorage.setItem('penjual_email', response.data.penjual_email);
   
         console.log('Login Successfull', response.data);
         
@@ -82,7 +82,7 @@ const Login = () => {
                   <p style={{ color: 'red' }}>{errorMessage}</p>
                 )}
               </form>
-              <Link to="/signup">
+              <Link to="/signtoko">
                 Don't have an account? Create an account
               </Link>
               <br />
@@ -100,4 +100,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Loginpenjual;

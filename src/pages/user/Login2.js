@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import padiImage from "../../assets/images/padi2.png"; // Import gambar padi
+import padiImage from "../../assets/images/admin.jpg"; // Import gambar padi
 
-const Login = () => {
+const Login2 = () => {
   const loginNameRef = useRef();
   const loginPasswordRef = useRef();
   const [errorMessage, setErrorMessage] = useState('');
@@ -16,16 +16,16 @@ const Login = () => {
       const email = loginNameRef.current.value;
       const password = loginPasswordRef.current.value;
   
-      const response = await axios.post('http://localhost:8080/login', { email, password });
+      const response = await axios.post('http://localhost:8080/loginadmin', { email, password });
 
   
       if (response.data && response.data.token) {
         // Simpan token ke localStorage
         localStorage.setItem('token', response.data.token);
         // Simpan data pengguna ke localStorage (jika diperlukan)
-        localStorage.setItem('user_id', response.data.user_id);
-        localStorage.setItem('user_name', response.data.user_name);
-        localStorage.setItem('user_email', response.data.user_email);
+        localStorage.setItem('admin_id', response.data.admin_id);
+        localStorage.setItem('admin_name', response.data.admin_name);
+        localStorage.setItem('admin_email', response.data.admin_email);
   
         console.log('Login Successfull', response.data);
         
@@ -33,7 +33,7 @@ const Login = () => {
         window.alert('Welcome!');
     
         // Redirect ke halaman home atau dashboard
-        navigate("/home");
+        navigate("/admin");
       } else {
         setErrorMessage('Login failed. Email or password is incorrect.');
       }
@@ -52,7 +52,7 @@ const Login = () => {
   return (
     <section className="common-section">
       <div className="container">
-        <h2 className="text-center mb-4">Login</h2>
+        <h2 className="text-center mb-4">Login Admin</h2>
         <div className="signup-container p-4 shadow">
           <div className="row align-items-center">
             <div className="col-lg-6 col-md-6 col-sm-12">
@@ -82,9 +82,6 @@ const Login = () => {
                   <p style={{ color: 'red' }}>{errorMessage}</p>
                 )}
               </form>
-              <Link to="/signup">
-                Don't have an account? Create an account
-              </Link>
               <br />
               <button type="button" className="btn btn-danger" onClick={logout}>
                 Logout
@@ -100,4 +97,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Login2;

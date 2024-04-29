@@ -6,7 +6,10 @@ import Cart from '../pages/user/Cart';
 import ProductDetails from '../pages/user/ProductDetails';
 import Checkout from '../pages/user/Checkout';
 import Login from '../pages/user/Login';
+import Login2 from '../pages/user/Login2';
+import Loginpenjual from '../pages/user/Loginpenjual';
 import Signup from '../pages/user/Signup';
+import Signupcopy from '../pages/user/Signup copy';
 import Payment from '../pages/user/payment';
 import ArtikelDetails from '../pages/user/ArtikelDetails';
 import AdminHome from '../pages/admin/Component/Home/Home';
@@ -48,6 +51,10 @@ const Routers = () => {
             <Route path='/cart' element={<Cart/>}/>
             <Route path='/payment' element={<Payment/>}/>
             <Route path='/checkout' element={<Checkout/>}/>
+            <Route path='/login2' element={<Login2/>}/>
+            <Route path='/loginpenjual' element={<Loginpenjual/>}/>
+            <Route path='/signtoko' element={<Signupcopy/>}/>
+
           
             <Route path='/detail/:id' element={<ProductDetails/>}/>
             <Route path='/detailartikel/:id' element={<ArtikelDetails/>} />

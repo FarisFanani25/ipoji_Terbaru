@@ -46,15 +46,11 @@ const Header = () => {
                         </div>
 
                         <div className="nav__icons">
-                            <span className="fav__icon">
-                                <i className="ri-heart-line"></i>
-                                <span className="badge">1</span>
-                            </span>
                             {/* Cart icon now linked to /cart */}
                             <span className="cart__icon">
                                 <NavLink to="/cart">
                                     <i className="ri-shopping-bag-line"></i>
-                                    <span className="badge">1</span>
+                                    
                                 </NavLink>
                             </span>
 
