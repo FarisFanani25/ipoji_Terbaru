@@ -19,12 +19,13 @@ const Checkout = () => {
     const fetchCities = async () => {
         try {
             const response = await axios.get('/api/ongkir/getKota');
-            setCities(response.data.rajaongkir.results);
+            setCities(response.data.results); // Updated to use correct data structure
         } catch (error) {
             console.error('Error fetching cities:', error);
         }
     };
-
+    
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -34,6 +35,8 @@ const Checkout = () => {
             console.error('Error calculating shipping costs:', error);
         }
     };
+    
+    
 
     return (
         <div className="container mt-4">

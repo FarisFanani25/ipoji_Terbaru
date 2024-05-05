@@ -8,6 +8,10 @@ const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
 
+  const handleAddToCart = (productId) => {
+    dispatch(cartActions.addToCart(productId)); // Panggil action Redux untuk menambahkan produk ke keranjang
+  };
+
   const handleIncrement = (id) => {
     // Implement your logic for incrementing item quantity
   };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Helmet from "../../components/Helmet/Helmet";
 import CommonSection from "../../components/UI/CommonSection";
-import { Container, Row, Col, Button } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 import ProductCard from "../../components/UI/ProductCard";
 import ReactPaginate from "react-paginate";
 import axios from 'axios';
@@ -35,23 +35,33 @@ const Shop = () => {
 
   const handleAddToCart = async (productId) => {
     try {
-      // Kirim permintaan POST untuk menambahkan produk ke keranjang
-      const response = await axios.post('http://localhost:8080/cart/add', {
-        id_produk: productId,
-        jumlah: 1, // Atur jumlah produk yang ditambahkan ke 1, atau sesuai kebutuhan
-        harga_total: products.find(product => product.id_produk === productId).harga,
-        id_user: 1 // Ganti dengan ID pengguna yang sesuai jika Anda memiliki sistem autentikasi
-      });
-      
-      // Tampilkan pesan sukses jika produk berhasil ditambahkan ke keranjang
-      alert('Product added to cart successfully!');
-      setAddedProduct(productId);
+        // Cari produk berdasarkan ID
+        const selectedProduct = products.find(product => product.id_produk === productId);
+  
+        // Pastikan produk ditemukan sebelum mencoba mengambil harganya
+        if (selectedProduct) {
+            // Kirim permintaan POST untuk menambahkan produk ke keranjang
+            const response = await axios.post('http://localhost:8080/cart/add', {
+                id_produk: productId,
+                jumlah: 1,
+                harga_total: selectedProduct.harga, // Menggunakan harga dari produk yang ditemukan
+                id_user: 1
+            });
+  
+            // Tampilkan pesan sukses jika produk berhasil ditambahkan ke keranjang
+            alert('Product added to cart successfully!');
+            setAddedProduct(productId);
+        } else {
+            // Tampilkan pesan jika produk tidak ditemukan
+            alert('Product not found. Please try again.');
+        }
     } catch (error) {
-      // Tangani kesalahan jika terjadi
-      console.error('Error adding product to cart:', error);
-      alert('Failed to add product to cart. Please try again later.');
+        // Tangani kesalahan jika terjadi
+        console.error('Error adding product to cart:', error);
+        alert('Failed to add product to cart. Please try again later.');
     }
   };
+  
 
   const searchedProduct = products.filter((item) => {
     if (searchTerm === "") {
@@ -93,9 +103,7 @@ const Shop = () => {
           <Row>
             {displayPage.map((item) => (
               <Col lg="3" md="4" sm="6" xs="6" key={item.id_produk} className="mb-4">
-                <ProductCard item={item}>
-                  <Button color="primary" onClick={() => handleAddToCart(item.id_produk)}>Add to Cart</Button>
-                </ProductCard>
+                <ProductCard item={item} handleAddToCart={handleAddToCart} />
               </Col>
             ))}
           </Row>
@@ -115,11 +123,13 @@ const Shop = () => {
       
       {/* Animasi gambar produk melayang ke ikon keranjang */}
       {addedProduct && (
-        <img
-          src={`gambar-produk/${addedProduct}.jpg`} // Ubah sesuai dengan alamat gambar produk
-          alt="Added to Cart"
-          className="product-animation"
-        />
+        <div className="floating-cart-animation">
+          <img
+            src={`gambar-produk/${addedProduct}.jpg`} // Ubah sesuai dengan alamat gambar produk
+            alt="Added to Cart"
+            className="product-animation"
+          />
+        </div>
       )}
     </Helmet>
   );

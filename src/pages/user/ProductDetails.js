@@ -33,14 +33,20 @@ const ProductDetails = () => {
     window.scrollTo(0, 0);
   }, [product]);
 
-  const addItemToCart = () => {
-    dispatch(cartActions.addItem({
-      id,
-      title: product?.nama_produk,
-      price: product?.harga_produk,
-      image01: product?.gambar_produk,
-      quantity: 1,
-    }));
+  const addItemToCart = async () => {
+    try {
+      const response = await axios.post('http://localhost:8080/add-to-cart', {
+        id,
+        title: product?.nama_produk,
+        price: product?.harga_produk,
+        image01: product?.gambar_produk,
+        quantity: 1,
+      });
+      console.log('Response:', response.data); // You can handle the response accordingly
+      dispatch(cartActions.addItem(response.data)); // Assuming response.data contains the updated cart item
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
+    }
   };
 
   if (!product) {
