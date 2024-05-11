@@ -9,7 +9,7 @@ const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
 
   const handleAddToCart = (productId) => {
-    dispatch(cartActions.addToCart(productId)); // Panggil action Redux untuk menambahkan produk ke keranjang
+    dispatch(cartActions.addToCart(productId));
   };
 
   const handleIncrement = (id) => {
@@ -29,7 +29,7 @@ const Cart = () => {
     cartItems.forEach((item) => {
       totalPrice += item.quantity * item.price;
     });
-    return totalPrice.toFixed(2); // Menggunakan toFixed(2) untuk membulatkan harga menjadi 2 desimal
+    return totalPrice.toFixed(2);
   };
 
   return (
@@ -41,22 +41,27 @@ const Cart = () => {
         <>
           {cartItems.map((item) => (
             <div key={item.id} className="border rounded p-3 mb-3">
-              <Row>
-                <Col sm="12">
-                  <h5>{item.productName}</h5>
-                </Col>
-                <Col sm="6">
+              <h5>{item.productName}</h5>
+              <Row className="align-items-center">
+                <Col sm="3">
                   <img src={item.Image} alt={item.productName} className="img-fluid" />
                 </Col>
-                <Col sm="4">
-                  <p className="text-right">Harga: Rp.{typeof item.price === 'number' ? item.price.toFixed(2) : item.price}</p>
-                  <div className="d-flex justify-content-end">
+                <Col sm="3">
+                  <p>Harga Satuan: Rp.{item.price.toFixed(2)}</p>
+                </Col>
+                <Col sm="3">
+                  <div className="d-flex justify-content-center align-items-center">
                     <Button color="info" size="sm" className="mr-2" onClick={() => handleDecrement(item.id)}>-</Button>
                     <span>{item.quantity}</span>
                     <Button color="info" size="sm" className="ml-2" onClick={() => handleIncrement(item.id)}>+</Button>
                   </div>
                 </Col>
-                <Col sm="2">
+                <Col sm="3">
+                  <p>Subtotal: Rp.{(item.quantity * item.price).toFixed(2)}</p>
+                </Col>
+              </Row>
+              <Row className="mt-3">
+                <Col sm="12">
                   <Button color="danger" className="w-100" onClick={() => handleRemove(item.id)}>Remove</Button>
                 </Col>
               </Row>

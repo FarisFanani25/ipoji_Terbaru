@@ -53,3 +53,16 @@
         font-size: 0.7rem;
     }
 }
+
+.product__item {
+    transition: transform 0.3s ease;
+  }
+  
+  .product__item.clicked {
+    transform: scale(0.95);
+  }
+  
+  .addTOCart__btn {
+    /* Tambahkan gaya tombol keranjang di sini */
+  }
+  

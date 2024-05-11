@@ -66,7 +66,7 @@ const Login = () => {
                     ref={loginNameRef}
                   />
                 </div>
-                <div className="form-group">
+                <div className="form-group mt-4">
                   <input
                     type="password"
                     className="form-control"
@@ -75,7 +75,7 @@ const Login = () => {
                     ref={loginPasswordRef}
                   />
                 </div>
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-primary mt-5">
                   Login
                 </button>
                 {errorMessage && (
@@ -86,9 +86,9 @@ const Login = () => {
                 Don't have an account? Create an account
               </Link>
               <br />
-              <button type="button" className="btn btn-danger" onClick={logout}>
+              {/* <button type="button" className="btn btn-danger" onClick={logout}>
                 Logout
-              </button>
+              </button> */}
             </div>
             <div className="col-lg-6 col-md-6 col-sm-12">
               <img src={padiImage} alt="Padi" className="img-fluid" />

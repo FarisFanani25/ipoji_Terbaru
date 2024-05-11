@@ -73,3 +73,23 @@ section{
     padding: 40px 0px;
   }
 }
+
+.cart-item {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cart-item__container {
+  flex: 1;
+  margin-bottom: 10px; /* Atur margin antara item */
+}
+
+.cart-item__content {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-right: 10px; /* Atur margin kanan antara item */
+}
+
+.cart-item__content h5 {
+  margin-bottom: 5px; /* Atur margin bawah untuk judul */
+}

@@ -29,7 +29,7 @@ const Signup = () => {
       window.alert('Registration successful!');
 
       // Redirect after successful registration
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       // Handle error
       if (error.response.status === 409) {
@@ -57,7 +57,7 @@ const Signup = () => {
                     onChange={(e) => setName(e.target.value)}
                   />
                 </div>
-                <div className="form-group">
+                <div className="form-group mt-3">
                   <input
                     type="email"
                     className="form-control"
@@ -67,7 +67,7 @@ const Signup = () => {
                   />
                   {error && <p className="text-danger">{error}</p>}
                 </div>
-                <div className="form-group">
+                <div className="form-group mt-3">
                   <input
                     type="password"
                     className="form-control"
@@ -76,7 +76,7 @@ const Signup = () => {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-primary mt-4">
                   Sign Up
                 </button>
               </form>

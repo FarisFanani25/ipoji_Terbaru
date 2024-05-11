@@ -66,7 +66,7 @@ const Login2 = () => {
                     ref={loginNameRef}
                   />
                 </div>
-                <div className="form-group">
+                <div className="form-group mt-3">
                   <input
                     type="password"
                     className="form-control"
@@ -75,17 +75,17 @@ const Login2 = () => {
                     ref={loginPasswordRef}
                   />
                 </div>
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-primary mt-4">
                   Login
                 </button>
                 {errorMessage && (
                   <p style={{ color: 'red' }}>{errorMessage}</p>
                 )}
               </form>
-              <br />
+              {/* <br />
               <button type="button" className="btn btn-danger" onClick={logout}>
                 Logout
-              </button>
+              </button> */}
             </div>
             <div className="col-lg-6 col-md-6 col-sm-12">
               <img src={padiImage} alt="Padi" className="img-fluid" />

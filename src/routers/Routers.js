@@ -44,6 +44,8 @@ import PenjualDelivery from "../pages/penjual/Component/Delivery/Delivery";
 import PenjualProducts from '../pages/penjual/Component/Product/Product';
 import PenjualAnggota from '../pages/penjual/Component/Anggota/anggota';
 
+import Card from '../pages/user/CartCoba';
+
 
 const userInpDetails = []; // Placeholder for user input details
 const productInpDetails = []; // Placeholder for product input details
@@ -62,7 +64,9 @@ const Routers = () => {
             <Route path='/cart' element={<Cart/>}/>
             <Route path='/payment' element={<Payment/>}/>
             <Route path='/checkout' element={<Checkout/>}/>
-            <Route path='/login2' element={<Login2/>}/>
+
+
+            {/* <Route path='/login2' element={<Login2/>}/> */}
             <Route path='/loginpenjual' element={<Loginpenjual/>}/>
             <Route path='/signtoko' element={<Signupcopy/>}/>
 
@@ -70,7 +74,11 @@ const Routers = () => {
             <Route path='/detailartikel/:id' element={<ArtikelDetails/>} />
             <Route path='/payment' element={<Payment/>} />
             
+
+
+            
             {/* Admin Routes */}
+            <Route path="/admin/login" element={<Login2 />} />
             <Route path="/admin" element={<AdminHome />} />
             <Route path="/admin/orders" element={<AdminOrders />} />
             <Route
@@ -117,6 +125,8 @@ const Routers = () => {
                 <Route path=":productId" element={<Detail />} />
                 <Route path="addnew" element={<PenjualAddNew inputs={productInpDetails} titlee="Add New Product" type="PRODUCT" />} />
             </Route>
+
+            <Route path='/card2' element={<Card/>}/>
         </Routes>
     );
 };

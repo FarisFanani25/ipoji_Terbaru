@@ -18,7 +18,6 @@ const Loginpenjual = () => {
   
       const response = await axios.post('http://localhost:8080/loginpenjual', { email, password });
 
-  
       if (response.data && response.data.token) {
         // Simpan token ke localStorage
         localStorage.setItem('token', response.data.token);
@@ -43,16 +42,10 @@ const Loginpenjual = () => {
     }
   };
   
-
-  // Implement logout function
-  const logout = () => {
-    navigate('/login');
-  };
-
   return (
     <section className="common-section">
       <div className="container">
-        <h2 className="text-center mb-4">Login</h2>
+        <h2 className="text-center mb-4">Login Penjual</h2>
         <div className="signup-container p-4 shadow">
           <div className="row align-items-center">
             <div className="col-lg-6 col-md-6 col-sm-12">
@@ -86,9 +79,9 @@ const Loginpenjual = () => {
                 Don't have an account? Create an account
               </Link>
               <br />
-              <button type="button" className="btn btn-danger" onClick={logout}>
-                Logout
-              </button>
+              <Link to="/login2">
+                Login Sebagai Admin
+              </Link>
             </div>
             <div className="col-lg-6 col-md-6 col-sm-12">
               <img src={padiImage} alt="Padi" className="img-fluid" />

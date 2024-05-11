@@ -33,36 +33,6 @@ const Shop = () => {
     setPageNumber(0); // Reset page number when search term changes
   };
 
-  const handleAddToCart = async (productId) => {
-    try {
-        // Cari produk berdasarkan ID
-        const selectedProduct = products.find(product => product.id_produk === productId);
-  
-        // Pastikan produk ditemukan sebelum mencoba mengambil harganya
-        if (selectedProduct) {
-            // Kirim permintaan POST untuk menambahkan produk ke keranjang
-            const response = await axios.post('http://localhost:8080/cart/add', {
-                id_produk: productId,
-                jumlah: 1,
-                harga_total: selectedProduct.harga, // Menggunakan harga dari produk yang ditemukan
-                id_user: 1
-            });
-  
-            // Tampilkan pesan sukses jika produk berhasil ditambahkan ke keranjang
-            alert('Product added to cart successfully!');
-            setAddedProduct(productId);
-        } else {
-            // Tampilkan pesan jika produk tidak ditemukan
-            alert('Product not found. Please try again.');
-        }
-    } catch (error) {
-        // Tangani kesalahan jika terjadi
-        console.error('Error adding product to cart:', error);
-        alert('Failed to add product to cart. Please try again later.');
-    }
-  };
-  
-
   const searchedProduct = products.filter((item) => {
     if (searchTerm === "") {
       return item;
@@ -103,7 +73,7 @@ const Shop = () => {
           <Row>
             {displayPage.map((item) => (
               <Col lg="3" md="4" sm="6" xs="6" key={item.id_produk} className="mb-4">
-                <ProductCard item={item} handleAddToCart={handleAddToCart} />
+                <ProductCard item={item} />
               </Col>
             ))}
           </Row>
@@ -121,7 +91,7 @@ const Shop = () => {
         </Container>
       </section>
       
-      {/* Animasi gambar produk melayang ke ikon keranjang */}
+      {/* Animasi gambar produk melayang ke ikon keranjang
       {addedProduct && (
         <div className="floating-cart-animation">
           <img
@@ -130,7 +100,7 @@ const Shop = () => {
             className="product-animation"
           />
         </div>
-      )}
+      )} */}
     </Helmet>
   );
 };

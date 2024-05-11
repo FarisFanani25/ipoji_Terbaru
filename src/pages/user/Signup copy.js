@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import padiImage from "../../assets/images/padi2.png"; // Import gambar padi
+import padiImage from "../../assets/images/petanii.png"; // Import gambar padi
 
 const Signupcopy = () => {
   const [name, setName] = useState('');
@@ -25,10 +25,10 @@ const Signupcopy = () => {
       console.log('Data Inserted', response.data);
       
       // Show success alert
-      window.alert('Registration successful!');
+      window.alert('Akun Penjual Berhasil didaftarkan!');
   
       // Redirect after successful registration
-      navigate("/");
+      navigate("/loginpenjual");
     } catch (error) {
       // Handle error
       console.error('Error inserting data', error);
@@ -38,7 +38,7 @@ const Signupcopy = () => {
   return (
     <section>
       <Container>
-        <h2 className="text-center mb-4">Sign Up</h2>
+        <h2 className="text-center mb-4">Daftar Penjual</h2>
         <div className="signup-container p-4" style={{ boxShadow: "0 0 20px rgba(0, 0, 0, 0.1)" }}>
           <Row className="align-items-center">
             <Col lg="6" md="6" sm="12">
@@ -74,7 +74,7 @@ const Signupcopy = () => {
                   Sign Up
                 </button>
               </form>
-              <Link to="/login">Already have an account? Login</Link>
+              <Link to="/loginpenjual">Sudah Memiliki Akun? Masuk</Link>
             </Col>
             <Col lg="6" md="6" sm="12">
               <img src={padiImage} alt="Padi" className="img-fluid" />

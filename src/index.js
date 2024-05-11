@@ -7,15 +7,18 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import store from "./redux/store";
 import { Provider } from 'react-redux';
+import { CartProvider } from './components/UI/CartContext';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-    <Provider store={store}>
-    <App />
-    </Provider>
+      <Provider store={store}>
+        <CartProvider>
+          <App />
+        </CartProvider>
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>
 );
