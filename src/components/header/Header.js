@@ -30,7 +30,6 @@ const Header = () => {
 
   const menuToggle = () => menuRef.current.classList.toggle("active__menu");
 
-  
   return (
     <header className="header" ref={headerRef}>
       <Container>
@@ -49,15 +48,13 @@ const Header = () => {
               </ul>
             </div>
 
-        <div className="nav__icons">
-                            {/* Cart icon now linked to /cart */}
-                            <span className="cart__icon">
-                                <NavLink to="/cart">
-                                    <i className="ri-shopping-bag-line"></i>
-                                    
-                                </NavLink>
-                            </span>
-
+            <div className="nav__icons">
+              {/* Cart icon now linked to /cart */}
+              <span className="cart__icon">
+                <NavLink to="/cardcoba">
+                  <i className="ri-shopping-bag-line"></i>
+                </NavLink>
+              </span>
 
               {/* Tambahkan NavLink untuk navigasi ke halaman pengguna */}
               <NavLink to="/user" className="user__icon">
