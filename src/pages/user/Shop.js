@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Helmet from "../../components/Helmet/Helmet";
 import CommonSection from "../../components/UI/CommonSection";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Button, InputGroup, InputGroupText, Input, Alert } from "reactstrap";
 import ProductCard from "../../components/UI/ProductCard";
 import ReactPaginate from "react-paginate";
 import axios from 'axios';
@@ -13,10 +13,13 @@ const Shop = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
   const [products, setProducts] = useState([]);
-  const [addedProduct, setAddedProduct] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [alert, setAlert] = useState({ visible: false, message: "", type: "" });
 
   useEffect(() => {
     getDataProduk();
+    checkLoginStatus();
   }, []);
 
   const getDataProduk = async () => {
@@ -28,9 +31,23 @@ const Shop = () => {
     }
   };
 
+  const checkLoginStatus = () => {
+    const userId = localStorage.getItem('user_id');
+    setIsLoggedIn(!!userId);
+  };
+
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
     setPageNumber(0); // Reset page number when search term changes
+  };
+
+  const handleAddToCart = (product) => {
+    if (!isLoggedIn) {
+      setAlert({ visible: true, message: "Please log in to add items to the cart.", type: "danger" });
+      return;
+    }
+    setCartItems([...cartItems, product]);
+    setAlert({ visible: true, message: "Item added to cart!", type: "success" });
   };
 
   const searchedProduct = products.filter((item) => {
@@ -62,18 +79,32 @@ const Shop = () => {
         <Container>
           <Row>
             <Col>
-              <input
-                type="text"
-                placeholder="Search..."
-                value={searchTerm}
-                onChange={handleSearchChange}
-              />
+              <InputGroup>
+                <Input
+                  type="text"
+                  placeholder="Search..."
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                />
+                <InputGroupText>
+                  <Button color="primary">Search</Button>
+                </InputGroupText>
+              </InputGroup>
             </Col>
-          </Row>
+          </Row><br></br>
+          {alert.visible && (
+            <Row>
+              <Col>
+                <Alert color={alert.type} toggle={() => setAlert({ ...alert, visible: false })}>
+                  {alert.message}
+                </Alert>
+              </Col>
+            </Row>
+          )}
           <Row>
             {displayPage.map((item) => (
               <Col lg="3" md="4" sm="6" xs="6" key={item.id_produk} className="mb-4">
-                <ProductCard item={item} />
+                <ProductCard item={item} onAddToCart={() => handleAddToCart(item)} />
               </Col>
             ))}
           </Row>
@@ -91,16 +122,11 @@ const Shop = () => {
         </Container>
       </section>
       
-      {/* Animasi gambar produk melayang ke ikon keranjang
-      {addedProduct && (
-        <div className="floating-cart-animation">
-          <img
-            src={`gambar-produk/${addedProduct}.jpg`} // Ubah sesuai dengan alamat gambar produk
-            alt="Added to Cart"
-            className="product-animation"
-          />
-        </div>
-      )} */}
+      {/* Icon keranjang dengan jumlah item */}
+      <div className="cart-icon">
+        <i className="fa fa-shopping-cart"></i>
+        {cartItems.length > 0 && <span className="cart-count">{cartItems.length}</span>}
+      </div>
     </Helmet>
   );
 };

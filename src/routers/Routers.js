@@ -126,7 +126,7 @@ const Routers = () => {
                 <Route path="addnew" element={<PenjualAddNew inputs={productInpDetails} titlee="Add New Product" type="PRODUCT" />} />
             </Route>
 
-            <Route path='/card2' element={<Card/>}/>
+            <Route path='/cardcoba' element={<Card/>}/>
         </Routes>
     );
 };
