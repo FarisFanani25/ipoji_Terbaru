@@ -1,49 +1,150 @@
-.checkout__bill, .checkout__total {
-  background: #00aaff; /* Menyesuaikan warna background */
-  color: white; /* Menyesuaikan warna teks agar kontras */
+/* checkout.css */
+
+.checkout-container {
+  margin: 0;
+  padding: 20px;
+  width: auto; /* Adjust width as necessary */
+  max-width: 800px; /* Or another max-width based on your design */
+  box-sizing: border-box;
 }
 
-.checkout__bill {
-  padding: 30px;
-  margin-top: 0; /* Menghapus margin-top yang sebelumnya */
+.checkout-title, .checkout-form, .checkout-results, .checkout-summary {
+  margin-left: 0;
 }
 
-.checkout__product-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .checkout__product-image {
-    width: 80px; /* Adjust the width as needed */
-    height: auto; /* Maintain aspect ratio */
-    margin-right: 20px;
-  }
-  
-  .checkout__product-details {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-  
-  .product-details-right {
-    text-align: center;
-    flex-grow: 1; /* Allow the details to take remaining space */
-  }
 
-  
-  
-  @media only screen and (max-width: 768px) {
-    .checkout__total h6 {
-      font-size: 0.9rem;
-    }
-  
-    .checkout__bill {
-      margin-top: 40px;
-    }
-  }
-  
+.checkout-form {
+  margin-bottom: 20px;
+}
 
-  .form__group {
-    background: #07bd4d;
-  }
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.form-select, .form-input, .form-textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #555;
+  background: #fff;
+  transition: border-color 0.3s ease;
+}
+
+.form-select:focus, .form-input:focus, .form-textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.form-textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.form-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 14px;
+  color: #fff;
+  background: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.form-button:hover {
+  background: #0056b3;
+}
+
+.checkout-results {
+  margin-bottom: 20px;
+}
+
+.results-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.results-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.result-item {
+  font-size: 14px;
+  color: #555;
+  padding: 8px 10px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 5px;
+}
+
+.checkout-summary {
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.summary-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-button, .summary-button {
+  display: inline-block;
+  padding: 12px 24px; /* Increased padding */
+  font-size: 16px; /* Slightly larger font size */
+  color: #fff;
+  background: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle box shadow */
+}
+
+.form-button:hover, .summary-button:hover {
+  background: #0056b3;
+  transform: translateY(-2px); /* Slight upward movement on hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+.form-button:active, .summary-button:active {
+  background: #003f7f;
+  transform: translateY(0); /* Reset movement on active state */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Reset shadow on active state */
+}
+
