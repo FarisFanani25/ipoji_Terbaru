@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import padiImage from "../../assets/images/padi2.png"; // Import gambar padi
+import padiImage from "../../assets/images/gambar1.jpg"; // Import gambar padi
 
 const Signup = () => {
   const [name, setName] = useState('');
@@ -42,17 +42,22 @@ const Signup = () => {
 
   return (
     <section>
+      
       <Container>
-        <h2 className="text-center mb-4">Sign Up</h2>
         <div className="signup-container p-4" style={{ boxShadow: "0 0 20px rgba(0, 0, 0, 0.1)" }}>
           <Row className="align-items-center">
-            <Col lg="6" md="6" sm="12">
+          <Col lg="6" md="6" sm="12">
+              <img src={padiImage} alt="Padi" className="img-fluid" style={{ maxWidth: '90%', height: 'auto', marginBottom: '20px', borderRadius: '15px' }} />
+            </Col>
+            <Col lg="6" md="6" sm="12" className="text-left">
               <form className="form mb-5" onSubmit={saveUser}>
+                <h2 className="mb-5" style={{ fontWeight: 500 }}>Daftar Akun</h2>
+                <h4 className="mb-5" style={{ fontWeight: 300, fontSize: '1rem' }}>Tingkatkan Kesehatan Anda, Mulai dengan Pilihan Beras Sehat</h4>
                 <div className="form-group">
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="Full name"
+                    placeholder="Username"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                   />
@@ -76,15 +81,22 @@ const Signup = () => {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
-                <button type="submit" className="btn btn-primary mt-4">
-                  Sign Up
+                <button
+                  type="submit"
+                  className="btn mt-4"
+                  style={{
+                    backgroundColor: 'navy',
+                    color: 'white',
+                    padding: '10px 20px',
+                    fontSize: '0.9rem'
+                  }}
+                >
+                  Daftar
                 </button>
               </form>
-              <Link to="/login">Already have an account? Login</Link>
+              <Link to="/login">Sudah memiliki akun? Klik Disini</Link>
             </Col>
-            <Col lg="6" md="6" sm="12">
-              <img src={padiImage} alt="Padi" className="img-fluid" />
-            </Col>
+            
           </Row>
         </div>
       </Container>

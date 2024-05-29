@@ -93,11 +93,6 @@ const ProductDetails = () => {
                     </tr>
                   </tbody>
                 </table>
-
-                <button onClick={addItemToCart} className='btn btn-primary mr-2'>
-                  <FontAwesomeIcon icon={faShoppingCart} />
-                </button>
-                <button className='btn btn-success'>Beli Sekarang</button>
               </div>
             </Col>
           </Row>

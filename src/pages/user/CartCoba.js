@@ -1,74 +1,7 @@
-<<<<<<< HEAD
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
-
-// const KeranjangPage = () => {
-//   const [keranjang, setKeranjang] = useState([]);
-//   const userId = localStorage.getItem('user_id');
-
-//   useEffect(() => {
-//     // Fungsi untuk mengambil data keranjang dari server
-//     const fetchData = async () => {
-//       try {
-//         // Ganti URL dengan endpoint yang sesuai untuk mengambil data keranjang
-//         const response = await axios.et(`http://localhost:8080/keranjang/user/${userId}`);
-//         setKeranjang(response.data);g
-//       } catch (error) {
-//         console.error('Terjadi masalah saat mengambil data keranjang:', error);
-//       }
-//     };
-
-//     fetchData();
-//   }, [userId]);
-
-//   const handleDelete = async (id) => {
-//     try { 
-//       await axios.delete(`http://localhost:8080/keranjang/${id}`);
-//       // Hapus item keranjang dari state setelah berhasil dihapus dari server
-//       setKeranjang(keranjang.filter(item => item.id_produk !== id));
-//     } catch (error) {
-//       console.error('Terjadi masalah saat menghapus data keranjang:', error);
-//     }
-//   };
-
-//   return (
-//     <div className="keranjang-page">
-//       <h1>Keranjang Belanja</h1>
-//       <table className="keranjang-table">
-//         <thead>
-//           <tr>
-//             <th>Nama Produk</th>
-//             <th>Harga</th>
-//             <th>Action</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {keranjang.length > 0 ? (
-//             keranjang.map((item) => (
-//               <tr key={item.id_produk}>
-//                 <td>{item.nama_produk}</td>
-//                 <td>Rp.{item.harga_produk}</td>
-//                 <td>
-//                   <button onClick={() => handleDelete(item.id_produk)}>Hapus</button>
-//                 </td>
-//               </tr>
-//             ))
-//           ) : (
-//             <tr>
-//               <td colSpan="3">Keranjang belanja masih kosong.</td>
-//             </tr>
-//           )}
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// };
-
-// export default KeranjangPage;
-=======
 import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Card.css'
+import './Card.css';
+import { Link } from 'react-router-dom'; // Import Link
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -98,6 +31,10 @@ const Cart = () => {
 
     fetchCartItems();
   }, []);
+
+  useEffect(() => {
+    calculateTotal(cartItems);
+  }, [cartItems]);
 
   const calculateTotal = (items) => {
     const total = items.reduce((sum, item) => sum + item.harga_produk * item.quantity, 0);
@@ -162,14 +99,58 @@ const Cart = () => {
     }
   };
 
-  const handleCheckout = () => {
-    // Implement checkout logic here
-    alert('Checkout successful!');
+  const handleCheckout = async () => {
+    const userId = localStorage.getItem('user_id');
+    if (!userId) {
+      console.error('User ID not found in localStorage');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:8080/midtrans/transaction', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          total: total,
+          first_name: 'John',
+          last_name: 'Doe',
+          email: 'johndoe@example.com',
+          phone: '08123456789'
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create transaction');
+      }
+
+      const data = await response.json();
+      window.snap.pay(data.token, {
+        onSuccess: (result) => {
+          alert('Payment successful!');
+          console.log(result);
+        },
+        onPending: (result) => {
+          alert('Waiting for payment!');
+          console.log(result);
+        },
+        onError: (result) => {
+          alert('Payment failed!');
+          console.log(result);
+        },
+        onClose: () => {
+          alert('You closed the popup without finishing the payment');
+        },
+      });
+    } catch (error) {
+      console.error('Error during checkout:', error);
+    }
   };
 
   return (
     <div className="container mt-5">
-      <h2 className="text-center mb-4">Shopping Cart</h2>
+      <h2 className="text-center mb-4">Keranjang</h2>
       <div className="row">
         <div className="col-12">
           <div className="list-group">
@@ -180,6 +161,11 @@ const Cart = () => {
                 onClick={() => handleSelectItem(item)}
               >
                 <div className="d-flex align-items-center">
+                  <img
+                    src={`http://localhost:8080/gambar/${item.gambar_produk}`}
+                    alt={item.gambar_produk}
+                    style={{ width: '100px', height: '100px', marginRight: '20px' }}
+                  />
                   <div>
                     <h5 className="mb-1">{item.nama_produk}</h5>
                     <p className="mb-1">Rp. {item.harga_produk}</p>
@@ -203,7 +189,8 @@ const Cart = () => {
       <div className="row mt-4">
         <div className="col-12 text-right">
           <h3>Total: Rp. {total}</h3>
-          <button className="btn btn-primary mt-3 mb-4" onClick={handleCheckout}>Checkout</button>
+          {/* Gunakan Link untuk membuat tombol Checkout */}
+          <Link to="/checkout" className="btn btn-primary mt-3 mb-4" onClick={handleCheckout}>Checkout</Link>
         </div>
       </div>
     </div>
@@ -211,4 +198,3 @@ const Cart = () => {
 };
 
 export default Cart;
->>>>>>> 877ef5e140bc7d3f72de35229d7751d5b27bc1b1

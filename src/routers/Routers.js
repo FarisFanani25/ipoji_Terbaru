@@ -14,6 +14,7 @@ import Signup from '../pages/user/Signup';
 import Signupcopy from '../pages/user/Signup copy';
 import Payment from '../pages/user/payment';
 import ArtikelDetails from '../pages/user/ArtikelDetails';
+import PembayaranForm from '../pages/user/pembayaran';
 
 
 // Admin Components
@@ -44,6 +45,7 @@ import PenjualDelivery from "../pages/penjual/Component/Delivery/Delivery";
 import PenjualProducts from '../pages/penjual/Component/Product/Product';
 import PenjualAnggota from '../pages/penjual/Component/Anggota/anggota';
 
+
 import Card from '../pages/user/CartCoba';
 
 
@@ -64,7 +66,7 @@ const Routers = () => {
             <Route path='/cart' element={<Cart/>}/>
             <Route path='/payment' element={<Payment/>}/>
             <Route path='/checkout' element={<Checkout/>}/>
-
+            <Route path='/pembayaran' element={<PembayaranForm/>}/>
 
             {/* <Route path='/login2' element={<Login2/>}/> */}
             <Route path='/loginpenjual' element={<Loginpenjual/>}/>
