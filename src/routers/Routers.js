@@ -55,7 +55,7 @@ const Routers = () => {
     return (
         <Routes>
             {/* User Routes */}
-            <Route path="/" element={<Navigate to='Signup' />} />
+            <Route path="/" element={<Navigate to='Home' />} />
             <Route path='/login' element={<Login/>}/>
             <Route path='/signup' element={<Signup/>}/>
             <Route path='/home' element={<Home/>}/>
