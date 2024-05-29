@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Card.css'
+import './Card.css';
+import { Link } from 'react-router-dom'; // Import Link
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -30,6 +31,10 @@ const Cart = () => {
 
     fetchCartItems();
   }, []);
+
+  useEffect(() => {
+    calculateTotal(cartItems);
+  }, [cartItems]);
 
   const calculateTotal = (items) => {
     const total = items.reduce((sum, item) => sum + item.harga_produk * item.quantity, 0);
@@ -94,14 +99,58 @@ const Cart = () => {
     }
   };
 
-  const handleCheckout = () => {
-    // Implement checkout logic here
-    alert('Checkout successful!');
+  const handleCheckout = async () => {
+    const userId = localStorage.getItem('user_id');
+    if (!userId) {
+      console.error('User ID not found in localStorage');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:8080/midtrans/transaction', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          total: total,
+          first_name: 'John',
+          last_name: 'Doe',
+          email: 'johndoe@example.com',
+          phone: '08123456789'
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create transaction');
+      }
+
+      const data = await response.json();
+      window.snap.pay(data.token, {
+        onSuccess: (result) => {
+          alert('Payment successful!');
+          console.log(result);
+        },
+        onPending: (result) => {
+          alert('Waiting for payment!');
+          console.log(result);
+        },
+        onError: (result) => {
+          alert('Payment failed!');
+          console.log(result);
+        },
+        onClose: () => {
+          alert('You closed the popup without finishing the payment');
+        },
+      });
+    } catch (error) {
+      console.error('Error during checkout:', error);
+    }
   };
 
   return (
     <div className="container mt-5">
-      <h2 className="text-center mb-4">Shopping Cart</h2>
+      <h2 className="text-center mb-4">Keranjang</h2>
       <div className="row">
         <div className="col-12">
           <div className="list-group">
@@ -112,6 +161,11 @@ const Cart = () => {
                 onClick={() => handleSelectItem(item)}
               >
                 <div className="d-flex align-items-center">
+                  <img
+                    src={`http://localhost:8080/gambar/${item.gambar_produk}`}
+                    alt={item.gambar_produk}
+                    style={{ width: '100px', height: '100px', marginRight: '20px' }}
+                  />
                   <div>
                     <h5 className="mb-1">{item.nama_produk}</h5>
                     <p className="mb-1">Rp. {item.harga_produk}</p>
@@ -135,7 +189,8 @@ const Cart = () => {
       <div className="row mt-4">
         <div className="col-12 text-right">
           <h3>Total: Rp. {total}</h3>
-          <button className="btn btn-primary mt-3 mb-4" onClick={handleCheckout}>Checkout</button>
+          {/* Gunakan Link untuk membuat tombol Checkout */}
+          <Link to="/checkout" className="btn btn-primary mt-3 mb-4" onClick={handleCheckout}>Checkout</Link>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 .hero__section {
-    background: rgba(80, 160, 171, 1);
+    background: rgb (245.255.250);
 }
 
 .hero__content h2 {
@@ -64,3 +64,36 @@
         margin-bottom: 40px;
     }
 }
+.section__title {
+    margin-bottom: 100px; /* Adjust the value as needed */
+}
+
+.section__separator {
+    display: flex;
+    align-items: center;
+    margin: 40px 0;
+}
+
+.section__separator-line {
+    flex-grow: 1;
+    border-top: 1px solid #ddd;
+    margin: 0 10px;
+}
+
+.section__separator-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.section__separator-dots::before,
+.section__separator-dots::after {
+    content: "";
+    display: block;
+    width: 8px;
+    height: 8px;
+    background-color: #ddd;
+    border-radius: 50%;
+    margin: 0 5px;
+}
+

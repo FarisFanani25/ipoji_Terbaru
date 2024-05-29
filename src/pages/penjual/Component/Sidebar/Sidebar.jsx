@@ -10,15 +10,15 @@ import TableChartIcon from '@mui/icons-material/TableChart';
 import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { ColorContext } from '../../ColorContext/darkContext';
-import './Sidebar.scss';
+import './Sidebar2.scss';
 
-function Sidebar() {
+function Sidebar2() {
     // color state management using react context
     const { darkMode, dispatch } = useContext(ColorContext);
 
     return (
         <div className={`sidebar ${darkMode ? 'dark' : 'light'}`}>
-                    <h3 className="text_none">Penjual IPOJI</h3>
+                    <h4 className="text_none">Penjual IPOJI</h4>
             
 
             <div className="links">
@@ -91,4 +91,4 @@ function Sidebar() {
     );
 }
 
-export default Sidebar;
+export default Sidebar2;

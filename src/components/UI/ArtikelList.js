@@ -38,6 +38,7 @@ const ArtikelList = () => {
                     id_artikel={article.id_artikel} 
                     imageSrc={article.gambar_artikel}
                     title={article.judul_artikel}
+                    description={article.deskripsi_artikel}
                 />
             ))}
         </div>

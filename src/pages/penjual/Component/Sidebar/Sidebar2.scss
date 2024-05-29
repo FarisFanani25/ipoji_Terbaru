@@ -1,8 +1,8 @@
-$icon_color: #0b631b;
+$icon_color: #053653;
 $text_color: #3d3c42;
 
 .sidebar {
-  border-right: 1px solid #eee;
+  border-right: 1px solid #053653;
   margin-left: 10px;
 
   .logo {
@@ -15,11 +15,15 @@ $text_color: #3d3c42;
 
     .text_none {
       text-decoration: none;
-      color: $icon_color;
-      margin-top: 5px; // Atur margin untuk memisahkan logo dan teks
-      display: block; // Membuat teks menjadi blok untuk menempatkannya di bawah logo
-    }
+      color: $icon_color; // Make sure $icon_color is defined somewhere in your styles
+      margin-top: 5px; // Maintain the top margin to separate the text from other elements
+      display: block; // Ensure the text behaves as a block element
+      font-family: 'Arial', sans-serif; // Change the font family to something more professional
+      font-size: 1.2em; // Adjust the font size to be more readable
+      font-weight: 500; // Make the font weight less blocky
+      padding-left: 15px; // Add left padding to move the text slightly to the left
   }
+  }  
 
   .links {
     margin: 15px 10px;
@@ -28,7 +32,7 @@ $text_color: #3d3c42;
         text-transform: uppercase;
         color: gray;
         margin: 10px 0px 5px;
-        font-size: 14px;
+        font-size: 15px;
       }
 
       li {
@@ -37,11 +41,11 @@ $text_color: #3d3c42;
         margin-left: 10px;
         color: $text_color;
         padding: 5px 10px;
-        font-weight: 500;
+        font-weight: 450;
         transition: all 0.2s ease;
         border-radius: 4px;
         cursor: pointer;
-        font-size: 18px;
+        font-size: 16px;
         transition: all 0.2s ease;
 
         &:hover {
@@ -54,7 +58,7 @@ $text_color: #3d3c42;
         .icon {
           color: $icon_color;
           margin-right: 10px;
-          font-size: 18px;
+          font-size: 20px;
         }
       }
     }

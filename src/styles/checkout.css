@@ -1,49 +1,31 @@
-.checkout__bill, .checkout__total {
-  background: #00aaff; /* Menyesuaikan warna background */
-  color: white; /* Menyesuaikan warna teks agar kontras */
+.cost-summary {
+  background-color: rgb(10, 111, 161);
+  color: white;
+  border-radius: 10px;
+  padding: 20px;
 }
 
-.checkout__bill {
-  padding: 30px;
-  margin-top: 0; /* Menghapus margin-top yang sebelumnya */
+.buyer-info-header {
+  background-color: rgb(10, 111, 161);
+  color: white;
 }
 
-.checkout__product-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .checkout__product-image {
-    width: 80px; /* Adjust the width as needed */
-    height: auto; /* Maintain aspect ratio */
-    margin-right: 20px;
-  }
-  
-  .checkout__product-details {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-  
-  .product-details-right {
-    text-align: center;
-    flex-grow: 1; /* Allow the details to take remaining space */
-  }
 
-  
-  
-  @media only screen and (max-width: 768px) {
-    .checkout__total h6 {
-      font-size: 0.9rem;
-    }
-  
-    .checkout__bill {
-      margin-top: 40px;
-    }
-  }
-  
 
-  .form__group {
-    background: #07bd4d;
-  }
+.cost-summary .card-title {
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  color: white;
+}
+
+.cost-summary .table {
+  color: white;
+}
+
+.cost-summary .table th, .cost-summary .table td {
+  border: none;
+}
+
+.cost-summary .table .text-end {
+  text-align: right;
+}

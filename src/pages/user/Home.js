@@ -25,7 +25,7 @@ const Home = ( ) => {
                 <Row>
                     <Col lg='6' md='6'>
                         <div className="hero__content">
-                            <p className="hero__subtitle">Trending Product in</p>
+                            <p className="hero__subtitle">IPOJI 2024</p>
                             <h2>Beras Sehat Pilihan Kita</h2>
                             <p>Beras sehat adalah jenis beras yang telah melalui proses pengolahan
                             yang minimal atau tanpa menggunakan bahan kimia sintetis seperti pestisida atau pupuk buatan,
@@ -52,7 +52,12 @@ const Home = ( ) => {
             <Container>
                 <Row>
                     <Col lg='12' className="text-center">
-                        <h2 className="section__title">Mengenal Beras Sehat</h2>
+                        <h1 className="section__title">Seputar Beras Sehat</h1>
+                        <div className="section__separator">
+                                <div className="section__separator-line"></div>
+                                <div className="section__separator-dots"></div>
+                                <div className="section__separator-line"></div>
+                            </div>
                     </Col>
                     <ArtikelList/>
                 </Row>

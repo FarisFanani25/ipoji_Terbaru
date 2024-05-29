@@ -1,0 +1,12 @@
+.body-flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex {
+  flex: 1;
+}
+
+.col-10 {
+  width: 80%;
+}

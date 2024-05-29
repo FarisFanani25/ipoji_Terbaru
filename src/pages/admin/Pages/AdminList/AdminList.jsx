@@ -11,29 +11,22 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button, Form } from "react-bootstrap";
 
-
 function AdminList() {
   const [dataArtikel, setDataArtikel] = useState([]);
-  const [id, setId] = useState("");
-  const [judulArtikel, setJudulArtikel] = useState("");
-  const [deskripsiArtikel, setDeskripsiArtikel] = useState("");
-  const [gambarArtikel, setGambarArtikel] = useState("");
-  const [show, setShow] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [currentArtikel, setCurrentArtikel] = useState({
+    id_artikel: '',
+    judul_artikel: '',
+    deskripsi_artikel: '',
+    gambar_artikel: '',
+  });
 
   // State untuk form tambah data
   const [newJudulArtikel, setNewJudulArtikel] = useState("");
   const [newDeskripsiArtikel, setNewDeskripsiArtikel] = useState("");
   const [newGambarArtikel, setNewGambarArtikel] = useState("");
-
-
-  // State untuk form edit data
-const [editJudulArtikel, setEditJudulArtikel] = useState("");
-const [editDeskripsiArtikel, setEditDeskripsiArtikel] = useState("");
-const [editGambarArtikel, setEditGambarArtikel] = useState("");
-
-
 
   useEffect(() => {
     getDataArtikel();
@@ -48,56 +41,64 @@ const [editGambarArtikel, setEditGambarArtikel] = useState("");
     }
   };
 
-  const showModal = (data) => {
-    setId(data.id_artikel);
-    setEditJudulArtikel(data.judul_artikel); // Menggunakan setEditJudulArtikel
-    setEditDeskripsiArtikel(data.deskripsi_artikel); // Menggunakan setEditDeskripsiArtikel
-    setEditGambarArtikel(data.gambar_artikel); // Menggunakan setEditGambarArtikel
-    setShow(true);
-  };
-  
-
-  const closeModal = () => {
-    setId("");
-    setJudulArtikel("");
-    setDeskripsiArtikel("");
-    setGambarArtikel("");
-    setShow(false);
-  };
-
-  const showAddModal = () => {
-    setJudulArtikel("");
-    setDeskripsiArtikel("");
-    setGambarArtikel("");
+  const openAddModal = () => {
+    setNewJudulArtikel("");
+    setNewDeskripsiArtikel("");
+    setNewGambarArtikel("");
     setShowAdd(true);
   };
 
-
   const closeAddModal = () => {
-    setJudulArtikel("");
-    setDeskripsiArtikel("");
-    setGambarArtikel("");
+    setNewJudulArtikel("");
+    setNewDeskripsiArtikel("");
+    setNewGambarArtikel("");
     setShowAdd(false);
+  };
+
+  const openEditModal = (data) => {
+    setCurrentArtikel(data);
+    setShowEdit(true);
+  };
+
+  const closeEditModal = () => {
+    setCurrentArtikel({
+      id_artikel: '',
+      judul_artikel: '',
+      deskripsi_artikel: '',
+      gambar_artikel: '',
+    });
+    setShowEdit(false);
+  };
+
+  const handleEditInputChange = (e) => {
+    const { name, value } = e.target;
+    setCurrentArtikel((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleEditFileChange = (e) => {
+    setCurrentArtikel((prevData) => ({
+      ...prevData,
+      gambar_artikel: e.target.files[0],
+    }));
   };
 
   const addDataArtikel = async (event) => {
     event.preventDefault();
-  
     const formData = new FormData();
     formData.append("judul_artikel", newJudulArtikel);
     formData.append("deskripsi_artikel", newDeskripsiArtikel);
     formData.append("gambar_artikel", newGambarArtikel);
 
-  
     try {
       const response = await axios.post('http://localhost:8080/api/artikel', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-  
-      console.log('Response:', response.data); // Tambahkan log untuk menampilkan respons
-  
+
       if (response.data.status === 200) {
         alert(response.data.messages.success);
         getDataArtikel();
@@ -110,30 +111,27 @@ const [editGambarArtikel, setEditGambarArtikel] = useState("");
       alert("Data Gagal Ditambahkan. Lihat konsol untuk detail.");
     }
   };
-  
+
   const updateDataArtikel = async (event) => {
     event.preventDefault();
-    
     const formData = new FormData();
-    formData.append("judul_artikel", editJudulArtikel);
-    formData.append("deskripsi_artikel", editDeskripsiArtikel);
-    if (editGambarArtikel) {
-      formData.append("gambar_artikel", editGambarArtikel);
+    formData.append("judul_artikel", currentArtikel.judul_artikel);
+    formData.append("deskripsi_artikel", currentArtikel.deskripsi_artikel);
+    if (currentArtikel.gambar_artikel) {
+      formData.append("gambar_artikel", currentArtikel.gambar_artikel);
     }
-  
+
     try {
-      const response = await axios.put(`http://localhost:8080/update/artikel/${id}`, formData, {
+      const response = await axios.post(`http://localhost:8080/update/artikel/${currentArtikel.id_artikel}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-  
-      console.log('Response:', response.data);
-    
+
       if (response.data.status === 200) {
         alert(response.data.messages);
         getDataArtikel();
-        closeModal();
+        closeEditModal();
       } else {
         alert("Data Gagal Diupdate: " + response.data.messages);
       }
@@ -141,49 +139,46 @@ const [editGambarArtikel, setEditGambarArtikel] = useState("");
       console.error("Error updating data:", error);
       alert("Data Gagal Diupdate. Lihat konsol untuk detail.");
     }
-};
+  };
 
-  
-
-  const showModalDelete = (data) => {
-    setId(data.id_artikel);
+  const openDeleteModal = (data) => {
+    setCurrentArtikel(data);
     setShowDelete(true);
   };
 
-  const closeModalDelete = () => {
-    setId("");
+  const closeDeleteModal = () => {
+    setCurrentArtikel({
+      id_artikel: '',
+      judul_artikel: '',
+      deskripsi_artikel: '',
+      gambar_artikel: '',
+    });
     setShowDelete(false);
   };
 
   const deleteDataArtikel = async () => {
     try {
-        const response = await axios.delete(`http://localhost:8080/delete/artikel/${id}`);
-        console.log(response); // Cetak seluruh objek respon ke konsol
-        alert(response.data.messages);
-        getDataArtikel();
+      const response = await axios.delete(`http://localhost:8080/delete/artikel/${currentArtikel.id_artikel}`);
+      alert(response.data.messages);
+      getDataArtikel();
+      closeDeleteModal();
     } catch (error) {
-        console.error("Error deleting data:", error);
-        alert("Data Gagal Dihapus. Lihat konsol untuk detail.");
-    } finally {
-        closeModalDelete();
+      console.error("Error deleting data:", error);
+      alert("Data Gagal Dihapus. Lihat konsol untuk detail.");
     }
-};
-
-
+  };
 
   return (
-    
     <div className='body-flex'>
       <div className="flex">
         <div className='col-10 p-5'>
-          {/* Tombol Tambah */}
-          <div className="text-center mb-3">
-            <CButton color="primary" onClick={showAddModal}>
-              Tambah Data Artikel
-            </CButton>
+        <div className="d-flex justify-content-between mb-3">
+          <h2>Daftar Artikel</h2>
+          <CButton color="primary" onClick={openAddModal}>
+            Tambah Data Artikel
+          </CButton>
           </div>
-          <CTable striped>
-            
+        <CTable striped bordered hover>
             <CTableHead>
               <CTableRow>
                 <CTableDataCell>Judul</CTableDataCell>
@@ -193,44 +188,39 @@ const [editGambarArtikel, setEditGambarArtikel] = useState("");
               </CTableRow>
             </CTableHead>
             <CTableBody>
-            {dataArtikel.map((item, index) => (
-  <CTableRow key={index}>
-    <CTableDataCell>{item.judul_artikel ?? '-'}</CTableDataCell>
-    <CTableDataCell>{item.deskripsi_artikel ?? '-'}</CTableDataCell>
-    <CTableDataCell>
-      <img
-        src={`http://localhost:8080/gambar/${item.gambar_artikel}`}
-        alt={item.gambar_artikel || "Gambar Artikel"}
-        style={{ maxWidth: '1000px', maxHeight: '1000px' }}
-      />
-    </CTableDataCell>
-    <CTableDataCell>
-      <CButton
-        className='btn btn-primary text-white me-2'
-        onClick={() => showModal(item)}
-      >
-        Edit
-      </CButton> 
-      <CButton
-        className='btn btn-danger text-white'
-        onClick={() => showModalDelete(item)}
-      >
-        Hapus
-      </CButton>
-    </CTableDataCell>
-  </CTableRow>
-))}
-
-              <CTableRow>
-                <CTableDataCell colSpan="5" className="text-center">
-                 
-                </CTableDataCell>
-              </CTableRow>
+              {dataArtikel.map((item, index) => (
+                <CTableRow key={index}>
+                  <CTableDataCell>{item.judul_artikel ?? '-'}</CTableDataCell>
+                  <CTableDataCell>{item.deskripsi_artikel ?? '-'}</CTableDataCell>
+                  <CTableDataCell>
+                    <img
+                      src={`http://localhost:8080/gambar/${item.gambar_artikel}`}
+                      alt={item.gambar_artikel || "Gambar Artikel"}
+                      style={{ maxWidth: '100px', maxHeight: '100px' }}
+                    />
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    <CButton
+                      className='btn btn-primary text-white me-2'
+                      onClick={() => openEditModal(item)}
+                    >
+                      Edit
+                    </CButton>
+                    <CButton
+                      className='btn btn-danger text-white'
+                      onClick={() => openDeleteModal(item)}
+                    >
+                      Hapus
+                    </CButton>
+                  </CTableDataCell>
+                </CTableRow>
+              ))}
             </CTableBody>
           </CTable>
         </div>
       </div>
 
+      {/* Modal Tambah Artikel */}
       <Modal show={showAdd} onHide={closeAddModal}>
         <Modal.Header closeButton>
           <Modal.Title>Form Tambah Data Artikel</Modal.Title>
@@ -241,8 +231,8 @@ const [editGambarArtikel, setEditGambarArtikel] = useState("");
               <Form.Label>Judul Artikel</Form.Label>
               <Form.Control
                 type="text"
-                onChange={(e) => setNewJudulArtikel(e.target.value)}
                 value={newJudulArtikel}
+                onChange={(e) => setNewJudulArtikel(e.target.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formDeskripsiArtikel">
@@ -250,8 +240,8 @@ const [editGambarArtikel, setEditGambarArtikel] = useState("");
               <Form.Control
                 as="textarea"
                 rows={3}
-                onChange={(e) => setNewDeskripsiArtikel(e.target.value)}
                 value={newDeskripsiArtikel}
+                onChange={(e) => setNewDeskripsiArtikel(e.target.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formGambarArtikel">
@@ -268,45 +258,54 @@ const [editGambarArtikel, setEditGambarArtikel] = useState("");
         </Modal.Body>
       </Modal>
 
-      <Modal show={show} onHide={closeModal}>
-  <Modal.Header closeButton>
-    <Modal.Title>Form Edit Data Artikel</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-    <Form onSubmit={updateDataArtikel}>
-      <Form.Group className="mb-3" controlId="formEditJudulArtikel">
-        <Form.Label>Judul Artikel</Form.Label>
-        <Form.Control
-          type="text"
-          onChange={(e) => setEditJudulArtikel(e.target.value)}
-          value={editJudulArtikel}
-        />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formEditDeskripsiArtikel">
-        <Form.Label>Deskripsi Artikel</Form.Label>
-        <Form.Control
-          as="textarea"
-          rows={3}
-          onChange={(e) => setEditDeskripsiArtikel(e.target.value)}
-          value={editDeskripsiArtikel}
-        />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formEditGambarArtikel">
-        <Form.Label>Gambar Artikel</Form.Label>
-        <Form.Control
-          type="file"
-          onChange={(e) => setEditGambarArtikel(e.target.files[0])}
-        />
-      </Form.Group>
-      <Button type='submit' color="primary" className="px-4">
-        Update
-      </Button>
-    </Form>
-  </Modal.Body>
-</Modal>
+      {/* Modal Edit Artikel */}
+      <Modal show={showEdit} onHide={closeEditModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Data Artikel</Modal.Title>
+        </Modal.Header>
+        <Form onSubmit={updateDataArtikel}>
+          <Modal.Body>
+            <Form.Group className="mb-3" controlId="formEditJudulArtikel">
+              <Form.Label>Judul Artikel</Form.Label>
+              <Form.Control
+                type="text"
+                name="judul_artikel"
+                value={currentArtikel.judul_artikel}
+                onChange={handleEditInputChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formEditDeskripsiArtikel">
+              <Form.Label>Deskripsi Artikel</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                name="deskripsi_artikel"
+                value={currentArtikel.deskripsi_artikel}
+                onChange={handleEditInputChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formEditGambarArtikel">
+              <Form.Label>Gambar Artikel</Form.Label>
+              <Form.Control
+                type="file"
+                name="gambar_artikel"
+                onChange={handleEditFileChange}
+              />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={closeEditModal}>
+              Close
+            </Button>
+            <Button variant="primary" type="submit">
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
 
-
-      <Modal show={showDelete} onHide={closeModalDelete}>
+      {/* Modal Hapus Artikel */}
+      <Modal show={showDelete} onHide={closeDeleteModal}>
         <Modal.Header closeButton>
           <Modal.Title>Konfirmasi Penghapusan</Modal.Title>
         </Modal.Header>
@@ -317,7 +316,7 @@ const [editGambarArtikel, setEditGambarArtikel] = useState("");
           <Button variant="danger" onClick={deleteDataArtikel}>
             Hapus
           </Button>
-          <Button variant="secondary" onClick={closeModalDelete}>
+          <Button variant="secondary" onClick={closeDeleteModal}>
             Batal
           </Button>
         </Modal.Footer>

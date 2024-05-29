@@ -48,4 +48,15 @@
       }
     }
   }
-  
+  /* CSS untuk membuat tabel lebih rapi */
+.table-container {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* CSS untuk button tambah artikel */
+.add-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
