@@ -5,7 +5,7 @@ import "../../styles/checkout.css";
 const Checkout = () => {
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
-  const [origin, setOrigin] = useState('');
+  const [origin, setOrigin] = useState('ID-JK'); // Tetapkan kota asal secara langsung
   const [destination, setDestination] = useState('');
   const [weight, setWeight] = useState(1000);
   const [shippingCost, setShippingCost] = useState([]);
@@ -30,7 +30,7 @@ const Checkout = () => {
 
   const handleProvinceChange = async (e) => {
     const provinceId = e.target.value;
-    setOrigin(provinceId);
+    // setOrigin(provinceId); // Tidak perlu lagi setOrigin di sini
   
     try {
       const result = await axios.get(`http://localhost:8080/cities/${provinceId}`);
@@ -41,26 +41,26 @@ const Checkout = () => {
   };
 
   const handleDestinationChange = (e) => {
-    // Biarkan implementasi fungsi ini seperti semula
+    setDestination(e.target.value);
   };
 
   const handleWeightChange = (e) => {
-    // Biarkan implementasi fungsi ini seperti semula
+    setWeight(e.target.value);
   };
 
   const handleCalculateShippingCost = async () => {
-  try {
-    const result = await axios.post('http://localhost:8080/shipping-cost', {
-      origin,
-      destination,
-      weight,
-      courier: shippingOption
-    });
-    setShippingCost(result.data.rajaongkir.results);
-  } catch (error) {
-    setError(error);
-  }
-};
+    try {
+      const result = await axios.post('http://localhost:8080/shipping-cost', {
+        origin: origin, // Gunakan kota asal yang sudah ditetapkan
+        destination: destination,
+        weight: weight,
+        courier: shippingOption
+      });
+      setShippingCost(result.data.rajaongkir.results);
+    } catch (error) {
+      setError(error);
+    }
+  };
 
   const handleShippingOptionChange = (e) => {
     setShippingOption(e.target.value);
