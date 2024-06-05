@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import "./header.css";
 import { motion } from "framer-motion";
 import { Container, Row } from "reactstrap";
-import logo from "../../assets/images/eco-logo.png";
+import logo from "../../assets/images/rice.png"; // Ensure this path is correct
 import userIcon from "../../assets/images/user-icon.png";
 
 const Header = () => {
@@ -44,25 +44,26 @@ const Header = () => {
 
             <div className="navigation" ref={menuRef} onClick={menuToggle}>
               <ul className="menu">
-                {/* Navigation items for Home and Shop have been removed */}
+                <li><NavLink to="/">BERANDA</NavLink></li>
+                <li><NavLink to="/catalog">KATALOG</NavLink></li>
+                <li><NavLink to="/blog">BLOG</NavLink></li>
+                <li><NavLink to="/opportunity">TENTANG KAMI</NavLink></li>
               </ul>
             </div>
 
             <div className="nav__icons">
-              {/* Cart icon now linked to /cart */}
               <span className="cart__icon">
                 <NavLink to="/cardcoba">
                   <i className="ri-shopping-bag-line"></i>
                 </NavLink>
               </span>
 
-              {/* Tambahkan NavLink untuk navigasi ke halaman pengguna */}
               <NavLink to="/user" className="user__icon">
                 <motion.img
                   whileTap={{ scale: 1 }}
                   src={userIcon}
                   alt="User Icon"
-                  style={{ width: "30px", height: "30px" }} // Menentukan ukuran ikon pengguna di sini
+                  style={{ width: "30px", height: "30px" }}
                 />
               </NavLink>
 

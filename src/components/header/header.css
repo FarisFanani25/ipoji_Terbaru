@@ -1,183 +1,110 @@
-
-
-.header{
-    width: 100%;
-    height: 100px;
-    line-height: 90px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1); /* Atur efek bayangan di sini */  
-
-}
-
-.nav__wrapper{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 110px;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    column-gap: 8px;
-}
-
-.logo img {
-    width: 1.5rem;
-    height: 1.5rem;
-}
-
-.logo h1 {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--primary-color);
-}
-
-.menu {
-    display: flex;
-    align-items: center;
-    column-gap: 2.7rem;
-    margin-bottom: 0;
-}
-
-.nav__item a {
-    color: var(--primary-color);
-    font-weight: 500;
-    cursor: pointer;
-}
-
-.nav__icons{
-    display: flex;
-    align-items: center;
-    column-gap: 1.2rem;
-}
-
-.nav__icons span i {
-    font-size: 1.2rem;
-    color: var(--primary-color);
-    cursor: pointer;
-}
-
-.cart__icon,
-.fav__icon{
-    position: relative;
-}
-
-.badge {
-    position: absolute;
-    top: 25%;
-    right: -15%;
-    width: 15px;
-    height: 15px;
-    content: '';
-    background: var(--primary-color);
-    color: #fff;
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.7rem;
-    font-weight: 600;
-    z-index: 10;
-}
-
-.nav__icons span img {
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-}
-
-.mobile__menu {
-    font-size: 1.3rem;
-    color: var(--primary-color);
-    display: none;
-}
-
-.nav__active{
-    font-weight: 700 !important;
-}
-
-/* .sticky__header{
-    width: 100%;
-    height: 70px;
-    line-height: 70px;
-    position: sticky;
-    top: 0;
-    left: 0;
-    z-index: 999;
-    box-shadow: 3px 3px 8px -3px #ddd;   
-    background: #fff;
-} */
-
-
-@media only screen and (max-width:768px) {
-    .navigation{
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.53);
-        z-index: 9999;
-        display: none;
-    }
-
-.menu{
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 250px;
-    height: 100%;
-    background: #fff;
-    z-index: 99999;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.active__menu{
-    display: block;
-}
-
-.mobile__menu {
-    display: block;
-}
-
-.mobile__menu span i{
-    font-size: 1.1rem !important;
-}
-
-.logo img{
-    width: 1rem;
-    height: 1rem;
-}
-.logo h1 {
-    font-size: 1rem;
-}
-
-.fav__icon i, .cart__icon i{
-    font-size: 1.2rem !important;
-}
-
-.nav__icons span img {
-    width: 1.2rem;
-    height: 1.2rem;
-}
-
 .header {
+    background-color: #556B2F  ; /* Green color similar to the screenshot */
+    padding: 10px 0;
+    position: fixed;
     width: 100%;
-    height: 60px;
-    line-height: 60px;
-}
-
-.user__icon img {
-    width: 30px; /* Lebar ikon */
-    height: 30px; /* Tinggi ikon */
-    transition: transform 0.3s ease; /* Transisi saat ikon ditekan */
-}
-
-
-.user__icon img:hover {
-    transform: scale(1.2); /* Ubah skala ikon saat hover */
-}
-
-}
+    z-index: 1000;
+  }
+  
+  .sticky__header {
+    background-color: #556B2F   ;
+  }
+  
+  .nav__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo img {
+    max-width: 50px; /* Adjust size as needed */
+    margin-right: 10px;
+  }
+  
+  .logo h1 {
+    font-size: 24px;
+    color: #fff;
+    margin: 0;
+  }
+  
+  .navigation {
+    display: flex;
+  }
+  
+  .menu {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .menu li {
+    margin-right: 20px;
+  }
+  
+  .menu li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 20px;
+  }
+  
+  .menu li a:hover {
+    text-decoration: underline;
+  }
+  
+  .nav__icons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .cart__icon,
+  .user__icon {
+    margin-right: 20px;
+  }
+  
+  .cart__icon a,
+  .user__icon a {
+    color: #fff;
+    font-size: 24px;
+  }
+  
+  .mobile__menu {
+    display: none;
+  }
+  
+  @media (max-width: 768px) {
+    .navigation {
+      display: none;
+    }
+  
+    .mobile__menu {
+      display: block;
+      color: #fff;
+      font-size: 24px;
+    }
+  
+    .active__menu {
+      display: block;
+      position: absolute;
+      top: 60px;
+      right: 0;
+      background-color: #6AC234    ;
+      width: 100%;
+      text-align: right;
+    }
+  
+    .active__menu .menu {
+      flex-direction: column;
+    }
+  
+    .active__menu .menu li {
+      margin: 10px 0;
+    }
+  }
+  
+  
