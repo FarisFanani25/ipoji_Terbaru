@@ -1,18 +1,75 @@
-/* Untuk layar dengan lebar kurang dari atau sama dengan 768px */
+/* For screens with width less than or equal to 768px */
 @media (max-width: 768px) {
-    .artikel-list {
+  .artikel-list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: 1fr; /* Single column on small screens */
       gap: 20px;
-    }
   }
-  
-  /* Untuk layar dengan lebar lebih besar dari 768px */
-  @media (min-width: 769px) {
-    .artikel-list {
+}
+
+/* For screens with width greater than 768px */
+@media (min-width: 769px) {
+  .artikel-list {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
+      grid-template-columns: repeat(3, 1fr); /* Two columns on larger screens */
+      gap: 40px;
   }
-  
+}
+
+.artikel-card {
+  text-decoration: none;
+  color: inherit;
+}
+
+.article__item-container {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 100%;
+  border-radius: 0px;
+  overflow: hidden;
+  background-color: #ffffff;
+  position: relative;
+}
+
+.article__image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.article__details {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.article__title {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.article__description {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.read-more-link {
+  color: #006400; /* Dark green color */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .article__title {
+      font-size: 1.25rem;
+  }
+
+  .article__description {
+      font-size: 1rem;
+  }
+}

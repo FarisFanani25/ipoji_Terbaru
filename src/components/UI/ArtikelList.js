@@ -1,45 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ArtikelCard from "./ArtikelCard";
 import axios from "axios";
+import "./artikelList.css"; // Ensure to create and link this stylesheet
 
 const ArtikelList = () => {
     const [articles, setArticles] = useState([]);
 
-    const fetchArtikel = async () => {
+    useEffect(() => {
+        fetchArticles();
+    }, []);
+
+    const fetchArticles = async () => {
         try {
             const response = await axios.get('http://localhost:8080/artikel');
-            
-            if (response.data && Array.isArray(response.data.artikel)) {
-                setArticles(response.data.artikel);
-            } else {
-                console.error("Data yang diterima bukan array:", response.data);
-            }
+            setArticles(response.data.artikel);
         } catch (error) {
-            console.error("Gagal mengambil data artikel:", error);
+            console.error("Error fetching articles:", error);
         }
     };
 
-    useEffect(() => {
-        fetchArtikel();
-    }, []);
-
     return (
-        <div style={{ 
-            display: 'flex', 
-            flexDirection: 'column', 
-            alignItems: 'center', 
-            justifyContent: 'center', 
-            minHeight: '100vh', // Mengatur tinggi agar konten berada di tengah
-            backgroundColor: '#ffffff' // Warna background putih
-        }}>
-            {articles.map((article, index) => (
-                <ArtikelCard
-                    key={index}
-                    id_artikel={article.id_artikel} 
-                    imageSrc={article.gambar_artikel}
-                    title={article.judul_artikel}
-                    description={article.deskripsi_artikel}
-                />
+        <div className="artikel-list">
+            {articles.map((article) => (
+                <div key={article.id_artikel} className="artikel-column">
+                    <ArtikelCard
+                        imageSrc={article.gambar_artikel}
+                        title={article.judul_artikel}
+                        description={article.deskripsi_artikel}
+                        id_artikel={article.id_artikel}
+                    />
+                </div>
             ))}
         </div>
     );
