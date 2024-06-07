@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import EditAddressPopup from './EditAlamat';
 import "../../styles/checkout.css";
 
 const Checkout = () => {
@@ -7,14 +8,21 @@ const Checkout = () => {
   const shippingCost = 20500; // Dummy value for shipping cost
   const totalCost = productCost + shippingCost - discount;
 
+  const [isPopupOpen, setPopupOpen] = useState(false);
+  const [address, setAddress] = useState('Fernando Djaka Satria Putra (+62) 85710283688\nPerumnas Griya Mapan Kaligunting, RT.15/RW.1, Kaligunting, Mejayan (Blok C.1), KAB. MADIUN - MEJAYAN, JAWA TIMUR, ID 63153');
+
+  const openPopup = () => setPopupOpen(true);
+  const closePopup = () => setPopupOpen(false);
+  const saveAddress = (newAddress) => setAddress(newAddress);
+
   return (
     <div className="container">
       <div className="checkout">
-        <div className="checkout-header  mt-20">
+        <div className="checkout-header mt-20">
           <h2>Alamat Pengiriman</h2>
           <div className="address">
-            <p>Fernando Djaka Satria Putra (+62) 85710283688</p>
-            <p>Perumnas Griya Mapan Kaligunting, RT.15/RW.1, Kaligunting, Mejayan (Blok C.1), KAB. MADIUN - MEJAYAN, JAWA TIMUR, ID 63153</p>
+            <p>{address}</p>
+            <button className="btn btn-secondary" onClick={openPopup}>Ubah</button>
           </div>
         </div>
 
@@ -58,6 +66,13 @@ const Checkout = () => {
 
         <button className="btn btn-primary">Lanjut Pembayaran</button>
       </div>
+
+      <EditAddressPopup
+        isOpen={isPopupOpen}
+        onClose={closePopup}
+        onSave={saveAddress}
+        initialAddress={address}
+      />
     </div>
   );
 };

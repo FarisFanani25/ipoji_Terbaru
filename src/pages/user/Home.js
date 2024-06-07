@@ -178,7 +178,7 @@ const Home = () => {
                         <Col md="4" className="info-item">
                             <img src={easyIcon} alt="Mudah Didapat" className="info-icon" />
                             <h3>Mudah Didapat</h3>
-                            <p>Eka Farm memiliki jaringan outlet dan mitra usaha di seluruh Indonesia</p>
+                            <p>IPOJI memiliki jaringan outlet dan mitra usaha di seluruh Indonesia</p>
                         </Col>
                     </Row>
                 </Container>
@@ -197,7 +197,7 @@ const Home = () => {
 
 
             <section className="product-section">
-            <h3 className="section_title">Produk Eka Farm</h3>
+            <h3 className="section_title">Produk IPOJI</h3>
                 <div className="product-carousel-container">
                     <button className="carousel-control left" onClick={() => scrollCarousel('left')}>&lt;</button>
                     <div className="product-carousel" ref={carouselRef}>
