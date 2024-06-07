@@ -161,7 +161,7 @@ const Home = () => {
                                     <button className="info-button">PELAJARI DULU</button>
                                 </div>
                             </div> */}
-                            <h2 className="section-title">Alasan Anda Sebaiknya Beli Beras Organik Eka Farm</h2>
+                            <h2 className="section-title">Alasan Anda Sebaiknya Beli Beras Organik di IPOJI</h2>
                         </Col>
                     </Row>
                     <Row>

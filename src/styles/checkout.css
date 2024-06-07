@@ -1,31 +1,84 @@
-.cost-summary {
-  background-color: rgb(10, 111, 161);
-  color: white;
-  border-radius: 10px;
+.container {
+  max-width: 800px;
+  margin: 0 auto;
   padding: 20px;
+  font-family: Arial, sans-serif;
 }
 
-.buyer-info-header {
-  background-color: rgb(10, 111, 161);
-  color: white;
+.checkout {
+  border: 1px solid #ddd;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
 }
 
-
-
-.cost-summary .card-title {
+.checkout-header,
+.checkout-body,
+.checkout-footer {
   margin-bottom: 20px;
-  font-size: 1.5em;
-  color: white;
 }
 
-.cost-summary .table {
-  color: white;
+.checkout-header h2,
+.checkout-body h2,
+.checkout-footer h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
 }
 
-.cost-summary .table th, .cost-summary .table td {
+.address p {
+  margin: 0;
+}
+
+.product {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.product img {
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+}
+
+.product-details p {
+  margin: 0 0 5px 0;
+}
+
+.shipping {
+  margin-bottom: 20px;
+}
+
+.summary {
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.summary-item.total {
+  font-weight: bold;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #f60;
+  color: #fff;
+  text-align: center;
   border: none;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
-.cost-summary .table .text-end {
-  text-align: right;
+.btn-primary {
+  background-color: #f60;
+  color: #fff;
 }
