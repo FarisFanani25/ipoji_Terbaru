@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "../../styles/checkout.css";
 
+
 const Checkout = () => {
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
-  const [origin, setOrigin] = useState('ID-JK'); // Tetapkan kota asal secara langsung
+  const [origin, setOrigin] = useState('ID-JK'); 
   const [destination, setDestination] = useState('');
   const [weight, setWeight] = useState(1000);
   const [shippingCost, setShippingCost] = useState([]);
@@ -13,7 +14,8 @@ const Checkout = () => {
   const [address, setAddress] = useState('');
   const [error, setError] = useState(null);
   const [shippingOption, setShippingOption] = useState('');
-  const [productCost, setProductCost] = useState(0); // Dummy value for product cost
+  const [productCost, setProductCost] = useState(0); 
+  const [showModal, setShowModal] = useState(false); // State for Modal Visibility
 
   useEffect(() => {
     const fetchProvinces = async () => {
@@ -30,8 +32,6 @@ const Checkout = () => {
 
   const handleProvinceChange = async (e) => {
     const provinceId = e.target.value;
-    // setOrigin(provinceId); // Tidak perlu lagi setOrigin di sini
-  
     try {
       const result = await axios.get(`http://localhost:8080/cities/${provinceId}`);
       setCities(result.data.rajaongkir.results);
@@ -51,7 +51,7 @@ const Checkout = () => {
   const handleCalculateShippingCost = async () => {
     try {
       const result = await axios.post('http://localhost:8080/shipping-cost', {
-        origin: origin, // Gunakan kota asal yang sudah ditetapkan
+        origin: origin,
         destination: destination,
         weight: weight,
         courier: shippingOption
@@ -66,8 +66,21 @@ const Checkout = () => {
     setShippingOption(e.target.value);
   };
 
+  const handleAddAddressClick = () => {
+    setShowModal(true); // Show Modal
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false); // Close Modal
+  };
+
+  const handleSaveAddress = () => {
+    // Save the new address logic here
+    setShowModal(false);
+  };
+
   if (error) {
-    console.error("API Error:", error); // Log the error for debugging
+    console.error("API Error:", error);
     return <div>Error: {error.message}</div>;
   }
 
@@ -105,6 +118,7 @@ const Checkout = () => {
             <label htmlFor="address">Alamat Pengiriman:</label>
             <textarea id="address" className="form-control" value={address} onChange={(e) => setAddress(e.target.value)} />
           </div>
+          <button className="btn btn-secondary mt-2" onClick={handleAddAddressClick}>Tambah Alamat</button>
         </div>
         <div className="col-md-6">
           <div className="form-group">
@@ -149,6 +163,116 @@ const Checkout = () => {
       <div className="mt-5">
         <button className="btn btn-success">Lanjut Pembayaran</button>
       </div>
+
+      {/* Modal for Adding Address */}
+      {showModal && (
+  <div className="modal" style={{ display: 'block' }}>
+    <div className="modal-dialog">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h5 className="modal-title">Tambah Alamat</h5>
+          <button type="button" className="close" onClick={handleCloseModal}>
+            <span>&times;</span>
+          </button>
+        </div>
+        <div className="modal-body">
+          <form>
+            <div className="form-group">
+              <label htmlFor="fullName">Nama Lengkap:</label>
+              <input
+                type="text"
+                id="fullName"
+                className="form-control"
+                value={address.fullName || ''}
+                onChange={(e) => setAddress({ ...address, fullName: e.target.value })}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="phoneNumber">Nomor Telepon:</label>
+              <input
+                type="text"
+                id="phoneNumber"
+                className="form-control"
+                value={address.phoneNumber || ''}
+                onChange={(e) => setAddress({ ...address, phoneNumber: e.target.value })}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="province">Provinsi:</label>
+              <select
+                id="province"
+                className="form-control"
+                value={address.province || ''}
+                onChange={(e) => setAddress({ ...address, province: e.target.value })}
+              >
+                <option value="">Pilih Provinsi</option>
+                {provinces.map(province => (
+                  <option key={province.province_id} value={province.province_id}>
+                    {province.province}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="city">Kabupaten:</label>
+              <select
+                id="city"
+                className="form-control"
+                value={address.city || ''}
+                onChange={(e) => setAddress({ ...address, city: e.target.value })}
+              >
+                <option value="">Pilih Kabupaten</option>
+                {cities.map(city => (
+                  <option key={city.city_id} value={city.city_id}>
+                    {city.city_name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="district">Kecamatan:</label>
+              <input
+                type="text"
+                id="district"
+                className="form-control"
+                value={address.district || ''}
+                onChange={(e) => setAddress({ ...address, district: e.target.value })}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="subdistrict">Kelurahan:</label>
+              <input
+                type="text"
+                id="subdistrict"
+                className="form-control"
+                value={address.subdistrict || ''}
+                onChange={(e) => setAddress({ ...address, subdistrict: e.target.value })}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="detailedAddress">Alamat:</label>
+              <textarea
+                id="detailedAddress"
+                className="form-control"
+                value={address.detailedAddress || ''}
+                onChange={(e) => setAddress({ ...address, detailedAddress: e.target.value })}
+              />
+            </div>
+          </form>
+        </div>
+        <div className="modal-footer">
+          <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>
+            Batal
+          </button>
+          <button type="button" className="btn btn-primary" onClick={handleSaveAddress}>
+            Simpan
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };
