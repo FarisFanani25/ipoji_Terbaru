@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import EditAddressPopup from './EditAlamat';
 import "../../styles/checkout.css";
 
 
 const Checkout = () => {
+<<<<<<< HEAD
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
   const [origin, setOrigin] = useState('ID-JK'); 
@@ -16,20 +17,17 @@ const Checkout = () => {
   const [shippingOption, setShippingOption] = useState('');
   const [productCost, setProductCost] = useState(0); 
   const [showModal, setShowModal] = useState(false); // State for Modal Visibility
+=======
+  const productCost = 13440; // Dummy value for product cost
+  const discount = 100; // Dummy value for discount
+  const shippingCost = 20500; // Dummy value for shipping cost
+  const totalCost = productCost + shippingCost - discount;
+>>>>>>> bb113fec78225b50c50f6b9977f9d9c5615df531
 
-  useEffect(() => {
-    const fetchProvinces = async () => {
-      try {
-        const result = await axios.get('http://localhost:8080/provinces');
-        setProvinces(result.data.rajaongkir.results);
-      } catch (error) {
-        setError(error);
-      }
-    };
-  
-    fetchProvinces();
-  }, []);
+  const [isPopupOpen, setPopupOpen] = useState(false);
+  const [address, setAddress] = useState('Fernando Djaka Satria Putra (+62) 85710283688\nPerumnas Griya Mapan Kaligunting, RT.15/RW.1, Kaligunting, Mejayan (Blok C.1), KAB. MADIUN - MEJAYAN, JAWA TIMUR, ID 63153');
 
+<<<<<<< HEAD
   const handleProvinceChange = async (e) => {
     const provinceId = e.target.value;
     try {
@@ -86,80 +84,65 @@ const Checkout = () => {
 
   const totalShippingCost = shippingCost.length > 0 ? shippingCost[0].cost[0].value : 0;
   const totalCost = productCost + totalShippingCost;
+=======
+  const openPopup = () => setPopupOpen(true);
+  const closePopup = () => setPopupOpen(false);
+  const saveAddress = (newAddress) => setAddress(newAddress);
+>>>>>>> bb113fec78225b50c50f6b9977f9d9c5615df531
 
   return (
     <div className="container">
-      <h1 className="mt-5">Checkout</h1>
-      <div className="row">
-        <div className="col-md-6">
-          <div className="form-group">
-            <label htmlFor="province">Provinsi Asal:</label>
-            <select id="province" className="form-control" onChange={handleProvinceChange}>
-              <option value="">Pilih Provinsi Asal</option>
-              {provinces.map(province => (
-                <option key={province.province_id} value={province.province_id}>{province.province}</option>
-              ))}
-            </select>
-          </div>
-          <div className="form-group">
-            <label htmlFor="city">Kota Tujuan:</label>
-            <select id="city" className="form-control" onChange={handleDestinationChange}>
-              <option value="">Pilih Kota Tujuan</option>
-              {cities.map(city => (
-                <option key={city.city_id} value={city.city_id}>{city.city_name}</option>
-              ))}
-            </select>
-          </div>
-          <div className="form-group">
-            <label htmlFor="postalCode">Kode Pos:</label>
-            <input type="text" id="postalCode" className="form-control" value={postalCode} onChange={(e) => setPostalCode(e.target.value)} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="address">Alamat Pengiriman:</label>
-            <textarea id="address" className="form-control" value={address} onChange={(e) => setAddress(e.target.value)} />
+      <div className="checkout">
+        <div className="checkout-header mt-20">
+          <h2>Alamat Pengiriman</h2>
+          <div className="address">
+            <p>{address}</p>
+            <button className="btn btn-secondary" onClick={openPopup}>Ubah</button>
           </div>
           <button className="btn btn-secondary mt-2" onClick={handleAddAddressClick}>Tambah Alamat</button>
         </div>
-        <div className="col-md-6">
-          <div className="form-group">
-            <label htmlFor="weight">Berat (grams):</label>
-            <input type="number" id="weight" className="form-control" value={weight} onChange={handleWeightChange} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="shippingOption">Opsi Pengiriman:</label>
-            <select id="shippingOption" className="form-control" onChange={handleShippingOptionChange}>
-              <option value="">Pilih Opsi Pengiriman</option>
-              <option value="jne">JNE</option>
-              <option value="tiki">Tiki</option>
-              <option value="pos">Pos Indonesia</option>
-            </select>
-          </div>
-          <button className="btn btn-primary" onClick={handleCalculateShippingCost}>Hitung Biaya Pengiriman</button>
-        </div>
-      </div>
-      <div className="mt-5">
-        <h2>Biaya Pengiriman</h2>
-        <ul className="list-group">
-          {shippingCost.map((cost, index) => (
-            <li key={index} className="list-group-item">{cost.service} - {cost.description} : Rp. {cost.cost[0].value}</li>
-          ))}
-        </ul>
-      </div>
-      <div className="mt-5">
-        <h2>Ringkasan Biaya</h2>
-        <div className="row">
-          <div className="col-md-6">
-            <div>Biaya Produk:</div>
-            <div>Biaya Pengiriman:</div>
-            <div>Total Biaya:</div>
-          </div>
-          <div className="col-md-6">
-            <div>Rp. {productCost}</div>
-            <div>Rp. {totalShippingCost}</div>
-            <div>Rp. {totalCost}</div>
+
+        <div className="checkout-body">
+          <h2>Produk Dipesan</h2>
+          <div className="product">
+            <img src="https://via.placeholder.com/100" alt="Product" />
+            <div className="product-details">
+              <p>SKETCHBOOK A5 ISI 100 HALAMAN / BUKU SKETSA/ BUKU GAMBAR</p>
+              <p>Variasi: kupu kupu, cream</p>
+              <p>Rp13.440</p>
+            </div>
           </div>
         </div>
+
+        <div className="checkout-footer">
+          <div className="shipping">
+            <h2>Opsi Pengiriman</h2>
+            <p>Hemat - Rp20.500</p>
+          </div>
+          <div className="summary">
+            <h2>Ringkasan Belanja</h2>
+            <div className="summary-item">
+              <span>Biaya Produk</span>
+              <span>Rp{productCost}</span>
+            </div>
+            <div className="summary-item">
+              <span>Biaya Pengiriman</span>
+              <span>Rp{shippingCost}</span>
+            </div>
+            <div className="summary-item">
+              <span>Diskon</span>
+              <span>-Rp{discount}</span>
+            </div>
+            <div className="summary-item total">
+              <span>Total Biaya</span>
+              <span>Rp{totalCost}</span>
+            </div>
+          </div>
+        </div>
+
+        <button className="btn btn-primary">Lanjut Pembayaran</button>
       </div>
+<<<<<<< HEAD
       <div className="mt-5">
         <button className="btn btn-success">Lanjut Pembayaran</button>
       </div>
@@ -273,6 +256,15 @@ const Checkout = () => {
   </div>
 )}
 
+=======
+
+      <EditAddressPopup
+        isOpen={isPopupOpen}
+        onClose={closePopup}
+        onSave={saveAddress}
+        initialAddress={address}
+      />
+>>>>>>> bb113fec78225b50c50f6b9977f9d9c5615df531
     </div>
   );
 };

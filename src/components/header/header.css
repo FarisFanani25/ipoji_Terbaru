@@ -1,110 +1,92 @@
 .header {
-    background-color: #556B2F  ; /* Green color similar to the screenshot */
-    padding: 10px 0;
-    position: fixed;
-    width: 100%;
-    z-index: 1000;
-  }
-  
-  .sticky__header {
-    background-color: #556B2F   ;
-  }
-  
-  .nav__wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .logo {
-    display: flex;
-    align-items: center;
-  }
-  
-  .logo img {
-    max-width: 50px; /* Adjust size as needed */
-    margin-right: 10px;
-  }
-  
-  .logo h1 {
-    font-size: 24px;
-    color: #fff;
-    margin: 0;
-  }
-  
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #556B2F;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sticky__header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #556B2F;
+  z-index: 1000;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+
+.logo img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+}
+
+.menu {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.menu li a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.menu.active__menu {
+  display: block;
+}
+
+.nav__icons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.mobile__menu {
+  display: none;
+}
+
+@media (max-width: 768px) {
   .navigation {
-    display: flex;
-  }
-  
-  .menu {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .menu li {
-    margin-right: 20px;
-  }
-  
-  .menu li a {
-    text-decoration: none;
-    color: #fff;
-    font-size: 20px;
-  }
-  
-  .menu li a:hover {
-    text-decoration: underline;
-  }
-  
-  .nav__icons {
-    display: flex;
-    align-items: center;
-  }
-  
-  .cart__icon,
-  .user__icon {
-    margin-right: 20px;
-  }
-  
-  .cart__icon a,
-  .user__icon a {
-    color: #fff;
-    font-size: 24px;
-  }
-  
-  .mobile__menu {
     display: none;
   }
-  
-  @media (max-width: 768px) {
-    .navigation {
-      display: none;
-    }
-  
-    .mobile__menu {
-      display: block;
-      color: #fff;
-      font-size: 24px;
-    }
-  
-    .active__menu {
-      display: block;
-      position: absolute;
-      top: 60px;
-      right: 0;
-      background-color: #6AC234    ;
-      width: 100%;
-      text-align: right;
-    }
-  
-    .active__menu .menu {
-      flex-direction: column;
-    }
-  
-    .active__menu .menu li {
-      margin: 10px 0;
-    }
+
+  .navigation.active__menu {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 999;
   }
-  
-  
+
+  .mobile__menu {
+    display: block;
+  }
+}
+
+body {
+  padding-top: 80px; /* Adjust this value based on the header height */
+}
