@@ -15,14 +15,6 @@ import Signupcopy from '../pages/user/Signup copy';
 import Payment from '../pages/user/payment';
 import ArtikelDetails from '../pages/user/ArtikelDetails';
 import PembayaranForm from '../pages/user/pembayaran';
-<<<<<<< HEAD
-import Alamat from '../pages/user/alamat';
-=======
-import EditAddressPopup from '../pages/user/EditAlamat';
-
-
->>>>>>> bb113fec78225b50c50f6b9977f9d9c5615df531
-
 
 // Admin Components
 import AdminHome from '../pages/admin/Component/Home/Home';
@@ -74,11 +66,7 @@ const Routers = () => {
             <Route path='/payment' element={<Payment/>}/>
             <Route path='/checkout' element={<Checkout/>}/>
             <Route path='/pembayaran' element={<PembayaranForm/>}/>
-<<<<<<< HEAD
-            <Route path='/alamat' element={<Alamat/>}/>
-=======
-            <Route path='/alamat' element={<EditAddressPopup/>} />
->>>>>>> bb113fec78225b50c50f6b9977f9d9c5615df531
+        
 
             {/* <Route path='/login2' element={<Login2/>}/> */}
             <Route path='/loginpenjual' element={<Loginpenjual/>}/>
