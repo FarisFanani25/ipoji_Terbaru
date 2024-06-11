@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Card.css';
-import { Link } from 'react-router-dom'; // Import Link
+import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [total, setTotal] = useState(0);
+  const [modal, setModal] = useState(false);
+  const [itemToRemove, setItemToRemove] = useState(null);
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -41,13 +46,16 @@ const Cart = () => {
     setTotal(total);
   };
 
-  const handleRemove = async (id) => {
-    if (!window.confirm('Are you sure you want to remove this item?')) {
-      return;
-    }
+  const toggleModal = (item) => {
+    setModal(!modal);
+    setItemToRemove(item);
+  };
+
+  const handleRemove = async () => {
+    if (!itemToRemove) return;
 
     try {
-      const response = await fetch(`http://localhost:8080/cartcoba/removeItem/${id}`, {
+      const response = await fetch(`http://localhost:8080/cartcoba/removeItem/${itemToRemove.id}`, {
         method: 'DELETE',
       });
 
@@ -55,12 +63,17 @@ const Cart = () => {
         throw new Error('Failed to remove item from cart');
       }
 
-      const updatedItems = cartItems.filter(item => item.id !== id);
+      const updatedItems = cartItems.filter(item => item.id !== itemToRemove.id);
       setCartItems(updatedItems);
-      setSelectedItems(selectedItems.filter(item => item.id !== id));
+      setSelectedItems(selectedItems.filter(item => item.id !== itemToRemove.id));
       calculateTotal(updatedItems);
+      toast.success('Item removed from cart');
     } catch (error) {
       console.error('Error removing item from cart:', error);
+      toast.error('Failed to remove item from cart');
+    } finally {
+      setModal(false);
+      setItemToRemove(null);
     }
   };
 
@@ -81,8 +94,10 @@ const Cart = () => {
       const updatedItems = cartItems.map(item => item.id === id ? { ...item, quantity } : item);
       setCartItems(updatedItems);
       calculateTotal(updatedItems);
+      toast.success('Quantity updated');
     } catch (error) {
       console.error('Error updating item quantity:', error);
+      toast.error('Failed to update quantity');
     }
   };
 
@@ -128,23 +143,24 @@ const Cart = () => {
       const data = await response.json();
       window.snap.pay(data.token, {
         onSuccess: (result) => {
-          alert('Payment successful!');
+          toast.success('Payment successful!');
           console.log(result);
         },
         onPending: (result) => {
-          alert('Waiting for payment!');
+          toast.info('Waiting for payment!');
           console.log(result);
         },
         onError: (result) => {
-          alert('Payment failed!');
+          toast.error('Payment failed!');
           console.log(result);
         },
         onClose: () => {
-          alert('You closed the popup without finishing the payment');
+          toast.warning('You closed the popup without finishing the payment');
         },
       });
     } catch (error) {
       console.error('Error during checkout:', error);
+      toast.error('Failed to initiate checkout');
     }
   };
 
@@ -179,7 +195,7 @@ const Cart = () => {
                     onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}
                     style={{ width: '80px' }}
                   />
-                  <button className="btn btn-danger" onClick={(e) => { e.stopPropagation(); handleRemove(item.id); }}>Remove</button>
+                  <button className="btn btn-danger" onClick={(e) => { e.stopPropagation(); toggleModal(item); }}>Remove</button>
                 </div>
               </div>
             ))}
@@ -189,10 +205,22 @@ const Cart = () => {
       <div className="row mt-4">
         <div className="col-12 text-right">
           <h3>Total: Rp. {total}</h3>
-          {/* Gunakan Link untuk membuat tombol Checkout */}
           <Link to="/checkout" className="btn btn-primary mt-3 mb-4" onClick={handleCheckout}>Checkout</Link>
         </div>
       </div>
+      {/* Toast Container */}
+      <ToastContainer />
+      {/* Modal for remove confirmation */}
+      <Modal isOpen={modal} toggle={toggleModal}>
+        <ModalHeader toggle={toggleModal}>Confirm Removal</ModalHeader>
+        <ModalBody>
+          Are you sure you want to remove this item from the cart?
+        </ModalBody>
+        <ModalFooter>
+          <Button color="danger" onClick={handleRemove}>Remove</Button>
+          <Button color="secondary" onClick={toggleModal}>Cancel</Button>
+        </ModalFooter>
+      </Modal>
     </div>
   );
 };

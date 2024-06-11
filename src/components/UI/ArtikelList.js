@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ArtikelCard from "./ArtikelCard";
 import axios from "axios";
-import "./artikelList.css"; // Ensure to create and link this stylesheet
+import "./ArtikelList.css";
 
 const ArtikelList = () => {
     const [articles, setArticles] = useState([]);

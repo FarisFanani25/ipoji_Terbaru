@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Helmet from "../../components/Helmet/Helmet";
 import CommonSection from "../../components/UI/CommonSection";
-import { Container, Row, Col, Button, InputGroup, InputGroupText, Input, Alert } from "reactstrap";
+import { Container, Row, Col, Button, InputGroup, InputGroupText, Input } from "reactstrap";
 import ProductCard from "../../components/UI/ProductCard";
 import ReactPaginate from "react-paginate";
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import "../../styles/produk.css";
 import "../../styles/pagination.css";
+
 
 const Shop = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -15,7 +18,6 @@ const Shop = () => {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [alert, setAlert] = useState({ visible: false, message: "", type: "" });
 
   useEffect(() => {
     getDataProduk();
@@ -43,11 +45,11 @@ const Shop = () => {
 
   const handleAddToCart = (product) => {
     if (!isLoggedIn) {
-      setAlert({ visible: true, message: "Please log in to add items to the cart.", type: "danger" });
+      toast.error("Please log in to add items to the cart.");
       return;
     }
     setCartItems([...cartItems, product]);
-    setAlert({ visible: true, message: "Item added to cart!", type: "success" });
+    toast.success("Item added to cart!");
   };
 
   const searchedProduct = products.filter((item) => {
@@ -92,15 +94,6 @@ const Shop = () => {
               </InputGroup>
             </Col>
           </Row><br></br>
-          {alert.visible && (
-            <Row>
-              <Col>
-                <Alert color={alert.type} toggle={() => setAlert({ ...alert, visible: false })}>
-                  {alert.message}
-                </Alert>
-              </Col>
-            </Row>
-          )}
           <Row>
             {displayPage.map((item) => (
               <Col lg="3" md="4" sm="6" xs="6" key={item.id_produk} className="mb-4">
@@ -121,12 +114,15 @@ const Shop = () => {
           </Row>
         </Container>
       </section>
-      
+
       {/* Icon keranjang dengan jumlah item */}
       <div className="cart-icon">
         <i className="fa fa-shopping-cart"></i>
         {cartItems.length > 0 && <span className="cart-count">{cartItems.length}</span>}
       </div>
+
+      {/* Toast Container */}
+      <ToastContainer />
     </Helmet>
   );
 };
