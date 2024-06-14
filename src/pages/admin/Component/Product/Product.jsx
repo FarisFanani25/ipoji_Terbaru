@@ -166,47 +166,49 @@ function ProdukPage() {
 
   return (
     <div className='body-flex'>
-    <div className="flex">
-      <div className='col-10 p-5'>
-        <div className="d-flex justify-content-between mb-3">
-          <h2>Daftar Produk</h2>
-          <CButton color="primary" onClick={showAddModal}>
-            Tambah Data Produk
-          </CButton>
-        </div>
-        <CTable striped bordered hover>
-          <CTableHead>
-            <CTableRow>
-              <CTableDataCell>Nama Produk</CTableDataCell>
-              <CTableDataCell>Deskripsi Produk</CTableDataCell>
-              <CTableDataCell>Harga Produk</CTableDataCell>
-              <CTableDataCell>Gambar Produk</CTableDataCell>
-              <CTableDataCell>Berat</CTableDataCell>
-              <CTableDataCell>Stok</CTableDataCell>
-              <CTableDataCell>Action</CTableDataCell>
-            </CTableRow>
-          </CTableHead>
-          <CTableBody>
-            {dataProduk.map((data) => (
-              <CTableRow key={data.id_produk}>
-                <CTableDataCell>{data.nama_produk}</CTableDataCell>
-                <CTableDataCell>{data.deskripsi_produk}</CTableDataCell>
-                <CTableDataCell>{data.harga_produk}</CTableDataCell>
-                <CTableDataCell>
-                  <img src={`http://localhost:8080/gambar/${data.gambar_produk}`} alt={data.nama_produk} style={{ height: "50px", width: "50px" }} />
-                </CTableDataCell>
-                <CTableDataCell>{data.berat_produk}</CTableDataCell>
-                <CTableDataCell>{data.stok_produk}</CTableDataCell>
-                <CTableDataCell>
-                  <CButton color="primary" onClick={() => showEditModal(data)}>Edit</CButton>{' '}
-                  <CButton color="danger" onClick={() => showModalDelete(data)}>Delete</CButton>
-                </CTableDataCell>
+      <div className="flex">
+        <div className='col-10 p-5'>
+          <div className="d-flex justify-content-between mb-3">
+            <h2>Daftar Produk</h2>
+            <CButton color="primary" onClick={showAddModal}>
+              Tambah Data Produk
+            </CButton>
+          </div>
+          <CTable striped bordered hover>
+            <CTableHead>
+              <CTableRow>
+                <CTableDataCell>Nama Produk</CTableDataCell>
+                <CTableDataCell>Deskripsi Produk</CTableDataCell>
+                <CTableDataCell>Harga Produk</CTableDataCell>
+                <CTableDataCell>Gambar Produk</CTableDataCell>
+                <CTableDataCell>Berat</CTableDataCell>
+                <CTableDataCell>Stok</CTableDataCell>
+                <CTableDataCell>Action</CTableDataCell>
               </CTableRow>
-            ))}
-          </CTableBody>
-        </CTable>
+            </CTableHead>
+            <CTableBody>
+              {dataProduk.map((data) => (
+                <CTableRow key={data.id_produk}>
+                  <CTableDataCell>{data.nama_produk}</CTableDataCell>
+                  <CTableDataCell>{data.deskripsi_produk}</CTableDataCell>
+                  <CTableDataCell>{data.harga_produk}</CTableDataCell>
+                  <CTableDataCell>
+                    <img src={`http://localhost:8080/gambar/${data.gambar_produk}`} alt={data.nama_produk} style={{ height: "50px", width: "50px" }} />
+                  </CTableDataCell>
+                  <CTableDataCell>{data.berat_produk}</CTableDataCell>
+                  <CTableDataCell>{data.stok_produk}</CTableDataCell>
+                  <CTableDataCell>
+                    <div className="table-action-buttons">
+                      <CButton color="primary" onClick={() => showEditModal(data)}>Edit</CButton>
+                      <CButton color="danger" onClick={() => showModalDelete(data)}>Delete</CButton>
+                    </div>
+                  </CTableDataCell>
+                </CTableRow>
+              ))}
+            </CTableBody>
+          </CTable>
+        </div>
       </div>
-    </div>
 
       <Modal show={showAdd} onHide={closeAddModal}>
         <Modal.Header closeButton>
@@ -320,11 +322,10 @@ function ProdukPage() {
                 onChange={handleEditFileChange}
               />
               {oldImage && (
-                <div className="mt-2">
+                <div className="modal-image-preview">
                   <img
                     src={`http://localhost:8080/gambar/${oldImage}`}
                     alt="Old Product"
-                    style={{ height: "50px", width: "50px" }}
                   />
                 </div>
               )}

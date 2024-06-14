@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import "../../styles/checkout.css";
 
 const saveAddress = async (address) => {
@@ -11,13 +12,13 @@ const saveAddress = async (address) => {
   }
 };
 
-
-const AddressModal = ({ showModal, handleCloseModal }) => {
-  const [address, setAddress] = useState({});
+const AddressModal = ({ showModal, handleCloseModal, setAddress }) => {
+  const [localAddress, setLocalAddress] = useState({});
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [subdistricts, setSubdistricts] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState({ lat: -6.200000, lng: 106.816666 });
 
   useEffect(() => {
     fetch('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json')
@@ -27,31 +28,42 @@ const AddressModal = ({ showModal, handleCloseModal }) => {
   }, []);
 
   useEffect(() => {
-    if (address.province) {
-      fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${address.province}.json`)
+    if (localAddress.province) {
+      fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${localAddress.province}.json`)
         .then(response => response.json())
         .then(data => setCities(data))
         .catch(error => console.error('Error fetching cities:', error));
     }
-  }, [address.province]);
+  }, [localAddress.province]);
 
   useEffect(() => {
-    if (address.city) {
-      fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/districts/${address.city}.json`)
+    if (localAddress.city) {
+      fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/districts/${localAddress.city}.json`)
         .then(response => response.json())
         .then(data => setDistricts(data))
         .catch(error => console.error('Error fetching districts:', error));
     }
-  }, [address.city]);
+  }, [localAddress.city]);
 
   useEffect(() => {
-    if (address.district) {
-      fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/villages/${address.district}.json`)
+    if (localAddress.district) {
+      fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/villages/${localAddress.district}.json`)
         .then(response => response.json())
         .then(data => setSubdistricts(data))
         .catch(error => console.error('Error fetching subdistricts:', error));
     }
-  }, [address.district]);
+  }, [localAddress.district]);
+
+  const handleSaveAddress = async () => {
+    await saveAddress({ ...localAddress, location: selectedLocation });
+    setAddress({ ...localAddress, location: selectedLocation });
+    handleCloseModal();
+  };
+
+  const handleMapClick = (event) => {
+    const { latLng } = event;
+    setSelectedLocation({ lat: latLng.lat(), lng: latLng.lng() });
+  };
 
   return (
     showModal && (
@@ -72,8 +84,8 @@ const AddressModal = ({ showModal, handleCloseModal }) => {
                     type="text"
                     id="fullName"
                     className="form-control"
-                    value={address.fullName || ''}
-                    onChange={(e) => setAddress({ ...address, fullName: e.target.value })}
+                    value={localAddress.fullName || ''}
+                    onChange={(e) => setLocalAddress({ ...localAddress, fullName: e.target.value })}
                   />
                 </div>
                 <div className="form-group">
@@ -82,8 +94,8 @@ const AddressModal = ({ showModal, handleCloseModal }) => {
                     type="text"
                     id="phoneNumber"
                     className="form-control"
-                    value={address.phoneNumber || ''}
-                    onChange={(e) => setAddress({ ...address, phoneNumber: e.target.value })}
+                    value={localAddress.phoneNumber || ''}
+                    onChange={(e) => setLocalAddress({ ...localAddress, phoneNumber: e.target.value })}
                   />
                 </div>
                 <div className="form-group">
@@ -91,8 +103,8 @@ const AddressModal = ({ showModal, handleCloseModal }) => {
                   <select
                     id="province"
                     className="form-control"
-                    value={address.province || ''}
-                    onChange={(e) => setAddress({ ...address, province: e.target.value })}
+                    value={localAddress.province || ''}
+                    onChange={(e) => setLocalAddress({ ...localAddress, province: e.target.value })}
                   >
                     <option value="">Pilih Provinsi</option>
                     {provinces.map(province => (
@@ -107,8 +119,8 @@ const AddressModal = ({ showModal, handleCloseModal }) => {
                   <select
                     id="city"
                     className="form-control"
-                    value={address.city || ''}
-                    onChange={(e) => setAddress({ ...address, city: e.target.value })}
+                    value={localAddress.city || ''}
+                    onChange={(e) => setLocalAddress({ ...localAddress, city: e.target.value })}
                   >
                     <option value="">Pilih Kabupaten</option>
                     {cities.map(city => (
@@ -123,8 +135,8 @@ const AddressModal = ({ showModal, handleCloseModal }) => {
                   <select
                     id="district"
                     className="form-control"
-                    value={address.district || ''}
-                    onChange={(e) => setAddress({ ...address, district: e.target.value })}
+                    value={localAddress.district || ''}
+                    onChange={(e) => setLocalAddress({ ...localAddress, district: e.target.value })}
                   >
                     <option value="">Pilih Kecamatan</option>
                     {districts.map(district => (
@@ -139,8 +151,8 @@ const AddressModal = ({ showModal, handleCloseModal }) => {
                   <select
                     id="subdistrict"
                     className="form-control"
-                    value={address.subdistrict || ''}
-                    onChange={(e) => setAddress({ ...address, subdistrict: e.target.value })}
+                    value={localAddress.subdistrict || ''}
+                    onChange={(e) => setLocalAddress({ ...localAddress, subdistrict: e.target.value })}
                   >
                     <option value="">Pilih Kelurahan</option>
                     {subdistricts.map(subdistrict => (
@@ -155,11 +167,28 @@ const AddressModal = ({ showModal, handleCloseModal }) => {
                   <textarea
                     id="detailedAddress"
                     className="form-control"
-                    value={address.detailedAddress || ''}
-                    onChange={(e) => setAddress({ ...address, detailedAddress: e.target.value })}
+                    value={localAddress.detailedAddress || ''}
+                    onChange={(e) => setLocalAddress({ ...localAddress, detailedAddress: e.target.value })}
                   />
                 </div>
               </form>
+              <div className="form-group mt-4">
+                <label>Lokasi di Peta:</label>
+                <LoadScript googleMapsApiKey="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwNy2wkFmYwL86p69E0w8FixuTz5VWadc&loading=async&libraries=places&callback=initMap">
+                  <GoogleMap
+                    mapContainerStyle={{ height: "400px", width: "100%" }}
+                    center={selectedLocation}
+                    zoom={15}
+                    onClick={handleMapClick}
+                  >
+                    <Marker position={selectedLocation} />
+                  </GoogleMap>
+                </LoadScript>
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>Batal</button>
+              <button type="button" className="btn btn-primary" onClick={handleSaveAddress}>OK</button>
             </div>
           </div>
         </div>
@@ -215,7 +244,7 @@ const Checkout = () => {
         <button className="btn btn-success">Lanjut Pembayaran</button>
       </div>
 
-      <AddressModal showModal={showModal} handleCloseModal={handleCloseModal} />
+      <AddressModal showModal={showModal} handleCloseModal={handleCloseModal} setAddress={setAddress} />
     </div>
   );
 };

@@ -15,6 +15,7 @@ import Signupcopy from '../pages/user/Signup copy';
 import Payment from '../pages/user/payment';
 import ArtikelDetails from '../pages/user/ArtikelDetails';
 import PembayaranForm from '../pages/user/pembayaran';
+import OrderPage from '../pages/user/order';
 
 // Admin Components
 import AdminHome from '../pages/admin/Component/Home/Home';
@@ -66,6 +67,7 @@ const Routers = () => {
             <Route path='/payment' element={<Payment/>}/>
             <Route path='/checkout' element={<Checkout/>}/>
             <Route path='/pembayaran' element={<PembayaranForm/>}/>
+            <Route path='/order' element={<OrderPage/>} />
         
 
             {/* <Route path='/login2' element={<Login2/>}/> */}
