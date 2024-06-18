@@ -1,39 +1,41 @@
+/* Header styling */
 .header {
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: #556B2F;
+  background-color: #4B5320;
   z-index: 1000;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+  font-family: 'Arial, sans-serif';
 }
 
 .sticky__header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: #556B2F;
-  z-index: 1000;
   transition: all 0.3s ease-in-out;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #3E4422;
 }
 
 .nav__wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .logo {
   display: flex;
   align-items: center;
   color: #fff;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .logo img {
   width: 50px;
   height: 50px;
   margin-right: 10px;
+  border-radius: 50%;
 }
 
 .navigation {
@@ -50,6 +52,13 @@
 .menu li a {
   text-decoration: none;
   color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.menu li a:hover {
+  color: #D4AF37;
 }
 
 .menu.active__menu {
@@ -62,24 +71,54 @@
   gap: 20px;
 }
 
-.mobile__menu {
-  display: none;
+.nav__icons i {
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  transition: color 0.3s;
 }
 
+.nav__icons i:hover {
+  color: #D4AF37;
+}
+
+.mobile__menu {
+  display: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Responsive styling */
 @media (max-width: 768px) {
   .navigation {
     display: none;
   }
 
   .navigation.active__menu {
-    display: block;
+    display: flex;
+    flex-direction: column;
     position: absolute;
     top: 100%;
     left: 0;
     width: 100%;
-    background-color: white;
+    background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 999;
+    padding: 20px 0;
+  }
+
+  .menu {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .menu li a {
+    color: #4B5320;
+  }
+
+  .menu li a:hover {
+    color: #D4AF37;
   }
 
   .mobile__menu {
@@ -87,6 +126,22 @@
   }
 }
 
+/* Body padding to prevent overlap with fixed header */
 body {
   padding-top: 80px; /* Adjust this value based on the header height */
+  font-family: 'Arial, sans-serif';
+  line-height: 1.6;
+  background-color: #f4f4f4;
+}
+
+/* Additional global styles */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }

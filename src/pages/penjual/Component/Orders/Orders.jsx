@@ -9,7 +9,7 @@ import {
   CTableRow,
 } from '@coreui/react';
 
-function PenjualOrders() {
+function OrderPage() {
   const [dataOrder, setDataOrder] = useState([]);
 
   useEffect(() => {
@@ -104,4 +104,4 @@ function PenjualOrders() {
   );
 }
 
-export default PenjualOrders;
+export default OrderPage;

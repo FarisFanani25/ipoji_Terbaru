@@ -1,62 +1,57 @@
-.list_page {
-    display: grid;
-    grid-template-columns: 17% 83%;
-    justify-content: center;
-    width: 100%;
-  
-    .list_page_main {
-      .data_table {
-        padding: 10px 10px;
-  
-        .btnn {
-          margin-bottom: 10px;
-          margin-right: 10px;
-          button {
-            margin-top: 15px;
-            display: block;
-            background: none;
-            border: 1px solid #7451f8;
-            padding: 8px 15px;
-            background-color: #7451f8;
-            color: white;
-            font-size: 17px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-left: auto;
-            transition: all 0.3s ease;
-            text-transform: capitalize;
-  
-            &:hover {
-              background-color: white;
-              color: #7451f8;
-              border: 1px solid #7451f8;
-            }
-          }
-        }
-      }
-    }
-  }
-  
-  @media screen and (max-width: 992px) {
-    .list_page {
-      display: grid;
-      grid-template-columns: 100%;
-      justify-content: center;
-  
-      .home_sidebar {
-        display: none;
-      }
-    }
-  }
-  /* CSS untuk membuat tabel lebih rapi */
+.body-flex {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.flex {
+  display: flex;
+  width: 100%;
+}
+
+.col-10 {
+  margin: auto;
+}
+
+.d-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .table-container {
   max-width: 100%;
   overflow-x: auto;
 }
 
-/* CSS untuk button tambah artikel */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.bold-header th {
+  font-weight: bold;
+}
+
+/* CSS untuk tombol tambah artikel */
 .add-button-container {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 20px;
+}
+
+/* Media queries untuk tampilan responsif */
+@media screen and (max-width: 992px) {
+  .body-flex {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .flex {
+    flex-direction: column;
+  }
+  
+  .col-10 {
+    width: 100%;
+  }
 }

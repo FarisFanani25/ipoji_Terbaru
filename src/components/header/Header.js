@@ -46,7 +46,7 @@ const Header = () => {
               <ul className="menu">
                 <li><NavLink to="/">BERANDA</NavLink></li>
                 <li><NavLink to="/catalog">KATALOG</NavLink></li>
-                <li><NavLink to="/blog">BLOG</NavLink></li>
+                <li><NavLink to="/order">PESANAN</NavLink></li>
                 <li><NavLink to="/opportunity">TENTANG KAMI</NavLink></li>
               </ul>
             </div>

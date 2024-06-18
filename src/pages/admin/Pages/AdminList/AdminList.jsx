@@ -10,6 +10,7 @@ import {
 } from '@coreui/react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button, Form } from "react-bootstrap";
+import "./adminlist.scss"; // Pastikan untuk mengimpor file CSS yang diperbarui
 
 function AdminList() {
   const [dataArtikel, setDataArtikel] = useState([]);
@@ -23,7 +24,6 @@ function AdminList() {
     gambar_artikel: '',
   });
 
-  // State untuk form tambah data
   const [newJudulArtikel, setNewJudulArtikel] = useState("");
   const [newDeskripsiArtikel, setNewDeskripsiArtikel] = useState("");
   const [newGambarArtikel, setNewGambarArtikel] = useState("");
@@ -172,55 +172,56 @@ function AdminList() {
     <div className='body-flex'>
       <div className="flex">
         <div className='col-10 p-5'>
-        <div className="d-flex justify-content-between mb-3">
-          <h2>Daftar Artikel</h2>
-          <CButton color="primary" onClick={openAddModal}>
-            Tambah Data Artikel
-          </CButton>
+          <div className="d-flex justify-content-between mb-3">
+            <h2>Daftar Artikel</h2>
+            <CButton color="primary" onClick={openAddModal}>
+              Tambah Data Artikel
+            </CButton>
           </div>
-        <CTable striped bordered hover>
-            <CTableHead>
-              <CTableRow>
-                <CTableDataCell>Judul</CTableDataCell>
-                <CTableDataCell>Deskripsi Artikel</CTableDataCell>
-                <CTableDataCell>Gambar Artikel</CTableDataCell>
-                <CTableDataCell>Action</CTableDataCell>
-              </CTableRow>
-            </CTableHead>
-            <CTableBody>
-              {dataArtikel.map((item, index) => (
-                <CTableRow key={index}>
-                  <CTableDataCell>{item.judul_artikel ?? '-'}</CTableDataCell>
-                  <CTableDataCell>{item.deskripsi_artikel ?? '-'}</CTableDataCell>
-                  <CTableDataCell>
-                    <img
-                      src={`http://localhost:8080/gambar/${item.gambar_artikel}`}
-                      alt={item.gambar_artikel || "Gambar Artikel"}
-                      style={{ maxWidth: '100px', maxHeight: '100px' }}
-                    />
-                  </CTableDataCell>
-                  <CTableDataCell>
-                    <CButton
-                      className='btn btn-primary text-white me-2'
-                      onClick={() => openEditModal(item)}
-                    >
-                      Edit
-                    </CButton>
-                    <CButton
-                      className='btn btn-danger text-white'
-                      onClick={() => openDeleteModal(item)}
-                    >
-                      Hapus
-                    </CButton>
-                  </CTableDataCell>
+          <div className="table-container">
+            <CTable striped bordered hover>
+              <CTableHead className="bold-header">
+                <CTableRow>
+                  <CTableDataCell>Judul</CTableDataCell>
+                  <CTableDataCell>Deskripsi Artikel</CTableDataCell>
+                  <CTableDataCell>Gambar Artikel</CTableDataCell>
+                  <CTableDataCell>Action</CTableDataCell>
                 </CTableRow>
-              ))}
-            </CTableBody>
-          </CTable>
+              </CTableHead>
+              <CTableBody>
+                {dataArtikel.map((item, index) => (
+                  <CTableRow key={index}>
+                    <CTableDataCell>{item.judul_artikel ?? '-'}</CTableDataCell>
+                    <CTableDataCell>{item.deskripsi_artikel ?? '-'}</CTableDataCell>
+                    <CTableDataCell>
+                      <img
+                        src={`http://localhost:8080/gambar/${item.gambar_artikel}`}
+                        alt={item.gambar_artikel || "Gambar Artikel"}
+                        style={{ maxWidth: '100px', maxHeight: '100px' }}
+                      />
+                    </CTableDataCell>
+                    <CTableDataCell className="action-buttons">
+                      <CButton
+                        className='btn btn-primary text-white me-2'
+                        onClick={() => openEditModal(item)}
+                      >
+                        Edit
+                      </CButton>
+                      <CButton
+                        className='btn btn-danger text-white'
+                        onClick={() => openDeleteModal(item)}
+                      >
+                        Hapus
+                      </CButton>
+                    </CTableDataCell>
+                  </CTableRow>
+                ))}
+              </CTableBody>
+            </CTable>
+          </div>
         </div>
       </div>
 
-      {/* Modal Tambah Artikel */}
       <Modal show={showAdd} onHide={closeAddModal}>
         <Modal.Header closeButton>
           <Modal.Title>Form Tambah Data Artikel</Modal.Title>
@@ -258,7 +259,6 @@ function AdminList() {
         </Modal.Body>
       </Modal>
 
-      {/* Modal Edit Artikel */}
       <Modal show={showEdit} onHide={closeEditModal}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Data Artikel</Modal.Title>
@@ -304,7 +304,6 @@ function AdminList() {
         </Form>
       </Modal>
 
-      {/* Modal Hapus Artikel */}
       <Modal show={showDelete} onHide={closeDeleteModal}>
         <Modal.Header closeButton>
           <Modal.Title>Konfirmasi Penghapusan</Modal.Title>
