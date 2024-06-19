@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import "../../styles/checkout.css";
 
 const AddressModal = ({ showModal, handleCloseModal, handleConfirm }) => {
@@ -9,7 +8,6 @@ const AddressModal = ({ showModal, handleCloseModal, handleConfirm }) => {
   const [cities, setCities] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [subdistricts, setSubdistricts] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState({ lat: -6.200000, lng: 106.816666 });
 
   useEffect(() => {
     fetch('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json')
@@ -19,172 +17,151 @@ const AddressModal = ({ showModal, handleCloseModal, handleConfirm }) => {
   }, []);
 
   useEffect(() => {
-    if (localAddress.province) {
-      fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${localAddress.province}.json`)
+    if (address.province) {
+      fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${address.province}.json`)
         .then(response => response.json())
         .then(data => setCities(data))
         .catch(error => console.error('Error fetching cities:', error));
     }
-  }, [localAddress.province]);
+  }, [address.province]);
 
   useEffect(() => {
-    if (localAddress.city) {
-      fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/districts/${localAddress.city}.json`)
+    if (address.city) {
+      fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/districts/${address.city}.json`)
         .then(response => response.json())
         .then(data => setDistricts(data))
         .catch(error => console.error('Error fetching districts:', error));
     }
-  }, [localAddress.city]);
+  }, [address.city]);
 
   useEffect(() => {
-    if (localAddress.district) {
-      fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/villages/${localAddress.district}.json`)
+    if (address.district) {
+      fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/villages/${address.district}.json`)
         .then(response => response.json())
         .then(data => setSubdistricts(data))
         .catch(error => console.error('Error fetching subdistricts:', error));
     }
-  }, [localAddress.district]);
-
-  const handleSaveAddress = async () => {
-    await saveAddress({ ...localAddress, location: selectedLocation });
-    setAddress({ ...localAddress, location: selectedLocation });
-    handleCloseModal();
-  };
-
-  const handleMapClick = (event) => {
-    const { latLng } = event;
-    setSelectedLocation({ lat: latLng.lat(), lng: latLng.lng() });
-  };
+  }, [address.district]);
 
   return (
-    showModal && (
-      <div className="modal" style={{ display: 'block' }}>
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">Tambah Alamat</h5>
-              <button type="button" className="close" onClick={handleCloseModal}>
-                <span>&times;</span>
-              </button>
-            </div>
-            <div className="modal-body">
-              <form>
-                <div className="form-group">
-                  <label htmlFor="fullName">Nama Lengkap:</label>
-                  <input
-                    type="text"
-                    id="fullName"
-                    className="form-control"
-                    value={localAddress.fullName || ''}
-                    onChange={(e) => setLocalAddress({ ...localAddress, fullName: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="phoneNumber">Nomor Telepon:</label>
-                  <input
-                    type="text"
-                    id="phoneNumber"
-                    className="form-control"
-                    value={localAddress.phoneNumber || ''}
-                    onChange={(e) => setLocalAddress({ ...localAddress, phoneNumber: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="province">Provinsi:</label>
-                  <select
-                    id="province"
-                    className="form-control"
-                    value={localAddress.province || ''}
-                    onChange={(e) => setLocalAddress({ ...localAddress, province: e.target.value })}
-                  >
-                    <option value="">Pilih Provinsi</option>
-                    {provinces.map(province => (
-                      <option key={province.id} value={province.id}>
-                        {province.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="city">Kabupaten:</label>
-                  <select
-                    id="city"
-                    className="form-control"
-                    value={localAddress.city || ''}
-                    onChange={(e) => setLocalAddress({ ...localAddress, city: e.target.value })}
-                  >
-                    <option value="">Pilih Kabupaten</option>
-                    {cities.map(city => (
-                      <option key={city.id} value={city.id}>
-                        {city.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="district">Kecamatan:</label>
-                  <select
-                    id="district"
-                    className="form-control"
-                    value={localAddress.district || ''}
-                    onChange={(e) => setLocalAddress({ ...localAddress, district: e.target.value })}
-                  >
-                    <option value="">Pilih Kecamatan</option>
-                    {districts.map(district => (
-                      <option key={district.id} value={district.id}>
-                        {district.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="subdistrict">Kelurahan:</label>
-                  <select
-                    id="subdistrict"
-                    className="form-control"
-                    value={localAddress.subdistrict || ''}
-                    onChange={(e) => setLocalAddress({ ...localAddress, subdistrict: e.target.value })}
-                  >
-                    <option value="">Pilih Kelurahan</option>
-                    {subdistricts.map(subdistrict => (
-                      <option key={subdistrict.id} value={subdistrict.id}>
-                        {subdistrict.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="detailedAddress">Alamat:</label>
-                  <textarea
-                    id="detailedAddress"
-                    className="form-control"
-                    value={localAddress.detailedAddress || ''}
-                    onChange={(e) => setLocalAddress({ ...localAddress, detailedAddress: e.target.value })}
-                  />
-                </div>
-              </form>
-              <div className="form-group mt-4">
-                <label>Lokasi di Peta:</label>
-                <LoadScript googleMapsApiKey="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwNy2wkFmYwL86p69E0w8FixuTz5VWadc&loading=async&libraries=places&callback=initMap">
-                  <GoogleMap
-                    mapContainerStyle={{ height: "400px", width: "100%" }}
-                    center={selectedLocation}
-                    zoom={15}
-                    onClick={handleMapClick}
-                  >
-                    <Marker position={selectedLocation} />
-                  </GoogleMap>
-                </LoadScript>
+    <div>
+      {showModal && (
+        <div className="modal" style={{ display: 'block' }}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Tambah Alamat</h5>
               </div>
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>Batal</button>
-              <button type="button" className="btn btn-primary" onClick={handleSaveAddress}>OK</button>
+              <div className="modal-body">
+                <form>
+                  <div className="form-group">
+                    <label htmlFor="full_name">Nama Lengkap:</label>
+                    <input
+                      type="text"
+                      id="full_name"
+                      className="form-control"
+                      value={address.full_name || ''}
+                      onChange={(e) => setAddress({ ...address, full_name: e.target.value })}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="phone_number">Nomor Telepon:</label>
+                    <input
+                      type="text"
+                      id="phone_number"
+                      className="form-control"
+                      value={address.phone_number || ''}
+                      onChange={(e) => setAddress({ ...address, phone_number: e.target.value })}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="province">Provinsi:</label>
+                    <select
+                      id="province"
+                      className="form-control"
+                      value={address.province || ''}
+                      onChange={(e) => setAddress({ ...address, province: e.target.value })}
+                    >
+                      <option value="">Pilih Provinsi</option>
+                      {provinces.map(province => (
+                        <option key={province.id} value={province.id}>
+                          {province.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="city">Kabupaten:</label>
+                    <select
+                      id="city"
+                      className="form-control"
+                      value={address.city || ''}
+                      onChange={(e) => setAddress({ ...address, city: e.target.value })}
+                    >
+                      <option value="">Pilih Kabupaten</option>
+                      {cities.map(city => (
+                        <option key={city.id} value={city.id}>
+                          {city.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="district">Kecamatan:</label>
+                    <select
+                      id="district"
+                      className="form-control"
+                      value={address.district || ''}
+                      onChange={(e) => setAddress({ ...address, district: e.target.value })}
+                    >
+                      <option value="">Pilih Kecamatan</option>
+                      {districts.map(district => (
+                        <option key={district.id} value={district.id}>
+                          {district.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="subdistrict">Kelurahan:</label>
+                    <select
+                      id="subdistrict"
+                      className="form-control"
+                      value={address.subdistrict || ''}
+                      onChange={(e) => setAddress({ ...address, subdistrict: e.target.value })}
+                    >
+                      <option value="">Pilih Kelurahan</option>
+                      {subdistricts.map(subdistrict => (
+                        <option key={subdistrict.id} value={subdistrict.id}>
+                          {subdistrict.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="detailed_address">Alamat:</label>
+                    <textarea
+                      id="detailed_address"
+                      className="form-control"
+                      value={address.detailed_address || ''}
+                      onChange={(e) => setAddress({ ...address, detailed_address: e.target.value })}
+                    />
+                  </div>
+                </form>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>
+                  Batal
+                </button>
+                <button type="button" className="btn btn-primary" onClick={() => handleConfirm(address)}>
+                  Konfirmasi
+                </button>
+              </div>
             </div>
           </div>
         </div>
+      )}
     </div>
-    )
   );
 };
 
@@ -269,6 +246,7 @@ const Checkout = ({ productCost }) => {
         fetchAddresses(storedUserId, setAddresses); // Re-fetch addresses after deletion
       }
     } catch (error) {
+     
       console.error('There was an error deleting the address!', error);
     }
   };
