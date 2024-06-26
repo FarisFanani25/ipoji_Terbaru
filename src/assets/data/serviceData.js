@@ -19,7 +19,7 @@ const serviceData = [
   },
   {
     icon: "ri-exchange-dollar-line",
-    title: "Dapatkan Harga Paling Terbaik",
+    title: "Dapatkan Harga Terbaik",
     subtitle: "Harga dan Kualitas Oke",
     bg: "#E0E0E0",
   },

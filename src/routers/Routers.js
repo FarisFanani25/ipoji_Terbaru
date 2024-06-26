@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 // User Components
 import Home from '../pages/user/Home';
 import Shop from '../pages/user/Shop';
-import Cart from '../pages/user/Cart';
+// import Cart from '../pages/user/Cart';
 import ProductDetails from '../pages/user/ProductDetails';
 import Checkout from '../pages/user/Checkout';
 import Login from '../pages/user/Login';
@@ -63,7 +63,7 @@ const Routers = () => {
             <Route path='/home' element={<Home/>}/>
             <Route path='/shop' element={<Shop/>}/>
             <Route path='/shop/:id' element={<ProductDetails/>}/>
-            <Route path='/cart' element={<Cart/>}/>
+            {/* <Route path='/cart' element={<Cart/>}/> */}
             <Route path='/payment' element={<Payment/>}/>
             <Route path='/checkout' element={<Checkout/>}/>
             <Route path='/pembayaran' element={<PembayaranForm/>}/>
