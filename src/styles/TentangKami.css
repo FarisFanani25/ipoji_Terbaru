@@ -1,0 +1,158 @@
+/* TentangKami.css */
+
+.tentang-kami-container {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #f3f4f6;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+  }
+  
+  .tentang-kami-container h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 3rem;
+    color: #333;
+    font-weight: bold;
+    font-family: 'Georgia', serif;
+    letter-spacing: 1.5px;
+  }
+  
+  .tentang-kami-content {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  
+  .content-block {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    transition: all 0.3s ease;
+  }
+  
+  .content-block.reverse {
+    flex-direction: row-reverse;
+  }
+  
+  .text {
+    flex: 1;
+    min-width: 300px;
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.8;
+  }
+  
+  .text h2 {
+    font-size: 2rem;
+    color: #222;
+    margin-bottom: 20px;
+    font-family: 'Georgia', serif;
+    position: relative;
+  }
+  
+  .text h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    width: 50px;
+    height: 4px;
+    background-color: #4caf50;
+  }
+  
+  .image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    min-width: 300px;
+  }
+  
+  .image img {
+    width: 100%;
+    height: auto;
+    max-width: 500px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .image img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  }
+  
+  .whatsapp-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+  }
+  
+  .whatsapp-link {
+    display: inline-flex; /* Menjadikan elemen sebagai inline-flex untuk memudahkan penataan */
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+    padding: 10px 30px;
+    border: 2px solid #25d366;
+    border-radius: 8px;
+  }
+  
+  .whatsapp-link:hover {
+    background-color: #25d366;
+    color: white;
+  }
+  
+  .whatsapp-icon {
+    width: 40px; /* Mengurangi ukuran ikon agar lebih seimbang dengan teks */
+    height: 40px; /* Mengurangi ukuran ikon agar lebih seimbang dengan teks */
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .whatsapp-link:hover .whatsapp-icon {
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+  
+  .whatsapp-text {
+    transition: color 0.3s ease;
+    white-space: nowrap; /* Teks akan tetap dalam satu baris */
+  }
+  
+  .whatsapp-link:hover .whatsapp-text {
+    color: #0d685e;
+  }
+  
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+  }
+  
+  .whatsapp-link:hover .whatsapp-icon {
+    animation: bounce 1s infinite;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .content-block {
+        flex-direction: column;
+    }
+  }
+  

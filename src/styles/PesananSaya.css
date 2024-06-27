@@ -1,0 +1,100 @@
+/* src/styles/PesananSaya.css */
+
+.pesanan-saya-container {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: 'Arial', sans-serif;
+    background-color: #f3f4f6;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+.pesanan-saya-container h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 3rem;
+    color: #333;
+    font-weight: bold;
+    font-family: 'Georgia', serif;
+    letter-spacing: 1.5px;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    border-bottom: 2px solid #ddd;
+}
+
+.tabs button {
+    background: none;
+    border: none;
+    padding: 15px 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.3s, border-bottom 0.3s;
+}
+
+.tabs button:hover {
+    color: #4caf50;
+}
+
+.tabs button.active {
+    color: #4caf50;
+    border-bottom: 2px solid #4caf50;
+}
+
+.tab-content {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.tab-content h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+    font-family: 'Georgia', serif;
+}
+
+.whatsapp-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80px;
+}
+
+.whatsapp-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #25d366;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.whatsapp-link:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.whatsapp-icon {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    .tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+}

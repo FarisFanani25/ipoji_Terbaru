@@ -17,6 +17,7 @@ import ArtikelDetails from '../pages/user/ArtikelDetails';
 import PembayaranForm from '../pages/user/pembayaran';
 import OrderPage from '../pages/user/order';
 
+
 // Admin Components
 import AdminHome from '../pages/admin/Component/Home/Home';
 import AdminOrders from '../pages/admin/Component/Orders/Orders';
@@ -47,6 +48,8 @@ import PenjualAnggota from '../pages/penjual/Component/Anggota/anggota';
 
 
 import Card from '../pages/user/CartCoba';
+import PesananSaya from '../pages/user/PesananSaya';
+import TentangKami from '../pages/user/TentangKami';
 
 
 const userInpDetails = []; // Placeholder for user input details
@@ -68,6 +71,8 @@ const Routers = () => {
             <Route path='/checkout' element={<Checkout/>}/>
             <Route path='/pembayaran' element={<PembayaranForm/>}/>
             <Route path='/order' element={<OrderPage/>} />
+            <Route path='/PesananSaya' element={<PesananSaya/>} />
+            <Route path='/TentangKami' element={<TentangKami/>} />
         
 
             {/* <Route path='/login2' element={<Login2/>}/> */}

@@ -10,7 +10,7 @@ import {
 } from '@coreui/react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button, Form } from "react-bootstrap";
-//import "./Productpage.css";
+import './Product.scss';
 
 function PenjualProducts() {
   const [dataProduk, setDataProduk] = useState([]);
@@ -122,16 +122,13 @@ function PenjualProducts() {
 
   const closeEditModal = () => {
     setEditingData(null);
+    setNamaProduk("");
+    setDeskripsiProduk("");
+    setHargaProduk("");
+    setBeratProduk("");
+    setStokProduk("");
+    setOldImage("");
     setShowEdit(false);
-  };
-
-  const handleEditInputChange = (e) => {
-    const { name, value } = e.target;
-    setEditingData({ ...editingData, [name]: value });
-  };
-
-  const handleEditFileChange = (e) => {
-    setGambarProduk(e.target.files[0]);
   };
 
   const editDataProduk = async (event) => {
@@ -151,39 +148,38 @@ function PenjualProducts() {
         },
       });
 
-      if (response.data.status === 'success') {
-        alert(response.data.message);
-        await getDataProduk();  // Fetch the updated data
-        closeEditModal();  // Close the modal
+      if (response.data.status === 200) {
+        alert(response.data.messages.success);
+        getDataProduk();
+        closeEditModal();
       } else {
-        alert("Gagal menyimpan perubahan: " + response.data.message);
+        alert("Data Gagal Diperbarui: " + response.data.messages.error);
       }
     } catch (error) {
       console.error("Error editing data:", error);
-      alert("Gagal menyimpan perubahan. Lihat konsol untuk detail.");
+      alert("Data Gagal Diperbarui. Lihat konsol untuk detail.");
     }
   };
 
   return (
-    <div className='body-flex'>
-    <div className="flex">
-      <div className='col-10 p-5'>
+    <div className="body-flex">
+      <div className="col-10">
+        <h2>Kelola Produk</h2>
         <div className="d-flex justify-content-between mb-3">
-          <h2>Daftar Produk</h2>
           <CButton color="primary" onClick={showAddModal}>
-            Tambah Data Produk
+            Tambah Produk
           </CButton>
         </div>
-        <CTable striped bordered hover>
-          <CTableHead>
+        <CTable hover responsive bordered align="middle">
+          <CTableHead color="dark">
             <CTableRow>
-              <CTableDataCell>Nama Produk</CTableDataCell>
-              <CTableDataCell>Deskripsi Produk</CTableDataCell>
-              <CTableDataCell>Harga Produk</CTableDataCell>
-              <CTableDataCell>Gambar Produk</CTableDataCell>
-              <CTableDataCell>Berat</CTableDataCell>
-              <CTableDataCell>Stok</CTableDataCell>
-              <CTableDataCell>Action</CTableDataCell>
+              <th>Nama Produk</th>
+              <th>Deskripsi</th>
+              <th>Harga</th>
+              <th>Gambar</th>
+              <th>Berat</th>
+              <th>Stok</th>
+              <th>Aksi</th>
             </CTableRow>
           </CTableHead>
           <CTableBody>
@@ -198,181 +194,107 @@ function PenjualProducts() {
                 <CTableDataCell>{data.berat_produk}</CTableDataCell>
                 <CTableDataCell>{data.stok_produk}</CTableDataCell>
                 <CTableDataCell>
-                  <CButton color="primary" onClick={() => showEditModal(data)}>Edit</CButton>{' '}
-                  <CButton color="danger" onClick={() => showModalDelete(data)}>Delete</CButton>
+                  <div className="action-buttons">
+                    <CButton color="primary" onClick={() => showEditModal(data)}>Edit</CButton>
+                    <CButton color="danger" onClick={() => showModalDelete(data)}>Delete</CButton>
+                  </div>
                 </CTableDataCell>
               </CTableRow>
             ))}
           </CTableBody>
         </CTable>
       </div>
-    </div>
 
+      {/* Modal Add */}
       <Modal show={showAdd} onHide={closeAddModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Tambah Data Produk</Modal.Title>
+        <Modal.Header closeButton className="modal-header">
+          <Modal.Title>Tambah Produk</Modal.Title>
         </Modal.Header>
         <Form onSubmit={addDataProduk}>
           <Modal.Body>
             <Form.Group>
               <Form.Label>Nama Produk</Form.Label>
-              <Form.Control
-                type="text"
-                name="nama_produk"
-                value={newNamaProduk}
-                onChange={(e) => setNewNamaProduk(e.target.value)}
-              />
+              <Form.Control type="text" value={newNamaProduk} onChange={(e) => setNewNamaProduk(e.target.value)} required />
             </Form.Group>
             <Form.Group>
               <Form.Label>Deskripsi Produk</Form.Label>
-              <Form.Control
-                type="text"
-                name="deskripsi_produk"
-                value={newDeskripsiProduk}
-                onChange={(e) => setNewDeskripsiProduk(e.target.value)}
-              />
+              <Form.Control as="textarea" value={newDeskripsiProduk} onChange={(e) => setNewDeskripsiProduk(e.target.value)} required />
             </Form.Group>
             <Form.Group>
               <Form.Label>Harga Produk</Form.Label>
-              <Form.Control
-                type="number"
-                name="harga_produk"
-                value={newHargaProduk}
-                onChange={(e) => setNewHargaProduk(e.target.value)}
-              />
+              <Form.Control type="number" value={newHargaProduk} onChange={(e) => setNewHargaProduk(e.target.value)} required />
             </Form.Group>
             <Form.Group>
               <Form.Label>Gambar Produk</Form.Label>
-              <Form.Control
-                type="file"
-                name="gambar_produk"
-                onChange={(e) => setNewGambarProduk(e.target.files[0])}
-              />
+              <Form.Control type="file" onChange={(e) => setNewGambarProduk(e.target.files[0])} required />
             </Form.Group>
             <Form.Group>
               <Form.Label>Berat Produk</Form.Label>
-              <Form.Control
-                type="number"
-                name="berat_produk"
-                value={newBeratProduk}
-                onChange={(e) => setNewBeratProduk(e.target.value)}
-              />
+              <Form.Control type="number" value={newBeratProduk} onChange={(e) => setNewBeratProduk(e.target.value)} required />
             </Form.Group>
             <Form.Group>
               <Form.Label>Stok Produk</Form.Label>
-              <Form.Control
-                type="number"
-                name="stok_produk"
-                value={newStokProduk}
-                onChange={(e) => setNewStokProduk(e.target.value)}
-              />
+              <Form.Control type="number" value={newStokProduk} onChange={(e) => setNewStokProduk(e.target.value)} required />
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={closeAddModal}>
-              Close
-            </Button>
-            <Button variant="primary" type="submit">
-              Save Changes
-            </Button>
+            <Button variant="secondary" onClick={closeAddModal}>Close</Button>
+            <Button type="submit" variant="primary">Save changes</Button>
           </Modal.Footer>
         </Form>
       </Modal>
 
+      {/* Modal Edit */}
       <Modal show={showEdit} onHide={closeEditModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Data Produk</Modal.Title>
+        <Modal.Header closeButton className="modal-header">
+          <Modal.Title>Edit Produk</Modal.Title>
         </Modal.Header>
         <Form onSubmit={editDataProduk}>
           <Modal.Body>
             <Form.Group>
               <Form.Label>Nama Produk</Form.Label>
-              <Form.Control
-                type="text"
-                name="nama_produk"
-                value={nama_produk}
-                onChange={(e) => setNamaProduk(e.target.value)}
-              />
+              <Form.Control type="text" value={nama_produk} onChange={(e) => setNamaProduk(e.target.value)} required />
             </Form.Group>
             <Form.Group>
               <Form.Label>Deskripsi Produk</Form.Label>
-              <Form.Control
-                type="text"
-                name="deskripsi_produk"
-                value={deskripsi_produk}
-                onChange={(e) => setDeskripsiProduk(e.target.value)}
-              />
+              <Form.Control as="textarea" value={deskripsi_produk} onChange={(e) => setDeskripsiProduk(e.target.value)} required />
             </Form.Group>
             <Form.Group>
               <Form.Label>Harga Produk</Form.Label>
-              <Form.Control
-                type="number"
-                name="harga_produk"
-                value={harga_produk}
-                onChange={(e) => setHargaProduk(e.target.value)}
-              />
+              <Form.Control type="number" value={harga_produk} onChange={(e) => setHargaProduk(e.target.value)} required />
             </Form.Group>
             <Form.Group>
               <Form.Label>Gambar Produk</Form.Label>
-              <Form.Control
-                type="file"
-                name="gambar_produk"
-                onChange={handleEditFileChange}
-              />
-              {oldImage && (
-                <div className="mt-2">
-                  <img
-                    src={`http://localhost:8080/gambar/${oldImage}`}
-                    alt="Old Product"
-                    style={{ height: "50px", width: "50px" }}
-                  />
-                </div>
-              )}
+              <Form.Control type="file" onChange={(e) => setGambarProduk(e.target.files[0])} />
+              {oldImage && <img src={`http://localhost:8080/gambar/${oldImage}`} alt="Old" className="mt-2" style={{ height: "50px", width: "50px" }} />}
             </Form.Group>
             <Form.Group>
               <Form.Label>Berat Produk</Form.Label>
-              <Form.Control
-                type="number"
-                name="berat_produk"
-                value={berat_produk}
-                onChange={(e) => setBeratProduk(e.target.value)}
-              />
+              <Form.Control type="number" value={berat_produk} onChange={(e) => setBeratProduk(e.target.value)} required />
             </Form.Group>
             <Form.Group>
               <Form.Label>Stok Produk</Form.Label>
-              <Form.Control
-                type="number"
-                name="stok_produk"
-                value={stok_produk}
-                onChange={(e) => setStokProduk(e.target.value)}
-              />
+              <Form.Control type="number" value={stok_produk} onChange={(e) => setStokProduk(e.target.value)} required />
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={closeEditModal}>
-              Close
-            </Button>
-            <Button variant="primary" type="submit">
-              Save Changes
-            </Button>
+            <Button variant="secondary" onClick={closeEditModal}>Close</Button>
+            <Button type="submit" variant="primary">Save changes</Button>
           </Modal.Footer>
         </Form>
       </Modal>
 
+      {/* Modal Delete */}
       <Modal show={showDelete} onHide={closeModalDelete}>
-        <Modal.Header closeButton>
-          <Modal.Title>Delete Data Produk</Modal.Title>
+        <Modal.Header closeButton className="modal-header">
+          <Modal.Title>Hapus Produk</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Apakah anda yakin ingin menghapus data ini?</p>
+          Apakah anda yakin ingin menghapus produk ini?
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={closeModalDelete}>
-            Cancel
-          </Button>
-          <Button variant="danger" onClick={deleteDataProduk}>
-            Delete
-          </Button>
+          <Button variant="secondary" onClick={closeModalDelete}>Close</Button>
+          <Button variant="danger" onClick={deleteDataProduk}>Delete</Button>
         </Modal.Footer>
       </Modal>
     </div>
