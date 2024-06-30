@@ -3,9 +3,14 @@ import '../../styles/TentangKami.css';
 import image1 from '../../assets/images/image1.jpg';
 import image2 from '../../assets/images/image2.jpg';
 import whatsappIcon from '../../assets/images/wa.jpg';  // Pastikan Anda memiliki ikon ini di direktori Anda
+import Header from "../../components/header/HeaderUser";
+import Footer from "../../components/Footer/Footer";
+import  Helmet  from '../../components/Helmet/Helmet';
 
 const TentangKami = () => {
     return (
+        <Helmet title={"Home"}>
+        <Header />
         <div className="tentang-kami-container">
             <h1>Tentang Kami</h1>
             <div className="tentang-kami-content">
@@ -50,7 +55,11 @@ const TentangKami = () => {
                 </a>
             </div>
         </div>
+
+        <Footer/>
+
+        </Helmet>
     );
-}
+};
 
 export default TentangKami;

@@ -1,0 +1,99 @@
+/* Footer Styles */
+
+.custom-footer {
+    background-color: #161616;
+    padding: 30px 0;
+    color: #fff;
+  }
+  
+  .custom-logo {
+    margin-bottom: 20px;
+  }
+  
+  .custom-logo h1 {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .custom-footer-text {
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: left;
+  }
+  
+  .custom-footer-quick-links {
+    margin-bottom: 20px;
+    background: none; /* Ensure no background color */
+    padding: 0; /* Remove any padding */
+  }
+  
+  .custom-quick-links-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffd700;
+    margin-bottom: 10px;
+  }
+  
+  .custom-footer-quick-links .list-group-item {
+    background: none; /* Ensure no background color */
+    padding-left: 0; /* Align text to the left */
+    border: none; /* Remove borders */
+  }
+  
+  .custom-footer-quick-links .list-group-item a {
+    color: #fff; /* Set link text color to white */
+    text-decoration: none; /* Remove underline */
+    transition: color 0.3s ease; /* Add transition for color change */
+  }
+  
+  .custom-footer-quick-links .list-group-item a:hover {
+    color: #ffd700; /* Change color on hover */
+  }
+  
+  .custom-footer-contact {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* This will align items to the top */
+    background: none; /* Ensure no background color */
+  }
+  
+  .custom-footer-contact .list-group-item {
+    background: none; /* Ensure no background color */
+    padding-left: 0; /* Align text to the left */
+    border: none; /* Remove borders */
+  }
+  
+  .custom-footer-contact .list-group-item span i {
+    color: #fff; /* Set icon color to white */
+  }
+  
+  .custom-footer-contact p {
+    margin-bottom: 0;
+  }
+  
+  .custom-footer-copyright {
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  /* Adjusting the position of the contact section */
+  .custom-footer-quick-links.custom-contact {
+    margin-top: -20px; /* Adjust this value as needed */
+  }
+  
+  /* Media Queries */
+  @media (max-width: 768px) {
+    .custom-footer {
+      padding: 30px 0;
+    }
+  
+    .custom-quick-links-title {
+      font-size: 18px;
+    }
+  
+    .custom-footer-copyright {
+      font-size: 12px;
+    }
+  }
+  

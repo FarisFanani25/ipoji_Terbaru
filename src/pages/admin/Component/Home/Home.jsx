@@ -6,9 +6,15 @@ import ProgressBar from '../ProgressBar/ProgressBar';
 import Sidebar from '../Sidebar/Sidebar';
 import TableList from '../Product/Product';
 import './Home.scss';
+import Header from "../../../../components/header/Header";
+import Footer from "../../../../components/Footer/FooterAdmin";
+import  Helmet  from '../../../../components/Helmet/Helmet';
+
 
 function Home() {
     return (
+        <Helmet title={"home"}>
+        <Header />
         <div className="home">
             <div className="home_sidebar">
                 <Sidebar />
@@ -28,6 +34,9 @@ function Home() {
                 
             </div>
         </div>
+        <Footer/>
+
+        </Helmet>
     );
 }
 

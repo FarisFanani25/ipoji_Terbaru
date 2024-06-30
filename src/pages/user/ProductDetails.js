@@ -9,13 +9,13 @@ import { cartActions } from '../../shop/shop-cart/cartSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import '../../styles/product-details.css';
+import Header from "../../components/header/HeaderUser";
+import Footer from "../../components/Footer/Footer";
 
 const ProductDetails = () => {
-  const [tab, setTab] = useState('desc');
+  const [product, setProduct] = useState(null);
   const { id } = useParams();
   const dispatch = useDispatch();
-  const [product, setProduct] = useState(null);
-  const [previewImg, setPreviewImg] = useState('');
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -50,22 +50,23 @@ const ProductDetails = () => {
   };
 
   if (!product) {
-    return <div>Loading...</div>;
+    return <div className="loading">Loading...</div>;
   }
 
-  const { nama_produk, harga_produk, deskripsi_produk, stok_produk, berat_produk } = product;
+  const { nama_produk, harga_produk, deskripsi_produk, stok_produk, berat_produk, gambar_produk } = product;
 
   return (
     <Helmet title='Product-details'>
+      <Header />
       <CommonSection title={nama_produk} />
-      <section>
+      <section className="product-details-section">
         <Container>
           <Row>
             <Col lg='6'>
               <div className='product__main-img'>
                 <img 
-                  src={previewImg || `http://localhost:8080/gambar/${product.gambar_produk}`} 
-                  alt='' 
+                  src={`http://localhost:8080/gambar/${gambar_produk}`} 
+                  alt={nama_produk} 
                   className='img-fluid' 
                   style={{ maxWidth: '100%', maxHeight: '400px' }}
                 />
@@ -74,30 +75,33 @@ const ProductDetails = () => {
 
             <Col lg='6'>
               <div className='single__product-content'>
-                <h2 className='product__title' style={{ fontSize: '2rem', marginBottom: '15px' }}>{nama_produk}</h2>
-                <p className='mb-3' style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'blue' }}>Rp. {harga_produk}</p>
-
-                <table className='table table-bordered'>
+                <h2 className='product__title'>{nama_produk}</h2>
+                <p className='product__price'>Rp. {harga_produk}</p>
+                <table className='table product__details-table'>
                   <tbody>
                     <tr>
-                      <td>Detail Produk</td>
+                      <th>Detail Produk</th>
                       <td>{deskripsi_produk}</td>
                     </tr>
                     <tr>
-                      <td>Stok</td>
+                      <th>Stok</th>
                       <td>{stok_produk}</td>
                     </tr>
                     <tr>
-                      <td>Berat</td>
+                      <th>Berat</th>
                       <td>{berat_produk} kg</td>
                     </tr>
                   </tbody>
                 </table>
+                <button className='add-to-cart-btn' onClick={addItemToCart}>
+                  <FontAwesomeIcon icon={faShoppingCart} /> Add to Cart
+                </button>
               </div>
             </Col>
           </Row>
         </Container>
       </section>
+      <Footer />
     </Helmet>
   );
 };

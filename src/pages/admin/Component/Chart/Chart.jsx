@@ -1,5 +1,9 @@
 import React from 'react';
 import { Area, AreaChart, CartesianGrid, Tooltip, XAxis } from 'recharts';
+import Header from "../../../../components/header/Header";
+import Footer from "../../../../components/Footer/Footer";
+import  Helmet  from '../../../../components/Helmet/Helmet';
+
 
 // import css file
 import './chart.scss';
@@ -60,6 +64,8 @@ const data = [
 
 function Chart({ height, title }) {
     return (
+        <Helmet title={"home"}>
+        <Header />
         <div className="chart_sec">
             <div>
                 <div className="title">
@@ -95,6 +101,10 @@ function Chart({ height, title }) {
                 </div>
             </div>
         </div>
+        <Footer/>
+
+        </Helmet>
+
     );
 }
 

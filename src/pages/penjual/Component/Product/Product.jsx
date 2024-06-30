@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Header from "../../../../components/header/HeaderPenjual";
+import Footer from "../../../../components/Footer/FooterPenjual";
+import  Helmet  from '../../../../components/Helmet/Helmet';
+
 import {
   CButton,
   CTable,
@@ -162,6 +166,10 @@ function PenjualProducts() {
   };
 
   return (
+    
+<Helmet title={"DataProduk"}>
+        <Header />
+
     <div className="body-flex">
       <div className="col-10">
         <h2>Kelola Produk</h2>
@@ -298,6 +306,10 @@ function PenjualProducts() {
         </Modal.Footer>
       </Modal>
     </div>
+    
+    <Footer/>
+
+</Helmet>
   );
 }
 

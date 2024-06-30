@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Header from "../../../../components/header/HeaderPenjual";
+import Footer from "../../../../components/Footer/FooterPenjual";
+import Helmet from '../../../../components/Helmet/Helmet';
 import {
   CButton,
   CTable,
@@ -12,6 +15,7 @@ import {
   CDropdownMenu,
   CDropdownItem,
 } from '@coreui/react';
+import './delivery.scss'; // Import CSS file
 
 function PenjualDelivery() {
   const [dataDelivery, setDataDelivery] = useState([]);
@@ -44,83 +48,88 @@ function PenjualDelivery() {
   };
 
   return (
-    <div className="body-flex">
-      <div className="flex">
-        <div className="col-10 p-5">
-          <CTable striped>
-            <CTableHead>
-              <CTableRow>
-                <CTableDataCell>ID Pengiriman</CTableDataCell>
-                <CTableDataCell>Nama Pelanggan</CTableDataCell>
-                <CTableDataCell>Alamat Pengiriman</CTableDataCell>
-                <CTableDataCell>Nomor Handphone</CTableDataCell>
-                <CTableDataCell>Item yang Dikirim</CTableDataCell>
-                <CTableDataCell>Status Pembayaran</CTableDataCell>
-                <CTableDataCell>Status Pemrosesan</CTableDataCell>
-                <CTableDataCell>Status Pengiriman</CTableDataCell>
-                <CTableDataCell>Status Selesai</CTableDataCell>
-              </CTableRow>
-            </CTableHead>
-            <CTableBody>
-              {dataDelivery &&
-                dataDelivery.length > 0 &&
-                dataDelivery.map((delivery, index) => (
-                  <CTableRow key={index}>
-                    <CTableDataCell>{delivery.id_delivery}</CTableDataCell>
-                    <CTableDataCell>{delivery.nama_pembeli}</CTableDataCell>
-                    <CTableDataCell>{delivery.alamat}</CTableDataCell>
-                    <CTableDataCell>{delivery.nomor_handphone}</CTableDataCell>
-                    <CTableDataCell>
-                      <ul>
-                        {delivery.items &&
-                          JSON.parse(delivery.items).map((deliveryItems, i) => (
-                            <li key={i}>
-                              ID: {deliveryItems.id}, Nama: {deliveryItems.title}, Quantity: {deliveryItems.quantity}, Harga: {deliveryItems.price}, Total: {deliveryItems.price * deliveryItems.quantity}
-                            </li>
-                          ))}
-                      </ul>
-                    </CTableDataCell>
-                    <CTableDataCell>{delivery.status_pembayaran || 'success'}</CTableDataCell>
-                    <CTableDataCell>{delivery.status_pemrosesan || 'Belum Dimasukkan'}</CTableDataCell>
-                    <CTableDataCell>
-                      <CDropdown>
-                        <CDropdownToggle color="secondary">
-                        {String(delivery.status_pengiriman)} {delivery.status_pengiriman}
-                        </CDropdownToggle>
-                        <CDropdownMenu>
-                          <CDropdownItem onClick={() => updateDeliveryStatus(delivery.id_delivery, 'status_pengiriman', 'Dalam Perjalanan')}>
-                            Dalam Perjalanan
-                          </CDropdownItem>
-                          <CDropdownItem onClick={() => updateDeliveryStatus(delivery.id_delivery, 'status_pengiriman', 'Terkirim')}>
-                            Terkirim
-                          </CDropdownItem>
-                          {/* Tambahkan opsi lain sesuai kebutuhan */}
-                        </CDropdownMenu>
-                      </CDropdown>
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      <CDropdown>
-                        <CDropdownToggle color="secondary">
-                        {String(delivery.status_pengiriman)}{delivery.status_selesai}
-                        </CDropdownToggle>
-                        <CDropdownMenu>
-                          <CDropdownItem onClick={() => updateDeliveryStatus(delivery.id_delivery, 'status_selesai', 'Selesai')}>
-                            Selesai
-                          </CDropdownItem>
-                          <CDropdownItem onClick={() => updateDeliveryStatus(delivery.id_delivery, 'status_selesai', 'Belum Selesai')}>
-                            Belum Selesai
-                          </CDropdownItem>
-                          {/* Tambahkan opsi lain sesuai kebutuhan */}
-                        </CDropdownMenu>
-                      </CDropdown>
-                    </CTableDataCell>
-                  </CTableRow>
-                ))}
-            </CTableBody>
-          </CTable>
+    <Helmet title={"Pengiriman"}>
+      <Header />
+      <div className="body-flex">
+        <div className="flex">
+          <div className="col-10 p-5">
+            <h2 className="delivery-title">Status Pengiriman</h2>
+            <CTable striped>
+              <CTableHead>
+                <CTableRow>
+                  <CTableDataCell>ID Pengiriman</CTableDataCell>
+                  <CTableDataCell>Nama Pelanggan</CTableDataCell>
+                  <CTableDataCell>Alamat Pengiriman</CTableDataCell>
+                  <CTableDataCell>Nomor Handphone</CTableDataCell>
+                  <CTableDataCell>Item yang Dikirim</CTableDataCell>
+                  <CTableDataCell>Status Pembayaran</CTableDataCell>
+                  <CTableDataCell>Status Pemrosesan</CTableDataCell>
+                  <CTableDataCell>Status Pengiriman</CTableDataCell>
+                  <CTableDataCell>Status Selesai</CTableDataCell>
+                </CTableRow>
+              </CTableHead>
+              <CTableBody>
+                {dataDelivery &&
+                  dataDelivery.length > 0 &&
+                  dataDelivery.map((delivery, index) => (
+                    <CTableRow key={index}>
+                      <CTableDataCell>{delivery.id_delivery}</CTableDataCell>
+                      <CTableDataCell>{delivery.nama_pembeli}</CTableDataCell>
+                      <CTableDataCell>{delivery.alamat}</CTableDataCell>
+                      <CTableDataCell>{delivery.nomor_handphone}</CTableDataCell>
+                      <CTableDataCell>
+                        <ul>
+                          {delivery.items &&
+                            JSON.parse(delivery.items).map((deliveryItems, i) => (
+                              <li key={i}>
+                                ID: {deliveryItems.id}, Nama: {deliveryItems.title}, Quantity: {deliveryItems.quantity}, Harga: {deliveryItems.price}, Total: {deliveryItems.price * deliveryItems.quantity}
+                              </li>
+                            ))}
+                        </ul>
+                      </CTableDataCell>
+                      <CTableDataCell>{delivery.status_pembayaran || 'success'}</CTableDataCell>
+                      <CTableDataCell>{delivery.status_pemrosesan || 'Belum Dimasukkan'}</CTableDataCell>
+                      <CTableDataCell>
+                        <CDropdown>
+                          <CDropdownToggle color="secondary">
+                            {String(delivery.status_pengiriman)} {delivery.status_pengiriman}
+                          </CDropdownToggle>
+                          <CDropdownMenu>
+                            <CDropdownItem onClick={() => updateDeliveryStatus(delivery.id_delivery, 'status_pengiriman', 'Dalam Perjalanan')}>
+                              Dalam Perjalanan
+                            </CDropdownItem>
+                            <CDropdownItem onClick={() => updateDeliveryStatus(delivery.id_delivery, 'status_pengiriman', 'Terkirim')}>
+                              Terkirim
+                            </CDropdownItem>
+                            {/* Tambahkan opsi lain sesuai kebutuhan */}
+                          </CDropdownMenu>
+                        </CDropdown>
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        <CDropdown>
+                          <CDropdownToggle color="secondary">
+                            {String(delivery.status_pengiriman)}{delivery.status_selesai}
+                          </CDropdownToggle>
+                          <CDropdownMenu>
+                            <CDropdownItem onClick={() => updateDeliveryStatus(delivery.id_delivery, 'status_selesai', 'Selesai')}>
+                              Selesai
+                            </CDropdownItem>
+                            <CDropdownItem onClick={() => updateDeliveryStatus(delivery.id_delivery, 'status_selesai', 'Belum Selesai')}>
+                              Belum Selesai
+                            </CDropdownItem>
+                            {/* Tambahkan opsi lain sesuai kebutuhan */}
+                          </CDropdownMenu>
+                        </CDropdown>
+                      </CTableDataCell>
+                    </CTableRow>
+                  ))}
+              </CTableBody>
+            </CTable>
+          </div>
         </div>
       </div>
-    </div>
+      <Footer />
+    </Helmet>
   );
 }
 

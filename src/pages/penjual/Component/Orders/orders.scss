@@ -1,49 +1,104 @@
-.orders {
-  display: grid;
-  grid-template-columns: 17% 83%;
+/* OrderPage.css */
+
+.body-flex {
+  display: flex;
   justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f8f9fa;
 }
 
-/* Perlu di luar media query */
+.flex {
+  width: 100%;
+  max-width: 1200px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.col-10 {
+  width: 100%;
+  padding: 20px;
+}
+
+.order-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.ctable {
+  width: 100%;
+  margin-bottom: 20px;
+  border-collapse: collapse;
+}
+
+.ctable th,
+.ctable td {
+  padding: 12px;
+  text-align: left;
+}
+
+.ctable th {
+  background-color: #4B5320;
+  color: white;
+}
+
+.ctable-striped tbody tr:nth-of-type(odd) {
+  background-color: #f2f2f2;
+}
+
+.ctable-striped tbody tr:hover {
+  background-color: #ddd;
+}
+
 .action-buttons {
   display: flex;
-  margin-top: 10px;
+  gap: 10px;
 }
 
 .accept-button {
   background-color: #28a745;
-  color: #fff;
-  margin-right: 5px; /* Atur margin jika diperlukan */
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.accept-button:hover {
+  background-color: #218838;
 }
 
 .reject-button {
   background-color: #dc3545;
-  color: #fff;
-}
-/* Akhir dari luar media query */
-
-@media screen and (max-width: 992px) {
-  .orders {
-    display: grid;
-    grid-template-columns: 100%;
-    justify-content: center;
-  }
-
-  .home_sidebar {
-    display: none;
-  }
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
+.reject-button:hover {
+  background-color: #c82333;
+}
 
+@media (max-width: 768px) {
+  .order-title {
+    font-size: 1.5rem;
+  }
 
-@media screen and (max-width: 992px) {
-  .orders {
-    display: grid;
-    grid-template-columns: 100%;
-    justify-content: center;
+  .action-buttons {
+    flex-direction: column;
+    gap: 5px;
+  }
 
-    .home_sidebar {
-      display: none;
-    }
+  .accept-button,
+  .reject-button {
+    width: 100%;
+    padding: 10px;
   }
 }

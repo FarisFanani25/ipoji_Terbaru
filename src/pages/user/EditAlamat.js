@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import "../../styles/EditAlamat.css";
+import Header from "../../components/header/HeaderUser";
+import Footer from "../../components/Footer/Footer";
+import  Helmet  from '../../components/Helmet/Helmet';
 
 const EditAddressPopup = ({ isOpen, onClose, onSave, initialAddress }) => {
   const [address, setAddress] = useState(initialAddress);
@@ -16,6 +19,8 @@ const EditAddressPopup = ({ isOpen, onClose, onSave, initialAddress }) => {
   if (!isOpen) return null;
 
   return (
+    <Helmet title={"EditAlamat"}>
+        <Header />
     <div className="popup-overlay">
       <div className="popup-container">
         <h2>Edit Address</h2>
@@ -31,6 +36,9 @@ const EditAddressPopup = ({ isOpen, onClose, onSave, initialAddress }) => {
         </div>
       </div>
     </div>
+    <Footer/>
+
+        </Helmet>
   );
 };
 

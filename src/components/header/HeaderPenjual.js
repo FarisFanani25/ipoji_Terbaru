@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import "./header.css";
+import "./HeaderPenjual.css";
 import { motion } from "framer-motion";
 import { Container, Row } from "reactstrap";
 import logo from "../../assets/images/rice.png"; // Ensure this path is correct
@@ -35,57 +35,59 @@ const Header = () => {
 
   const menuToggle = () => {
     if (menuRef.current) {
-      menuRef.current.classList.toggle("active-menu");
+      menuRef.current.classList.toggle("active-menu-penjual");
     }
   };
+
   const togglePopup = () => setShowPopup(!showPopup);
 
   return (
-    <header className="header" ref={headerRef}>
+    <header className="header-penjual" ref={headerRef}>
       <Container>
         <Row>
-          <div className="nav-wrapper">
-            <div className="logo">
+          <div className="nav-wrapper-penjual">
+            <div className="logo-penjual">
               <img src={logo} alt="logo" />
               <div>
                 <h1>IPOJI</h1>
               </div>
             </div>
 
-            <div className="navigation" ref={menuRef}>
-              <ul className="menu">
-                <li><NavLink to="/admin">DASHBOARD</NavLink></li>
-                <li><NavLink to="/admin/user">PENGGUNA</NavLink></li>
-                <li><NavLink to="/admin/listadmin">ARTIKEL</NavLink></li>
-                <li><NavLink to="/admin/delivery">PESANAN</NavLink></li>
+            <div className="navigation-penjual" ref={menuRef}>
+              <ul className="menu-penjual">
+              <li><NavLink to="/penjual">DASHBOARD</NavLink></li>
+                <li><NavLink to="/penjual/products">PRODUK</NavLink></li>
+                <li><NavLink to="/penjual/anggota">ANGGOTA</NavLink></li>
+                <li><NavLink to="/penjual/orders">PESANAN</NavLink></li>
+                <li><NavLink to="/penjual/delivery">PENGIRIMAN</NavLink></li>
               </ul>
             </div>
 
-            <div className="nav-icons">
-              <span className="icon">
+            <div className="nav-icons-penjual">
+              <span className="icon-penjual">
                 <NavLink to="/cardcoba">
                   <i className="ri-shopping-bag-line"></i>
                 </NavLink>
               </span>
 
-              <span className="icon">
+              <span className="icon-penjual">
                 <NavLink to="/notifikasi">
-                <i className="ri-notification-line"></i>
+                  <i className="ri-notification-line"></i>
                 </NavLink>
               </span>
 
-              <div className="user-icon" onClick={togglePopup}>
+              <div className="user-icon-penjual" onClick={togglePopup}>
                 <motion.img
                   whileTap={{ scale: 1 }}
                   src={userIcon}
                   alt="User Icon"
-                  className="user-icon-img"
+                  className="user-icon-img-penjual"
                 />
               </div>
 
               {showPopup && (
                 <motion.div
-                  className="popup"
+                  className="popup-penjual"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
@@ -94,7 +96,7 @@ const Header = () => {
                 </motion.div>
               )}
 
-              <div className="mobile-menu">
+              <div className="mobile-menu-penjual">
                 <span onClick={menuToggle}>
                   <i className="ri-menu-line"></i>
                 </span>

@@ -9,6 +9,9 @@ import man4 from '../../Images/man4.jpg';
 import woman1 from '../../Images/woman1.jpg';
 import woman2 from '../../Images/woman2.jpg';
 import './datatable.scss';
+import Header from "../../../../components/header/Header";
+import Footer from "../../../../components/Footer/Footer";
+import  Helmet  from '../../../../components/Helmet/Helmet';
 
 // Replace this data with your own
 const userData = [
@@ -168,6 +171,8 @@ function DataTable() {
     ];
 
     return (
+        <Helmet title={"home"}>
+        <Header />
         <div className="data_table">
             <DataGrid
                 className="data_grid"
@@ -178,6 +183,10 @@ function DataTable() {
                 checkboxSelection
             />
         </div>
+        <Footer/>
+
+        </Helmet>
+
     );
 }
 

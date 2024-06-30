@@ -49,30 +49,8 @@ function Sidebar() {
                         </li>
                     </NavLink>
 
-                    <NavLink to="/admin/orders" activeClassName="active-link" style={{ textDecoration: 'none' }}>
-                        <li>
-                            <CreditCardIcon className="icon" /> Daftar Pesanan
-                        </li>
-                    </NavLink>
-
-                    <NavLink to="/admin/delivery" activeClassName="active-link" style={{ textDecoration: 'none' }}>
-                        <li>
-                            <DeliveryDiningIcon className="icon" /> Pengiriman
-                        </li>
-                    </NavLink>
 
                     <li className="spann">Settings</li>
-                    <NavLink to="/admin/profile" activeClassName="active-link" style={{ textDecoration: 'none' }}>
-                        <li>
-                            <AccountCircleIcon className="icon" /> Profil
-                        </li>
-                    </NavLink>
-
-                    <NavLink to="/admin/settings" activeClassName="active-link" style={{ textDecoration: 'none' }}>
-                        <li>
-                            <SettingsRoundedIcon className="icon" /> Pengaturan
-                        </li>
-                    </NavLink>
 
                     <NavLink to="/admin/logout" activeClassName="active-link" style={{ textDecoration: 'none' }}>
                         <li>

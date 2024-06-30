@@ -1,14 +1,15 @@
 import React from 'react';
-import Chart from '../Chart/Chart';
 import ItemLists from '../ItemLists/ItemLists';
-
-import ProgressBar from '../ProgressBar/ProgressBar';
 import Sidebar from '../Sidebar/Sidebar';
-import TableList from '../Product/Product';
 import './Home.scss';
+import Header from "../../../../components/header/HeaderPenjual";
+import Footer from "../../../../components/Footer/FooterPenjual";
+import  Helmet  from '../../../../components/Helmet/Helmet';
 
 function PenjualHome() {
     return (
+        <Helmet title={"home"}>
+        <Header />
         <div className="home">
             <div className="home_sidebar">
                 <Sidebar />
@@ -28,6 +29,9 @@ function PenjualHome() {
                 
             </div>
         </div>
+        <Footer/>
+
+</Helmet>
     );
 }
 

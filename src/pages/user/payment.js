@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Container, Button, Form, FormGroup, Label, Input, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import axios from 'axios';
+import Header from "../../components/header/HeaderUser";
+import Footer from "../../components/Footer/Footer";
+import  Helmet  from '../../components/Helmet/Helmet';
 
 const Payment = () => {
   const [file, setFile] = useState(null);
@@ -50,6 +53,8 @@ const Payment = () => {
   };
 
   return (
+    <Helmet title={"payment"}>
+        <Header />
     <Container>
       <h1>Bukti Pembayaran</h1>
       <p>Kirim ke rekening ini: ......</p>
@@ -92,6 +97,9 @@ const Payment = () => {
         </ModalBody>
       </Modal>
     </Container>
+    <Footer/>
+
+        </Helmet>
   );
 };
 

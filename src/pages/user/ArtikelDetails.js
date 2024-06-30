@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router'; // Ubah dari 'react-router-dom' menjadi 'react-router'
 import axios from "axios";
-//import Helmet from '../components/Helmet/Helmet'; // Jika Anda ingin menambahkan judul halaman
+import Helmet from '../../components/Helmet/Helmet'; // Jika Anda ingin menambahkan judul halaman
+import Header from "../../components/header/HeaderUser";
+import Footer from "../../components/Footer/Footer";
 
 const ArtikelDetails = () => {
     const [article, setArticle] = useState(null);
@@ -30,6 +32,8 @@ const ArtikelDetails = () => {
 
 
     return (
+        <Helmet title={"ArtikelDetails"}>
+            <Header/>
         <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
             {/* Judul Artikel */}
             <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', fontFamily: 'Arial, sans-serif' }}>
@@ -55,6 +59,8 @@ const ArtikelDetails = () => {
                 {article.deskripsi_artikel}
             </div>
         </div>
+        <Footer/>
+        </Helmet>
     );
 };
 

@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaCheck, FaEdit, FaTrash, FaPlus, FaTimes, FaSave } from 'react-icons/fa';
 import "../../styles/checkout.css";
+import Header from "../../components/header/HeaderUser";
+import Footer from "../../components/Footer/Footer";
+import  Helmet  from '../../components/Helmet/Helmet';
+
 
 axios.defaults.withCredentials = true;
 
@@ -141,6 +145,8 @@ const AddressModal = ({ showModal, handleCloseModal, handleConfirm, addresses, s
   };
 
   return (
+    <Helmet title={"AddressModal"}>
+      <Header/>
     <div>
       {showModal && (
         <div className="modal" style={{ display: 'block' }} onClick={handleClickOutsideModal}>
@@ -425,6 +431,8 @@ const AddressModal = ({ showModal, handleCloseModal, handleConfirm, addresses, s
         </div>
       )}
     </div>
+    <Footer/>
+    </Helmet>
   );
 };
 

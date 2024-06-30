@@ -7,10 +7,11 @@ import ReactPaginate from "react-paginate";
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Header from "../../components/header/HeaderUser";
+import Footer from "../../components/Footer/Footer";
 
 import "../../styles/produk.css";
 import "../../styles/pagination.css";
-
 
 const Shop = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -75,12 +76,13 @@ const Shop = () => {
 
   return (
     <Helmet title="Product">
+      <Header />
       <CommonSection title="Product" />
 
-      <section>
+      <section className="product-section">
         <Container>
           <Row>
-            <Col>
+            <Col className="product-search">
               <InputGroup>
                 <Input
                   type="text"
@@ -93,11 +95,12 @@ const Shop = () => {
                 </InputGroupText>
               </InputGroup>
             </Col>
-          </Row><br></br>
+          </Row>
+          <br />
           <Row>
             {displayPage.map((item) => (
               <Col lg="3" md="4" sm="6" xs="6" key={item.id_produk} className="mb-4">
-                <ProductCard item={item} onAddToCart={() => handleAddToCart(item)} />
+                <ProductCard item={item} onAddToCart={() => handleAddToCart(item)} className="product-card" />
               </Col>
             ))}
           </Row>
@@ -115,14 +118,13 @@ const Shop = () => {
         </Container>
       </section>
 
-      {/* Icon keranjang dengan jumlah item */}
       <div className="cart-icon">
         <i className="fa fa-shopping-cart"></i>
         {cartItems.length > 0 && <span className="cart-count">{cartItems.length}</span>}
       </div>
 
-      {/* Toast Container */}
       <ToastContainer />
+      <Footer />
     </Helmet>
   );
 };

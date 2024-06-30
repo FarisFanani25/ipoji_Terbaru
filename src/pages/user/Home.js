@@ -15,6 +15,9 @@ import testimonialImg1 from "../../assets/images/testimonial1.jpg";
 import testimonialImg2 from "../../assets/images/testimonial2.jpg";
 import testimonialImg3 from "../../assets/images/testimonial3.jpg";
 import serviceData from "../../assets/data/serviceData";
+import Header from "../../components/header/HeaderUser";
+import Footer from "../../components/Footer/Footer";
+
 const Home = () => {
   const [products, setProducts] = useState([]);
   const carouselRef = useRef(null);
@@ -122,6 +125,7 @@ const Home = () => {
 
   return (
     <Helmet title={"Home"}>
+      <Header />
       <section className="hero__section">
         <Container>
           <Row>
@@ -174,13 +178,6 @@ const Home = () => {
         <Container>
           <Row>
             <Col md="12">
-              {/* <div className="info-header">
-                                <h2 className="section-title">MAU PELUANG BISNIS YANG LARIS TERUS MENERUS?</h2>
-                                <div className="info-buttons">
-                                    <button className="info-button">SAYA MAU</button>
-                                    <button className="info-button">PELAJARI DULU</button>
-                                </div>
-                            </div> */}
               <h2 className="section-title">
                 Alasan Anda Sebaiknya Beli Beras Organik di IPOJI
               </h2>
@@ -268,71 +265,56 @@ const Home = () => {
         </div>
       </section>
 
-      {/* <Services /> */}
-      <Row>
-        <Col md="12">
-          <div className="info-header">
-            <h2 className="section-title">LIHAT LEBIH LENGKAP DI KATALOG</h2>
-            <div className="info-buttons">
-              <button className="info-button1">CEK KATALOG</button>
-            </div>
-          </div>
-        </Col>
-      </Row>
+      <section>
+        <Container>
+          <Row>
+            <Col lg="12" className="text-center">
+              <h2 className="section-title">Layanan Kami</h2>
+            </Col>
+            <Services />
+          </Row>
+        </Container>
+      </section>
 
-      <Container>
-        <section className="testimonial-section">
-          <h3 className="section_title">Apa kata pelanggan kami?</h3>
-          <div className="testimonial-carousel-container">
-            <button
-              className="carousel-control left"
-              onClick={() => scrollTestimonials("left")}
-            >
-              &lt;
-            </button>
-            <div className="testimonial-carousel" ref={testimonialCarouselRef}>
-              {testimonials.map((testimonial, index) => (
-                <div key={index} className="testimonial-item">
-                  <div className="testimonial-card">
-                    <img
-                      src={testimonial}
-                      alt={`Testimonial ${index + 1}`}
-                      className="w-100"
-                    />
-                  </div>
+      <section className="product-section">
+        <h3 className="section_title">Testimoni</h3>
+        <div className="product-carousel-container">
+          <button
+            className="carousel-control left"
+            onClick={() => scrollTestimonials("left")}
+          >
+            &lt;
+          </button>
+          <div className="product-carousel" ref={testimonialCarouselRef}>
+            {testimonials.map((testimonial, index) => (
+              <div key={index} className="product-item">
+                <div className="testimonial-card">
+                  <img src={testimonial} alt={`Testimonial ${index + 1}`} />
                 </div>
-              ))}
-            </div>
-            <button
-              className="carousel-control right"
-              onClick={() => scrollTestimonials("right")}
-            >
-              &gt;
-            </button>
+              </div>
+            ))}
           </div>
-        </section>
-      </Container>
+          <button
+            className="carousel-control right"
+            onClick={() => scrollTestimonials("right")}
+          >
+            &gt;
+          </button>
+        </div>
+      </section>
 
-      <Container className="info-section3">
-        <Row>
-          <Col>
-            <div className="info-header2">
-              <h2 className="section-title">Keuntungan belanja di IPOJI</h2>
+      <section className="trending__products">
+        <Container>
+          <Row>
+            <Col lg="12" className="text-center">
+              <h2 className="section__title">Artikel Terbaru</h2>
+            </Col>
+            <ArtikelList />
+          </Row>
+        </Container>
+      </section>
 
-              <Services />
-            </div>
-          </Col>
-        </Row>
-      </Container>
-
-      <Container className="info-section3">
-        <Row>
-          <Col>
-            <h1 className="section-title3">Artikel Seputar Beras Sehat</h1>
-          </Col>
-          <ArtikelList />
-        </Row>
-      </Container>
+      <Footer />
     </Helmet>
   );
 };

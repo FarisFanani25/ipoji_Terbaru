@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
+import Header from "../../components/header/HeaderUser";
+import Footer from "../../components/Footer/Footer";
+import  Helmet  from '../../components/Helmet/Helmet';
 
 
 const PembayaranForm = () => {
@@ -36,6 +39,8 @@ const PembayaranForm = () => {
     };
 
     return (
+        <Helmet title={"order"}>
+        <Header />
         <div className="container mt-5">
             <h1 className="mb-4">Halaman Pembayaran</h1>
             {message && <div className="alert alert-info">{message}</div>}
@@ -77,6 +82,9 @@ const PembayaranForm = () => {
                 </div>
             </form>
         </div>
+        <Footer/>
+
+        </Helmet>
     );
 };
 

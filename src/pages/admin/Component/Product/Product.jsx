@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Header from "../../../../components/header/Header";
+import Footer from "../../../../components/Footer/FooterAdmin";
+import  Helmet  from '../../../../components/Helmet/Helmet';
 import {
   CButton,
   CTable,
@@ -165,6 +168,8 @@ function ProdukPage() {
   };
 
   return (
+    <Helmet title={"home"}>
+        <Header />
     <div className='body-flex'>
       <div className="flex">
         <div className='col-10 p-5'>
@@ -377,6 +382,9 @@ function ProdukPage() {
         </Modal.Footer>
       </Modal>
     </div>
+    <Footer/>
+
+</Helmet>
   );
 }
 

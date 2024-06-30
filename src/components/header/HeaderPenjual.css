@@ -1,0 +1,146 @@
+/* HeaderPenjual.css */
+
+/* General Header Styles */
+.header-penjual {
+    background: linear-gradient(45deg, #000428, #004e92);
+    padding: 20px 0;
+    color: #fff;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  .header-penjual.sticky-header {
+    background: linear-gradient(45deg, #004e92, #000428);
+  }
+  
+  .nav-wrapper-penjual {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo-penjual {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo-penjual img {
+    width: 40px;
+    margin-right: 10px;
+  }
+  
+  .logo-penjual h1 {
+    font-size: 24px;
+    color: #ffd700;
+  }
+  
+  /* Navigation Menu */
+  .navigation-penjual {
+    display: flex;
+  }
+  
+  .navigation-penjual .menu-penjual {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .navigation-penjual .menu-penjual li {
+    position: relative;
+  }
+  
+  .navigation-penjual .menu-penjual li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s ease;
+  }
+  
+  .navigation-penjual .menu-penjual li a:hover {
+    color: #ffd700;
+  }
+  
+  /* Icons */
+  .nav-icons-penjual {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .nav-icons-penjual .icon-penjual i {
+    font-size: 24px;
+    color: #fff;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-icons-penjual .icon-penjual i:hover {
+    color: #ffd700;
+  }
+  
+  .user-icon-penjual {
+    cursor: pointer;
+  }
+  
+  .user-icon-penjual .user-icon-img-penjual {
+    width: 30px;
+    border-radius: 50%;
+  }
+  
+  .popup-penjual {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .popup-penjual button {
+    background: #000428;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .popup-penjual button:hover {
+    background: #004e92;
+  }
+  
+  /* Mobile Menu */
+  .mobile-menu-penjual {
+    display: none;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    .navigation-penjual {
+      display: none;
+    }
+  
+    .navigation-penjual.active-menu-penjual {
+      display: block;
+      position: absolute;
+      top: 70px;
+      right: 20px;
+      background: #000428;
+      border-radius: 5px;
+      padding: 20px;
+    }
+  
+    .navigation-penjual .menu-penjual {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .mobile-menu-penjual {
+      display: block;
+    }
+  }
+  

@@ -36,7 +36,7 @@ function ItemLists({ type }) {
     switch (type) {
         case 'user':
             data = {
-                title: 'USERS',
+                title: 'PENGGUNA',
                 isMoney: false,
                 count: count,
                 icon: (
@@ -48,14 +48,14 @@ function ItemLists({ type }) {
                         className="icon"
                     />
                 ),
-                link: 'See all users',
+                link: 'Lihat daftar pengguna',
                 linkto: '/admin/user',
             };
             break;
 
         case 'orders':
             data = {
-                title: 'ORDERS',
+                title: 'ARTIKEL',
                 isMoney: false,
                 count: 34,
 
@@ -68,13 +68,13 @@ function ItemLists({ type }) {
                         className="icon"
                     />
                 ),
-                link: 'View all orders',
-                linkto: '/admin/orders',
+                link: 'Lihat Daftar Artikel',
+                linkto: '/admin/listadmin',
             };
             break;
         case 'products':
             data = {
-                title: 'PRODUCTS',
+                title: 'PRODUK',
                 isMoney: true,
                 count: 107,
                 icon: (
@@ -86,13 +86,13 @@ function ItemLists({ type }) {
                         className="icon"
                     />
                 ),
-                link: 'See all products',
+                link: 'LIHAT DAFTAR PRODUK',
                 linkto: '/admin/products',
             };
             break;
         case 'balance':
             data = {
-                title: 'DELIVERY',
+                title: 'PENGIRIMAN',
                 count: 444,
                 isMoney: true,
                 icon: (
@@ -104,8 +104,8 @@ function ItemLists({ type }) {
                         className="icon"
                     />
                 ),
-                link: 'See all details',
-                linkto: '/',
+                link: 'LIHAT DAFTAR PENGIRIMAN',
+                linkto: '/admin/delivery',
             };
             break;
         default:

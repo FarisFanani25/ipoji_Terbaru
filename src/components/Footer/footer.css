@@ -1,46 +1,65 @@
+/* footer.css */
+
 .footer {
+    background-color: #4B5320;
+    color: #fff;
     padding-top: 60px;
     padding-bottom: 30px;
-    background-color: #4B5320;
-
 }
 
-.footer__text{
-    line-height: 30px;
-    color: rgba(255, 255, 255, 0.735);
-}
-
-.footer__quick-links ul li{
-    background: transparent !important;
-}
-
-.footer__quick-links ul li a{
-    color: rgba(255, 255, 255, 0.735);
-}
-
-.quick__links-title{
+.logo h1 {
+    font-size: 2.5rem;
     margin-bottom: 20px;
-    color: #fff;
-    font-size: 1.1rem;
 }
 
-.footer__contact li span, 
-.footer__contact li p {
-    color: rgba(255, 255, 255, 0.735);
+.footer__text {
+    line-height: 1.6;
 }
 
-.footer__contact li span{
+.footer__quick-links {
+    margin-bottom: 30px;
+}
+
+.quick__links-title {
     font-size: 1.2rem;
+    margin-bottom: 10px;
 }
 
-.footer__contact p{
-    font-size: .9rem;
+.footer__quick-links a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 5px;
+    transition: color 0.3s ease;
 }
 
-.footer__copyright{
-    color: rgba(255, 255, 255, 0.735);
-    font-size: 0.9rem;
+.footer__quick-links a:hover {
+    color: #fff;
+}
+
+.footer__contact {
+    list-style: none;
+    padding-left: 0;
     margin-top: 50px;
-    text-align: center;
 }
 
+.footer__contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.footer__contact-item span {
+    margin-right: 10px;
+}
+
+.footer__copyright {
+    font-size: 0.9rem;
+    margin-top: 30px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.footer__contact p {
+    margin-bottom: 0; /* Menghilangkan margin bottom pada paragraph di dalam contact item */
+}

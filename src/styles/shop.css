@@ -1,60 +1,94 @@
+/* produk.css */
 
-
-.filter__widget select {
-    padding: 8px 20px;
-    border: 1px solid var(--primary-color);
-    cursor: pointer;
-    border-radius: 5px;
-    background: var(--primary-color);
-    color: #fff;
-}
-
-.filter__widget select:focus{
-    outline: none !important;
-}
-
-.filter__widget select option {
-    font-size: 0.9rem;
-}
-
-.search__box{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid var(--primary-color);
-    border-radius: 5px;
-    padding-right: 12px;
-    padding-left: 2px;
-    cursor: pointer;
-}
-
-.search__box input {
-    width: 100%;
-    border: none;
-    outline: none;
-    padding: 8px 10px;
-}
-
-.search__box span {
-    color: var(--primary-color);
-}
-
-.cart-icon {
+/* General Styles */
+.product-section {
+    background-color: #f7f7f7;
+    padding: 60px 0;
+  }
+  
+  .product-search {
+    margin-bottom: 30px;
+  }
+  
+  .product-search input {
+    border-radius: 50px;
+    padding: 10px 20px;
+  }
+  
+  .product-search .btn-primary {
+    border-radius: 50px;
+    margin-left: 10px;
+  }
+  
+  .product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Cart Icon Styles */
+  .cart-icon {
     position: fixed;
-    top: 20px;
+    bottom: 20px;
     right: 20px;
+    background-color: #004e92;
+    color: #fff;
+    border-radius: 50%;
+    padding: 15px;
     font-size: 24px;
-    color: #333;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+  }
+  
+  .cart-icon:hover {
+    background-color: #000428;
   }
   
   .cart-count {
     position: absolute;
     top: -10px;
     right: -10px;
-    background-color: red;
-    color: white;
+    background-color: #ffd700;
+    color: #000;
     border-radius: 50%;
     padding: 5px 10px;
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: bold;
   }
+  
+  /* Pagination Styles */
+  .paginationBttns {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .paginationBttns a {
+    color: #004e92;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 50px;
+    border: 1px solid #004e92;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .paginationBttns a:hover {
+    background-color: #004e92;
+    color: #fff;
+  }
+  
+  .paginationBttns .selected a {
+    background-color: #004e92;
+    color: #fff;
+  }
+  
+  .paginationBttns .disabled a {
+    color: #ddd;
+    pointer-events: none;
+    cursor: default;
+  }
+  

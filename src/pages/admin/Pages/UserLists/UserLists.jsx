@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
+import Header from "../../../../components/header/Header";
+import Footer from "../../../../components/Footer/FooterAdmin";
+import  Helmet  from '../../../../components/Helmet/Helmet';
 import {
     CButton,
     CCard,
@@ -95,6 +98,9 @@ function UserPage() {
     }, []);
 
     return (
+        <Helmet title={"userlist"}>
+        <Header />
+
         <div className='body-flex'>
             <div className="flex">
                 <div className='col-12 p-5'>
@@ -225,6 +231,9 @@ function UserPage() {
                 </div>
             </div>
         </div>
+        <Footer/>
+
+</Helmet>
     );
 }
 
