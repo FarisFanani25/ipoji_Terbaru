@@ -1,14 +1,14 @@
 const serviceData = [
   {
     icon: "ri-truck-line",
-    title: "GRATIS ONGKOR KIRIM",
-    subtitle: "Hingga 0 Rupiah",
+    title: "ONGKOR KIRIM MURAH",
+    subtitle: "Dapatkan Ongkir Murah",
     bg: "#F5F5DC",
   },
   {
     icon: "ri-refresh-line",
     title: "Pemrosesan Pesanan Cepat",
-    subtitle: "Layani Pesanan Secepat Kilat",
+    subtitle: "Proses Pesanan Cepat",
     bg: "#B3E5FC",
   },
   {

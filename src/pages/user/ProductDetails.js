@@ -93,9 +93,6 @@ const ProductDetails = () => {
                     </tr>
                   </tbody>
                 </table>
-                <button className='add-to-cart-btn' onClick={addItemToCart}>
-                  <FontAwesomeIcon icon={faShoppingCart} /> Add to Cart
-                </button>
               </div>
             </Col>
           </Row>

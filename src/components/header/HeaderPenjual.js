@@ -59,23 +59,10 @@ const Header = () => {
                 <li><NavLink to="/penjual/products">PRODUK</NavLink></li>
                 <li><NavLink to="/penjual/anggota">ANGGOTA</NavLink></li>
                 <li><NavLink to="/penjual/orders">PESANAN</NavLink></li>
-                <li><NavLink to="/penjual/delivery">PENGIRIMAN</NavLink></li>
               </ul>
             </div>
 
             <div className="nav-icons-penjual">
-              <span className="icon-penjual">
-                <NavLink to="/cardcoba">
-                  <i className="ri-shopping-bag-line"></i>
-                </NavLink>
-              </span>
-
-              <span className="icon-penjual">
-                <NavLink to="/notifikasi">
-                  <i className="ri-notification-line"></i>
-                </NavLink>
-              </span>
-
               <div className="user-icon-penjual" onClick={togglePopup}>
                 <motion.img
                   whileTap={{ scale: 1 }}
@@ -84,6 +71,8 @@ const Header = () => {
                   className="user-icon-img-penjual"
                 />
               </div>
+
+              
 
               {showPopup && (
                 <motion.div

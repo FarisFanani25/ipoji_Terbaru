@@ -55,7 +55,7 @@ function ItemLists({ type }) {
 
         case 'orders':
             data = {
-                title: 'ORDERS',
+                title: 'ANGGOTA',
                 isMoney: false,
                 count: 34,
 
@@ -68,13 +68,13 @@ function ItemLists({ type }) {
                         className="icon"
                     />
                 ),
-                link: 'View all orders',
-                linkto: '/admin/orders',
+                link: 'Lihat Data Anggota',
+                linkto: '/penjual/anggota',
             };
             break;
         case 'products':
             data = {
-                title: 'PRODUCTS',
+                title: 'PRODUK',
                 isMoney: true,
                 count: 107,
                 icon: (
@@ -86,13 +86,13 @@ function ItemLists({ type }) {
                         className="icon"
                     />
                 ),
-                link: 'See all products',
-                linkto: '/admin/products',
+                link: 'Lihat Produk',
+                linkto: '/penjual/products',
             };
             break;
         case 'balance':
             data = {
-                title: 'DELIVERY',
+                title: 'PESANAN',
                 count: 444,
                 isMoney: true,
                 icon: (
@@ -104,8 +104,8 @@ function ItemLists({ type }) {
                         className="icon"
                     />
                 ),
-                link: 'See all details',
-                linkto: '/',
+                link: 'Lihat Pesanan',
+                linkto: '/penjual/orders',
             };
             break;
         default:

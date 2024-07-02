@@ -61,11 +61,6 @@ function Sidebar2() {
                         </li>
                     </NavLink>
 
-                    <NavLink to="/penjual/delivery" activeClassName="active-link" style={{ textDecoration: 'none' }}>
-                        <li>
-                            <DeliveryDiningIcon className="icon" /> Pengiriman
-                        </li>
-                    </NavLink>
 
                     <li className="spann">Settings</li>
                     <NavLink to="/penjual/profile" activeClassName="active-link" style={{ textDecoration: 'none' }}>
