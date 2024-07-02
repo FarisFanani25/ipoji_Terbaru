@@ -9,7 +9,11 @@ import userIcon from "../../assets/images/user-icon.png";
 const Header = () => {
   const headerRef = useRef(null);
   const menuRef = useRef(null);
-  const [showPopup, setShowPopup] = useState(false);
+  const notificationRef = useRef(null);
+  const userPopupRef = useRef(null);
+  const [showUserPopup, setShowUserPopup] = useState(false);
+  const [showNotificationPopup, setShowNotificationPopup] = useState(false);
+  const [notifications, setNotifications] = useState([]);
 
   const stickyHeaderFunc = () => {
     const handleScroll = () => {
@@ -36,12 +40,40 @@ const Header = () => {
     return () => cleanup();
   }, []);
 
+  const handleClickOutside = (event) => {
+    if (
+      notificationRef.current &&
+      !notificationRef.current.contains(event.target)
+    ) {
+      setShowNotificationPopup(false);
+    }
+
+    if (userPopupRef.current && !userPopupRef.current.contains(event.target)) {
+      setShowUserPopup(false);
+    }
+  };
+
+  useEffect(() => {
+    if (showNotificationPopup || showUserPopup) {
+      document.addEventListener("click", handleClickOutside, true);
+    } else {
+      document.removeEventListener("click", handleClickOutside, true);
+    }
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  }, [showNotificationPopup, showUserPopup]);
+
   const menuToggle = () => {
     if (menuRef.current) {
       menuRef.current.classList.toggle("user-active__menu");
     }
   };
-  const togglePopup = () => setShowPopup(!showPopup);
+
+  const toggleUserPopup = () => setShowUserPopup(!showUserPopup);
+
+  const toggleNotificationPopup = () => setShowNotificationPopup(!showNotificationPopup);
 
   return (
     <header className="user-header" ref={headerRef}>
@@ -71,13 +103,31 @@ const Header = () => {
                 </NavLink>
               </span>
 
-              <span className="user-cart__icon">
-                <NavLink to="/notifikasi">
+              <span className="user-cart__icon" onClick={toggleNotificationPopup}>
                 <i className="ri-notification-line"></i>
-                </NavLink>
               </span>
 
-              <div className="user-user__icon" onClick={togglePopup}>
+              {showNotificationPopup && (
+                <motion.div
+                  className="notification-popup"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  ref={notificationRef}
+                >
+                  {notifications.length === 0 ? (
+                    <p>Tidak ada notifikasi</p>
+                  ) : (
+                    <ul>
+                      {notifications.map((notification, index) => (
+                        <li key={index}>{notification}</li>
+                      ))}
+                    </ul>
+                  )}
+                </motion.div>
+              )}
+
+              <div className="user-user__icon" onClick={toggleUserPopup}>
                 <motion.img
                   whileTap={{ scale: 1 }}
                   src={userIcon}
@@ -86,12 +136,13 @@ const Header = () => {
                 />
               </div>
 
-              {showPopup && (
+              {showUserPopup && (
                 <motion.div
                   className="user-popup"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
+                  ref={userPopupRef}
                 >
                   <button onClick={() => alert('Logged out!')}>Log Out</button>
                 </motion.div>
