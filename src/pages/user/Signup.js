@@ -9,6 +9,7 @@ const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('user'); // Default role
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -19,7 +20,8 @@ const Signup = () => {
       const response = await axios.post('http://localhost:8080/api/register', {
         name: name,
         email: email,
-        password: password
+        password: password,
+        role: role // Send role to backend
       });
 
       // Handle successful response
@@ -32,7 +34,7 @@ const Signup = () => {
       navigate("/login");
     } catch (error) {
       // Handle error
-      if (error.response.status === 409) {
+      if (error.response && error.response.status === 409) {
         setError('Email sudah pernah digunakan');
       } else {
         console.error('Error inserting data', error);
@@ -42,11 +44,10 @@ const Signup = () => {
 
   return (
     <section>
-      
       <Container>
         <div className="signup-container p-4" style={{ boxShadow: "0 0 20px rgba(0, 0, 0, 0.1)" }}>
           <Row className="align-items-center">
-          <Col lg="6" md="6" sm="12">
+            <Col lg="6" md="6" sm="12">
               <img src={padiImage} alt="Padi" className="img-fluid" style={{ maxWidth: '90%', height: 'auto', marginBottom: '20px', borderRadius: '15px' }} />
             </Col>
             <Col lg="6" md="6" sm="12" className="text-left">
@@ -81,6 +82,16 @@ const Signup = () => {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
+                <div className="form-group mt-3">
+                  <select
+                    className="form-control"
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                  >
+                    <option value="user">User</option>
+                    <option value="penjual">Penjual</option>
+                  </select>
+                </div>
                 <button
                   type="submit"
                   className="btn mt-4"
@@ -96,7 +107,6 @@ const Signup = () => {
               </form>
               <Link to="/login">Sudah memiliki akun? Klik Disini</Link>
             </Col>
-            
           </Row>
         </div>
       </Container>

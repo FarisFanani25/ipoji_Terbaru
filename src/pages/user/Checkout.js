@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "../../styles/checkout.css";
 import AddressModal from './AddressModal'; // Ensure the path is correct
-import Header from "../../components/header/HeaderUser";
-import Footer from "../../components/Footer/Footer";
-import  Helmet  from '../../components/Helmet/Helmet';
+import { useLocation } from 'react-router-dom';
 
 axios.defaults.withCredentials = true;
 
@@ -34,10 +32,12 @@ const fetchAddresses = async (userId, setAddresses) => {
   }
 };
 
-const Checkout = ({ productCost }) => {
+const Checkout = () => {
   const [primaryAddress, setPrimaryAddress] = useState({});
   const [addresses, setAddresses] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const location = useLocation(); // Use useLocation to access state
+  const { selectedItems, total } = location.state || { selectedItems: [], total: 0 }; // Destructure selectedItems and total from location.state
 
   useEffect(() => {
     const storedUserId = localStorage.getItem('user_id');
@@ -133,11 +133,9 @@ const Checkout = ({ productCost }) => {
   };  
 
   const totalShippingCost = 0;
-  const totalCost = productCost + totalShippingCost;
+  const totalCost = total + totalShippingCost;
 
   return (
-    <Helmet title={"Checkout"}>
-        <Header />
     <div className="container">
       <h1 className="mt-5">Checkout</h1>
       <div className="primary-address">
@@ -165,6 +163,25 @@ const Checkout = ({ productCost }) => {
         )}
       </div>
       <div className="mt-5">
+        <h3>Produk yang Dipilih</h3>
+        {selectedItems.map(item => (
+          <div key={item.id} className="list-group-item d-flex justify-content-between align-items-center">
+            <div className="d-flex align-items-center">
+              <img
+                src={`http://localhost:8080/gambar/${item.gambar_produk}`}
+                alt={item.gambar_produk}
+                style={{ width: '100px', height: '100px', marginRight: '20px' }}
+              />
+              <div>
+                <h5 className="mb-1">{item.nama_produk}</h5>
+                <p className="mb-1">Rp. {item.harga_produk}</p>
+                <p className="mb-1">Quantity: {item.quantity}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-5">
         <h2>Ringkasan Biaya</h2>
         <div className="row">
           <div className="col-md-6">
@@ -173,7 +190,7 @@ const Checkout = ({ productCost }) => {
             <div>Total Biaya:</div>
           </div>
           <div className="col-md-6 text-right">
-            <div>{productCost}</div>
+            <div>{total}</div>
             <div>{totalShippingCost}</div>
             <div>{totalCost}</div>
           </div>
@@ -183,10 +200,6 @@ const Checkout = ({ productCost }) => {
         <button className="btn btn-success">Lanjut Pembayaran</button>
       </div>
     </div>
-
-    <Footer/>
-
-        </Helmet>
   );
 };
 

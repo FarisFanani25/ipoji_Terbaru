@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Card.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
-import Header from "../../components/header/HeaderUser";
-import Footer from "../../components/Footer/Footer";
-import  Helmet  from '../../components/Helmet/Helmet';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -15,6 +12,7 @@ const Cart = () => {
   const [total, setTotal] = useState(0);
   const [modal, setModal] = useState(false);
   const [itemToRemove, setItemToRemove] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -41,8 +39,8 @@ const Cart = () => {
   }, []);
 
   useEffect(() => {
-    calculateTotal(cartItems);
-  }, [cartItems]);
+    calculateTotal(selectedItems); // Hitung total dari selectedItems
+  }, [selectedItems]);
 
   const calculateTotal = (items) => {
     const total = items.reduce((sum, item) => sum + item.harga_produk * item.quantity, 0);
@@ -96,6 +94,7 @@ const Cart = () => {
 
       const updatedItems = cartItems.map(item => item.id === id ? { ...item, quantity } : item);
       setCartItems(updatedItems);
+      setSelectedItems(selectedItems.map(item => item.id === id ? { ...item, quantity } : item));
       calculateTotal(updatedItems);
       toast.success('Quantity updated');
     } catch (error) {
@@ -117,60 +116,11 @@ const Cart = () => {
     }
   };
 
-  const handleCheckout = async () => {
-    const userId = localStorage.getItem('user_id');
-    if (!userId) {
-      console.error('User ID not found in localStorage');
-      return;
-    }
-
-    try {
-      const response = await fetch('http://localhost:8080/midtrans/transaction', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          total: total,
-          first_name: 'John',
-          last_name: 'Doe',
-          email: 'johndoe@example.com',
-          phone: '08123456789'
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to create transaction');
-      }
-
-      const data = await response.json();
-      window.snap.pay(data.token, {
-        onSuccess: (result) => {
-          toast.success('Payment successful!');
-          console.log(result);
-        },
-        onPending: (result) => {
-          toast.info('Waiting for payment!');
-          console.log(result);
-        },
-        onError: (result) => {
-          toast.error('Payment failed!');
-          console.log(result);
-        },
-        onClose: () => {
-          toast.warning('You closed the popup without finishing the payment');
-        },
-      });
-    } catch (error) {
-      console.error('Error during checkout:', error);
-      toast.error('Failed to initiate checkout');
-    }
+  const handleCheckout = () => {
+    navigate('/checkout', { state: { selectedItems, total } });
   };
 
   return (
-    <Helmet title={"CartCoba"}>
-    <Header />
-
     <div className="container mt-5">
       <h2 className="text-center mb-4">Keranjang</h2>
       <div className="row">
@@ -211,7 +161,7 @@ const Cart = () => {
       <div className="row mt-4">
         <div className="col-12 text-right">
           <h3>Total: Rp. {total}</h3>
-          <Link to="/checkout" className="btn btn-primary mt-3 mb-4" onClick={handleCheckout}>Checkout</Link>
+          <button className="btn btn-primary mt-3 mb-4" onClick={handleCheckout}>Checkout</button>
         </div>
       </div>
       {/* Toast Container */}
@@ -228,10 +178,6 @@ const Cart = () => {
         </ModalFooter>
       </Modal>
     </div>
-
-    <Footer/>
-
-</Helmet>
   );
 };
 
