@@ -3,6 +3,9 @@ import axios from 'axios';
 import "../../styles/checkout.css";
 import AddressModal from './AddressModal'; // Ensure the path is correct
 import { useLocation } from 'react-router-dom';
+import Header from "../../components/header/HeaderUser";
+import Footer from "../../components/Footer/Footer";
+import  Helmet  from '../../components/Helmet/Helmet';
 
 axios.defaults.withCredentials = true;
 
@@ -136,6 +139,8 @@ const Checkout = () => {
   const totalCost = total + totalShippingCost;
 
   return (
+    <Helmet title={"checkout"}>
+    <Header />
     <div className="container">
       <h1 className="mt-5">Checkout</h1>
       <div className="primary-address">
@@ -200,6 +205,8 @@ const Checkout = () => {
         <button className="btn btn-success">Lanjut Pembayaran</button>
       </div>
     </div>
+    <Footer/>
+    </Helmet>
   );
 };
 

@@ -5,6 +5,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import Header from "../../components/header/HeaderUser";
+import Footer from "../../components/Footer/Footer";
+import  Helmet  from '../../components/Helmet/Helmet';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -121,6 +124,8 @@ const Cart = () => {
   };
 
   return (
+    <Helmet title={"Cart"}>
+    <Header />
     <div className="container mt-5">
       <h2 className="text-center mb-4">Keranjang</h2>
       <div className="row">
@@ -178,6 +183,9 @@ const Cart = () => {
         </ModalFooter>
       </Modal>
     </div>
+    <Footer/>
+
+</Helmet>
   );
 };
 
