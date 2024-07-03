@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "../../styles/checkout.css";
 import AddressModal from './AddressModal'; // Ensure the path is correct
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Header from "../../components/header/HeaderUser";
 import Footer from "../../components/Footer/Footer";
 import Helmet from '../../components/Helmet/Helmet';
 
 axios.defaults.withCredentials = true;
-
+ 
 const fetchPrimaryAddress = async (userId, setPrimaryAddress) => {
   try {
     const response = await axios.get(`http://localhost:8080/address/primary/${userId}`);
@@ -42,6 +42,7 @@ const Checkout = () => {
   const [deliveryOption, setDeliveryOption] = useState('self-pickup');
   const location = useLocation(); // Use useLocation to access state
   const { selectedItems, total } = location.state || { selectedItems: [], total: 0 }; // Destructure selectedItems and total from location.state
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUserId = localStorage.getItem('user_id');
@@ -143,6 +144,34 @@ const Checkout = () => {
   const shippingCost = deliveryOption === 'delivery' && total < 100000 ? 20000 : 0;
   const totalCost = total + shippingCost;
 
+  const handleCheckout = async () => {
+    const storedUserId = localStorage.getItem('user_id');
+    if (storedUserId && primaryAddress.id_addresses) {
+      try {
+        const orderData = {
+          user_id: storedUserId,
+          address_id: primaryAddress.id_addresses,
+          total_cost: totalCost,
+          items: selectedItems.map(item => ({
+            product_id: item.id,
+            quantity: item.quantity
+          }))
+        };
+
+        const response = await axios.post('http://localhost:8080/orders', orderData, {
+          headers: { 'Content-Type': 'application/json' }
+        });
+        
+        console.log('Order created:', response.data);
+        navigate('/order-success'); // Redirect ke halaman sukses setelah order berhasil
+      } catch (error) {
+        console.error('There was an error creating the order!', error.response || error.message);
+      }
+    } else {
+      console.error('User ID or primary address not found');
+    }
+  };
+
   return (
     <Helmet title={"checkout"}>
       <Header />
@@ -202,7 +231,7 @@ const Checkout = () => {
               checked={deliveryOption === 'self-pickup'}
               onChange={handleDeliveryOptionChange}
             />
-            <label htmlFor="self-pickup">Ambil Sendiri (Gratis Ongkir)</label>
+            <label htmlFor="self-pickup">Ambil Sendiri</label>
           </div>
           <div>
             <input
@@ -213,28 +242,17 @@ const Checkout = () => {
               checked={deliveryOption === 'delivery'}
               onChange={handleDeliveryOptionChange}
             />
-            <label htmlFor="delivery">Dikirim Penjual (Mendapat biaya ongkir)</label>
+            <label htmlFor="delivery">Dikirim</label>
           </div>
         </div>
-        
         <div className="mt-5">
-          <h2>Ringkasan Biaya</h2>
-          <ul className="list-group">
-            <li className="list-group-item d-flex justify-content-between align-items-center">
-              Total Harga Produk:
-              <span>Rp. {total}</span>
-            </li>
-            <li className="list-group-item d-flex justify-content-between align-items-center">
-              Biaya Pengiriman:
-              <span>Rp. {shippingCost}</span>
-            </li>
-            <li className="list-group-item d-flex justify-content-between align-items-center">
-              Total Biaya:
-              <span>Rp. {totalCost}</span>
-            </li>
-          </ul>
+          <h3>Ringkasan Pembayaran</h3>
+          <p>Total Harga Barang: Rp. {total}</p>
+          <p>Ongkos Kirim: Rp. {shippingCost}</p>
+          <p>Total Pembayaran: Rp. {totalCost}</p>
+          <button className="btn btn-success" onClick={handleCheckout}>Lanjut Pembayaran</button>
         </div>
-        </div>
+      </div>
       <Footer />
     </Helmet>
   );
