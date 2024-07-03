@@ -57,22 +57,11 @@ const Header = () => {
                 <li><NavLink to="/admin">DASHBOARD</NavLink></li>
                 <li><NavLink to="/admin/user">PENGGUNA</NavLink></li>
                 <li><NavLink to="/admin/listadmin">ARTIKEL</NavLink></li>
-                <li><NavLink to="/admin/delivery">PESANAN</NavLink></li>
+                <li><NavLink to="/admin/products">PRODUK</NavLink></li>
               </ul>
             </div>
 
             <div className="nav-icons">
-              <span className="icon">
-                <NavLink to="/cardcoba">
-                  <i className="ri-shopping-bag-line"></i>
-                </NavLink>
-              </span>
-
-              <span className="icon">
-                <NavLink to="/notifikasi">
-                <i className="ri-notification-line"></i>
-                </NavLink>
-              </span>
 
               <div className="user-icon" onClick={togglePopup}>
                 <motion.img

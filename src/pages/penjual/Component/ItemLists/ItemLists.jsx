@@ -38,7 +38,7 @@ function ItemLists({ type }) {
             data = {
                 title: 'USERS',
                 isMoney: false,
-                count: count,
+                
                 icon: (
                     <PermIdentityIcon
                         style={{
@@ -57,7 +57,7 @@ function ItemLists({ type }) {
             data = {
                 title: 'ANGGOTA',
                 isMoney: false,
-                count: 34,
+                
 
                 icon: (
                     <LocalGroceryStoreOutlinedIcon
@@ -76,7 +76,7 @@ function ItemLists({ type }) {
             data = {
                 title: 'PRODUK',
                 isMoney: true,
-                count: 107,
+                
                 icon: (
                     <TableChartIcon
                         style={{
@@ -93,8 +93,8 @@ function ItemLists({ type }) {
         case 'balance':
             data = {
                 title: 'PESANAN',
-                count: 444,
-                isMoney: true,
+                
+                
                 icon: (
                     <DeliveryDiningIcon
                         style={{
