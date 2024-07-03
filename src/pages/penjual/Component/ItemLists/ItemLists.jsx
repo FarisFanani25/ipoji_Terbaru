@@ -38,7 +38,7 @@ function ItemLists({ type }) {
             data = {
                 title: 'USERS',
                 isMoney: false,
-                count: count,
+                
                 icon: (
                     <PermIdentityIcon
                         style={{
@@ -55,9 +55,9 @@ function ItemLists({ type }) {
 
         case 'orders':
             data = {
-                title: 'ORDERS',
+                title: 'ANGGOTA',
                 isMoney: false,
-                count: 34,
+                
 
                 icon: (
                     <LocalGroceryStoreOutlinedIcon
@@ -68,15 +68,15 @@ function ItemLists({ type }) {
                         className="icon"
                     />
                 ),
-                link: 'View all orders',
-                linkto: '/admin/orders',
+                link: 'Lihat Data Anggota',
+                linkto: '/penjual/anggota',
             };
             break;
         case 'products':
             data = {
-                title: 'PRODUCTS',
+                title: 'PRODUK',
                 isMoney: true,
-                count: 107,
+                
                 icon: (
                     <TableChartIcon
                         style={{
@@ -86,15 +86,15 @@ function ItemLists({ type }) {
                         className="icon"
                     />
                 ),
-                link: 'See all products',
-                linkto: '/admin/products',
+                link: 'Lihat Produk',
+                linkto: '/penjual/products',
             };
             break;
         case 'balance':
             data = {
-                title: 'DELIVERY',
-                count: 444,
-                isMoney: true,
+                title: 'PESANAN',
+                
+                
                 icon: (
                     <DeliveryDiningIcon
                         style={{
@@ -104,8 +104,8 @@ function ItemLists({ type }) {
                         className="icon"
                     />
                 ),
-                link: 'See all details',
-                linkto: '/',
+                link: 'Lihat Pesanan',
+                linkto: '/penjual/orders',
             };
             break;
         default:

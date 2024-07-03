@@ -10,8 +10,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import Header from "../../components/header/HeaderUser";
 import Footer from "../../components/Footer/Footer";
 
+
 import "../../styles/produk.css";
 import "../../styles/pagination.css";
+
 
 const Shop = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -75,14 +77,15 @@ const Shop = () => {
   };
 
   return (
+    
     <Helmet title="Product">
-      <Header />
+      <Header/>
       <CommonSection title="Product" />
 
-      <section className="product-section">
+      <section>
         <Container>
           <Row>
-            <Col className="product-search">
+            <Col>
               <InputGroup>
                 <Input
                   type="text"
@@ -95,12 +98,11 @@ const Shop = () => {
                 </InputGroupText>
               </InputGroup>
             </Col>
-          </Row>
-          <br />
+          </Row><br></br>
           <Row>
             {displayPage.map((item) => (
               <Col lg="3" md="4" sm="6" xs="6" key={item.id_produk} className="mb-4">
-                <ProductCard item={item} onAddToCart={() => handleAddToCart(item)} className="product-card" />
+                <ProductCard item={item} onAddToCart={() => handleAddToCart(item)} />
               </Col>
             ))}
           </Row>
@@ -118,13 +120,15 @@ const Shop = () => {
         </Container>
       </section>
 
+      {/* Icon keranjang dengan jumlah item */}
       <div className="cart-icon">
         <i className="fa fa-shopping-cart"></i>
         {cartItems.length > 0 && <span className="cart-count">{cartItems.length}</span>}
       </div>
 
+      {/* Toast Container */}
       <ToastContainer />
-      <Footer />
+      <Footer/>
     </Helmet>
   );
 };

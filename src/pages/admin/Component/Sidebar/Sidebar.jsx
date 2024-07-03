@@ -50,13 +50,6 @@ function Sidebar() {
                     </NavLink>
 
 
-                    <li className="spann">Settings</li>
-
-                    <NavLink to="/admin/logout" activeClassName="active-link" style={{ textDecoration: 'none' }}>
-                        <li>
-                            <LogoutIcon className="icon" /> Keluar
-                        </li>
-                    </NavLink>
                 </ul>
             </div>
         </div>

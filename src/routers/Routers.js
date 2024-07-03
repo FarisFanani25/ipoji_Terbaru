@@ -32,7 +32,7 @@ import AdminProducts from '../pages/admin/Component/Product/Product';
 import Detail from '../pages/admin/Pages/Detail/Detail';
 import AdminRegister from '../pages/admin/Pages/Register/Register';
 import AdminProfile from "../pages/admin/Pages/Profile/profileAdmin";
-import AdminDelivery from "../pages/admin/Component/Delivery/Delivery";
+
 
 // Seller (Penjual) Components
 import PenjualHome from '../pages/penjual/Component/Home/Homepenjual';
@@ -42,7 +42,6 @@ import PenjualLogin from '../pages/penjual/Pages/Login/Login';
 import PenjualUserList from '../pages/penjual/Pages/UserLists/UserLists';
 import PenjualRegister from '../pages/penjual/Pages/Register/Register';
 import PenjualProfile from "../pages/penjual/Pages/Profile/profileAdmin";
-import PenjualDelivery from "../pages/penjual/Component/Delivery/Delivery";
 import PenjualProducts from '../pages/penjual/Component/Product/Product';
 import PenjualAnggota from '../pages/penjual/Component/Anggota/anggota';
 
@@ -101,7 +100,7 @@ const Routers = () => {
             <Route path="/admin/register" element={<AdminRegister />} />
             <Route path="/admin/listadmin" element={<AdminList />} />
             <Route path="/admin/profile" element={<AdminProfile />} />
-            <Route path="/admin/delivery" element={<AdminDelivery />} />
+
             <Route
                 path="/admin/user"
                 element={<UserList inputs={userInpDetails} titlee="User List" type="USER" />}
@@ -122,7 +121,7 @@ const Routers = () => {
             <Route path="/penjual/login" element={<PenjualLogin />} />
             <Route path="/penjual/register" element={<PenjualRegister />} />
             <Route path="/penjual/profile" element={<PenjualProfile />} />
-            <Route path="/penjual/delivery" element={<PenjualDelivery />} />
+        
             <Route path="/penjual/anggota" element={<PenjualAnggota />} />
 
             <Route

@@ -54,14 +54,13 @@ function OrderPage() {
               <CTableHead>
                 <CTableRow>
                   <CTableDataCell>Nama Pelanggan</CTableDataCell>
-                  <CTableDataCell>Phone</CTableDataCell>
+                  <CTableDataCell>No.Handphone</CTableDataCell>
                   <CTableDataCell>Alamat</CTableDataCell>
                   <CTableDataCell>Metode Pembayaran</CTableDataCell>
+                  <CTableDataCell>Item Dibeli</CTableDataCell>
+                  <CTableDataCell>Jumlah dibeli</CTableDataCell>
                   <CTableDataCell>Total Harga</CTableDataCell>
-                  <CTableDataCell>Tanggal Pesan</CTableDataCell>
-                  <CTableDataCell>Item yang Dibeli</CTableDataCell>
                   <CTableDataCell>Status</CTableDataCell>
-                  <CTableDataCell>Actions</CTableDataCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody>
@@ -89,16 +88,22 @@ function OrderPage() {
                       <CTableDataCell>
                         <div className="action-buttons">
                           <CButton
-                            className="accept-button"
-                            onClick={() => updateOrderStatus(item.id, 'Accepted')}
+                            className="process-button"
+                            onClick={() => updateOrderStatus(item.id, 'Diproses')}
                           >
-                            Accept
+                            Diproses
+                          </CButton>
+                          <CButton
+                            className="shipped-button"
+                            onClick={() => updateOrderStatus(item.id, 'Dikirim')}
+                          >
+                            Dikirim
                           </CButton>
                           <CButton
                             className="reject-button"
-                            onClick={() => updateOrderStatus(item.id, 'Rejected')}
+                            onClick={() => updateOrderStatus(item.id, 'Ditolak')}
                           >
-                            Reject
+                            Ditolak
                           </CButton>
                         </div>
                       </CTableDataCell>

@@ -5,15 +5,21 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import "../../styles/product-card.css";
 
 const ProductCard = ({ item }) => {
-  const { id_produk, nama_produk, harga_produk, gambar_produk } = item;
+  const { id_produk, nama_produk, harga_produk, gambar_produk, stok_produk } = item;
   const [isAnimating, setIsAnimating] = useState(false);
   const [animationStyle, setAnimationStyle] = useState({});
+  const [showNotif, setShowNotif] = useState(false);
 
   const handleClick = async (event) => {
-    event.stopPropagation(); // Prevent the click event from propagating to parent elements
+    event.stopPropagation();
     const userId = localStorage.getItem('user_id');
     if (!userId) {
       alert('Please log in first.');
+      return;
+    }
+
+    if (stok_produk <= 0) {
+      setShowNotif(true);
       return;
     }
 
@@ -66,27 +72,29 @@ const ProductCard = ({ item }) => {
   };
 
   return (
-    <div className="product__container" style={{ boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.1)" }}>
+    <div className="product__container">
       <div className="product__item">
         <div className="product__img">
-          <img src={`http://localhost:8080/gambar/${gambar_produk}`} alt={nama_produk} className="w-100" />
-        </div><br></br>
+          <img src={`http://localhost:8080/gambar/${gambar_produk}`} alt={nama_produk} className="img-fluid" />
+        </div>
 
         <div className="product__content">
-          <h5>
-            <Link to={`/detail/${id_produk}`}>{nama_produk}</Link>
+          <h5 className="mb-3">
+            <Link to={`/detail/${id_produk}`} className="text-decoration-none">{nama_produk}</Link>
           </h5>
-          <div className="d-flex align-items-center justify-content-between">
-            <span className="product__price">Rp. {harga_produk}</span>
-            <button className="addTOCart__btn" onClick={handleClick}>
-              <FontAwesomeIcon icon={faShoppingCart} /> 
+          <p className="product__price mb-3">Rp. {harga_produk}</p>
+          {stok_produk > 0 ? (
+            <button className="addToCart__btn" onClick={handleClick}>
+              <FontAwesomeIcon icon={faShoppingCart} className="me-2" /> Tambah ke Keranjang
             </button>
-          </div>
+          ) : (
+            <p className="text-danger fw-bold mb-0">Produk tidak tersedia</p>
+          )}
         </div>
       </div>
       {isAnimating && (
         <div className="floating-cart-animation" style={animationStyle}>
-          <img src={`http://localhost:8080/gambar/${gambar_produk}`} alt={nama_produk} />
+          <img src={`http://localhost:8080/gambar/${gambar_produk}`} alt={nama_produk} className="img-fluid" />
         </div>
       )}
     </div>

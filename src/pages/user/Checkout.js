@@ -141,7 +141,16 @@ const Checkout = () => {
     setDeliveryOption(event.target.value);
   };
 
-  const shippingCost = deliveryOption === 'delivery' && total < 100000 ? 20000 : 0;
+  // Update the shippingCost logic to handle the conditions correctly
+  let shippingCost = 0;
+  if (deliveryOption === 'delivery') {
+    if (total < 100000) {
+      shippingCost = 20000;
+    } else {
+      shippingCost = 0;
+    }
+  }
+
   const totalCost = total + shippingCost;
 
   const handleCheckout = async () => {

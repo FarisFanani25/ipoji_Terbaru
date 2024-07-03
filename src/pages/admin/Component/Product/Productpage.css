@@ -2,19 +2,19 @@
 
 .body-flex {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .flex {
+  flex: 1;
   display: flex;
   justify-content: center;
-  width: 100%;
+  align-items: center;
 }
 
 .col-10 {
-  width: 80%;
+  max-width: 90%;
   margin: auto;
 }
 
@@ -28,28 +28,80 @@
   margin-bottom: 1rem;
 }
 
-.table-action-buttons {
-  display: flex;
-  gap: 10px;
+.p-5 {
+  padding: 3rem !important;
 }
 
-.table-action-buttons .btn {
-  padding: 5px 10px;
+.h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
-.modal-image-preview {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
+/* Custom styles for table (adjust as needed) */
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  background-color: transparent;
+  border-collapse: collapse;
 }
 
-.modal-image-preview img {
-  height: 50px;
-  width: 50px;
-  object-fit: cover;
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
-.modal-footer {
-  display: flex;
-  justify-content: flex-end;
+.table-bordered {
+  border: 1px solid #dee2e6;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #dee2e6;
+  padding: 0.75rem;
+  vertical-align: top;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.075);
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .table-responsive-sm {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+}
+
+@media (max-width: 768px) {
+  .table-responsive-md {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+}
+
+@media (max-width: 992px) {
+  .table-responsive-lg {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+}
+
+@media (max-width: 1200px) {
+  .table-responsive-xl {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
 }

@@ -28,7 +28,7 @@ function Home() {
                     <ItemLists type="user" />
                     <ItemLists type="orders" />
                     <ItemLists type="products" />
-                    <ItemLists type="balance" />
+
                 </div>
 
                 

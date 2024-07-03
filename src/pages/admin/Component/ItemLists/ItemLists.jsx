@@ -38,7 +38,7 @@ function ItemLists({ type }) {
             data = {
                 title: 'PENGGUNA',
                 isMoney: false,
-                count: count,
+                
                 icon: (
                     <PermIdentityIcon
                         style={{
@@ -57,13 +57,13 @@ function ItemLists({ type }) {
             data = {
                 title: 'ARTIKEL',
                 isMoney: false,
-                count: 34,
+                
 
                 icon: (
-                    <LocalGroceryStoreOutlinedIcon
+                    <TableChartIcon
                         style={{
-                            color: '#AC7088',
-                            backgroundColor: '#FFF38C',
+                            color: '#367E18',
+                            backgroundColor: '#A7FFE4',
                         }}
                         className="icon"
                     />
@@ -76,12 +76,12 @@ function ItemLists({ type }) {
             data = {
                 title: 'PRODUK',
                 isMoney: true,
-                count: 107,
+                
                 icon: (
-                    <TableChartIcon
+                    <LocalGroceryStoreOutlinedIcon
                         style={{
-                            color: '#367E18',
-                            backgroundColor: '#A7FFE4',
+                            color: '#AC7088',
+                            backgroundColor: '#FFF38C',
                         }}
                         className="icon"
                     />
@@ -90,24 +90,7 @@ function ItemLists({ type }) {
                 linkto: '/admin/products',
             };
             break;
-        case 'balance':
-            data = {
-                title: 'PENGIRIMAN',
-                count: 444,
-                isMoney: true,
-                icon: (
-                    <DeliveryDiningIcon
-                        style={{
-                            color: '#AC7088',
-                            backgroundColor: '#B1B2FF',
-                        }}
-                        className="icon"
-                    />
-                ),
-                link: 'LIHAT DAFTAR PENGIRIMAN',
-                linkto: '/admin/delivery',
-            };
-            break;
+
         default:
             break;
     }

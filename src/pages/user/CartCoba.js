@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import Header from "../../components/header/HeaderUser";
 import Footer from "../../components/Footer/Footer";
-import  Helmet  from '../../components/Helmet/Helmet';
+import Helmet from '../../components/Helmet/Helmet';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -120,72 +120,78 @@ const Cart = () => {
   };
 
   const handleCheckout = () => {
+    const outOfStockItems = selectedItems.filter(item => item.quantity === 0);
+
+    if (outOfStockItems.length > 0) {
+      toast.error('Some items are out of stock and cannot be checked out.');
+      return;
+    }
+
     navigate('/checkout', { state: { selectedItems, total } });
   };
 
   return (
     <Helmet title={"Cart"}>
-    <Header />
-    <div className="container mt-5">
-      <h2 className="text-center mb-4">Keranjang</h2>
-      <div className="row">
-        <div className="col-12">
-          <div className="list-group">
-            {cartItems.map(item => (
-              <div
-                className={`list-group-item d-flex justify-content-between align-items-center ${selectedItems.some(selectedItem => selectedItem.id === item.id) ? 'selected' : ''}`}
-                key={item.id}
-                onClick={() => handleSelectItem(item)}
-              >
-                <div className="d-flex align-items-center">
-                  <img
-                    src={`http://localhost:8080/gambar/${item.gambar_produk}`}
-                    alt={item.gambar_produk}
-                    style={{ width: '100px', height: '100px', marginRight: '20px' }}
-                  />
-                  <div>
-                    <h5 className="mb-1">{item.nama_produk}</h5>
-                    <p className="mb-1">Rp. {item.harga_produk}</p>
+      <Header />
+      <div className="container mt-5">
+        <h2 className="text-center mb-4">Keranjang</h2>
+        <div className="row">
+          <div className="col-12">
+            <div className="list-group">
+              {cartItems.map(item => (
+                <div
+                  className={`list-group-item d-flex justify-content-between align-items-center ${selectedItems.some(selectedItem => selectedItem.id === item.id) ? 'selected' : ''}`}
+                  key={item.id}
+                  onClick={() => handleSelectItem(item)}
+                >
+                  <div className="d-flex align-items-center">
+                    <img
+                      src={`http://localhost:8080/gambar/${item.gambar_produk}`}
+                      alt={item.gambar_produk}
+                      style={{ width: '100px', height: '100px', marginRight: '20px' }}
+                    />
+                    <div>
+                      <h5 className="mb-1">{item.nama_produk}</h5>
+                      <p className="mb-1">Rp. {item.harga_produk}</p>
+                    </div>
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <input
+                      type="number"
+                      className="form-control mr-2"
+                      value={item.quantity}
+                      onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}
+                      style={{ width: '80px' }}
+                    />
+                    <button className="btn btn-danger" onClick={(e) => { e.stopPropagation(); toggleModal(item); }}>Remove</button>
                   </div>
                 </div>
-                <div className="d-flex align-items-center">
-                  <input
-                    type="number"
-                    className="form-control mr-2"
-                    value={item.quantity}
-                    onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}
-                    style={{ width: '80px' }}
-                  />
-                  <button className="btn btn-danger" onClick={(e) => { e.stopPropagation(); toggleModal(item); }}>Remove</button>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="row mt-4">
-        <div className="col-12 text-right">
-          <h3>Total: Rp. {total}</h3>
-          <button className="btn btn-primary mt-3 mb-4" onClick={handleCheckout}>Checkout</button>
+        <div className="row mt-4">
+          <div className="col-12 text-right">
+            <h3>Total: Rp. {total}</h3>
+            <button className="btn btn-primary mt-3 mb-4" onClick={handleCheckout}>Checkout</button>
+          </div>
         </div>
+        {/* Toast Container */}
+        <ToastContainer />
+        {/* Modal for remove confirmation */}
+        <Modal isOpen={modal} toggle={toggleModal}>
+          <ModalHeader toggle={toggleModal}>Confirm Removal</ModalHeader>
+          <ModalBody>
+            Are you sure you want to remove this item from the cart?
+          </ModalBody>
+          <ModalFooter>
+            <Button color="danger" onClick={handleRemove}>Remove</Button>
+            <Button color="secondary" onClick={toggleModal}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
       </div>
-      {/* Toast Container */}
-      <ToastContainer />
-      {/* Modal for remove confirmation */}
-      <Modal isOpen={modal} toggle={toggleModal}>
-        <ModalHeader toggle={toggleModal}>Confirm Removal</ModalHeader>
-        <ModalBody>
-          Are you sure you want to remove this item from the cart?
-        </ModalBody>
-        <ModalFooter>
-          <Button color="danger" onClick={handleRemove}>Remove</Button>
-          <Button color="secondary" onClick={toggleModal}>Cancel</Button>
-        </ModalFooter>
-      </Modal>
-    </div>
-    <Footer/>
-
-</Helmet>
+      <Footer />
+    </Helmet>
   );
 };
 
