@@ -7,7 +7,7 @@ import heroImg from "../../assets/images/beras.png";
 import thumbIcon from "../../assets/images/thumb-icon.png";
 import qualityIcon from "../../assets/images/quality-icon.png";
 import easyIcon from "../../assets/images/easy-icon.png";
-import Services from "../../services/Services";
+// import Services from "../../services/Services";
 import ArtikelList from "../../components/UI/ArtikelList";
 import "../../styles/home.css";
 import axios from "axios";
@@ -150,7 +150,7 @@ const Home = () => {
                   whileTap={{ scale: 1.2 }}
                   className="buy__button"
                 >
-                  <Link to="/shop">SHOP NOW</Link>
+                  <Link to="/shop">BELI SEKARANG</Link>
                 </motion.button>
               </div>
             </Col>

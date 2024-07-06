@@ -119,7 +119,7 @@ const Checkout = () => {
       console.error('There was an error deleting the address!', error.response || error.message);
     }
   };
-  
+
   const setPrimaryAddressHandler = async (addressId) => {
     console.log('Setting primary address with ID:', addressId);
     const storedUserId = localStorage.getItem('user_id');
@@ -184,12 +184,13 @@ const Checkout = () => {
   return (
     <Helmet title={"checkout"}>
       <Header />
-      <div className="container">
-        <h1 className="mt-5">Checkout</h1>
-        <div className="primary-address">
-          <h3>Alamat Utama</h3>
+      <div className="checkout-container">
+        <h1 className="checkout-title">Checkout</h1>
+        <div className="primary-address checkout-section">
+          <h3 className="checkout-subtitle">Alamat Utama</h3>
           {primaryAddress && (
             <div>
+              <p>Hanya Melayani Area Madiun</p>
               <p>{primaryAddress.full_name}, {primaryAddress.detailed_address}, {primaryAddress.province}, {primaryAddress.city}, {primaryAddress.district}, {primaryAddress.subdistrict}</p>
               <button className="btn btn-secondary" onClick={handleAddAddressClick}>Ubah Alamat</button>
             </div>
@@ -210,28 +211,26 @@ const Checkout = () => {
             />
           )}
         </div>
-        <div className="mt-5">
-          <h3>Produk yang Dipilih</h3>
+        <div className="checkout-items checkout-section">
+          <h3 className="checkout-subtitle">Produk yang Dipilih</h3>
           {selectedItems.map(item => (
-            <div key={item.id} className="list-group-item d-flex justify-content-between align-items-center">
-              <div className="d-flex align-items-center">
-                <img
-                  src={`http://localhost:8080/gambar/${item.gambar_produk}`}
-                  alt={item.gambar_produk}
-                  style={{ width: '100px', height: '100px', marginRight: '20px' }}
-                />
-                <div>
-                  <h5 className="mb-1">{item.nama_produk}</h5>
-                  <p className="mb-1">Rp. {item.harga_produk}</p>
-                  <p className="mb-1">Quantity: {item.quantity}</p>
-                </div>
+            <div key={item.id} className="checkout-item">
+              <img
+                src={`http://localhost:8080/gambar/${item.gambar_produk}`}
+                alt={item.gambar_produk}
+                style={{ width: '100px', height: '100px', marginRight: '20px' }}
+              />
+              <div className="checkout-item-info">
+                <h5>{item.nama_produk}</h5>
+                <p>Rp. {item.harga_produk}</p>
+                <p>Quantity: {item.quantity}</p>
               </div>
             </div>
           ))}
         </div>
-        <div className="mt-3">
-          <h3>Pilihan Pengiriman</h3>
-          <div>
+        <div className="delivery-options checkout-section">
+          <h3 className="checkout-subtitle">Pilihan Pengiriman</h3>
+          <div className="delivery-option">
             <input
               type="radio"
               id="self-pickup"
@@ -242,7 +241,7 @@ const Checkout = () => {
             />
             <label htmlFor="self-pickup">Ambil Sendiri</label>
           </div>
-          <div>
+          <div className="delivery-option">
             <input
               type="radio"
               id="delivery"
@@ -251,15 +250,15 @@ const Checkout = () => {
               checked={deliveryOption === 'delivery'}
               onChange={handleDeliveryOptionChange}
             />
-            <label htmlFor="delivery">Dikirim</label>
+            <label htmlFor="delivery">Diantar</label>
           </div>
         </div>
-        <div className="mt-5">
-          <h3>Ringkasan Pembayaran</h3>
+        <div className="payment-summary checkout-section">
+          <h3 className="checkout-subtitle">Ringkasan Pembayaran</h3>
           <p>Total Harga Barang: Rp. {total}</p>
-          <p>Ongkos Kirim: Rp. {shippingCost}</p>
+          <p>Biaya Pengiriman: Rp. {shippingCost}</p>
           <p>Total Pembayaran: Rp. {totalCost}</p>
-          <button className="btn btn-success" onClick={handleCheckout}>Lanjut Pembayaran</button>
+          <button className="btn btn-success" onClick={handleCheckout}>Checkout</button>
         </div>
       </div>
       <Footer />
