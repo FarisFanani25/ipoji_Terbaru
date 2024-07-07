@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "../../styles/checkout.css";
-import AddressModal from './AddressModal'; // Ensure the path is correct
+import AddressModal from './AddressModal';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Header from "../../components/header/HeaderUser";
 import Footer from "../../components/Footer/Footer";
 import Helmet from '../../components/Helmet/Helmet';
+import InvoiceModal from './InvoiceModal'; // Import InvoiceModal
 
 axios.defaults.withCredentials = true;
- 
+
 const fetchPrimaryAddress = async (userId, setPrimaryAddress) => {
   try {
     const response = await axios.get(`http://localhost:8080/address/primary/${userId}`);
@@ -23,7 +24,7 @@ const fetchAddresses = async (userId, setAddresses) => {
   if (userId) {
     try {
       const response = await axios.get(`http://localhost:8080/address/user/${userId}`);
-      console.log(response.data); // Log the addresses to verify their structure
+      console.log(response.data);
       setAddresses(response.data || []);
     } catch (error) {
       console.error('There was an error fetching the addresses!', error);
@@ -40,8 +41,9 @@ const Checkout = () => {
   const [addresses, setAddresses] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [deliveryOption, setDeliveryOption] = useState('self-pickup');
-  const location = useLocation(); // Use useLocation to access state
-  const { selectedItems, total } = location.state || { selectedItems: [], total: 0 }; // Destructure selectedItems and total from location.state
+  const [showInvoiceModal, setShowInvoiceModal] = useState(false); // State for showing invoice modal
+  const location = useLocation();
+  const { selectedItems, total } = location.state || { selectedItems: [], total: 0 };
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -80,14 +82,14 @@ const Checkout = () => {
         { headers: { 'Content-Type': 'application/json' } }
       );
       console.log('Address saved:', response.data);
-      fetchAddresses(userId, setAddresses); // Re-fetch addresses after saving
+      fetchAddresses(userId, setAddresses);
     } catch (error) {
       console.error('There was an error saving the address!', error.response || error.message);
     }
   };
 
   const updateAddress = async (addressId, updatedAddress) => {
-    console.log('Updating address with ID:', addressId); // Add this log
+    console.log('Updating address with ID:', addressId);
     try {
       const storedUserId = localStorage.getItem('user_id');
       if (storedUserId) {
@@ -141,7 +143,6 @@ const Checkout = () => {
     setDeliveryOption(event.target.value);
   };
 
-  // Update the shippingCost logic to handle the conditions correctly
   let shippingCost = 0;
   if (deliveryOption === 'delivery') {
     if (total < 100000) {
@@ -170,9 +171,9 @@ const Checkout = () => {
         const response = await axios.post('http://localhost:8080/orders', orderData, {
           headers: { 'Content-Type': 'application/json' }
         });
-        
+
         console.log('Order created:', response.data);
-        navigate('/order-success'); // Redirect ke halaman sukses setelah order berhasil
+        setShowInvoiceModal(true); // Show the invoice modal
       } catch (error) {
         console.error('There was an error creating the order!', error.response || error.message);
       }
@@ -250,17 +251,26 @@ const Checkout = () => {
               checked={deliveryOption === 'delivery'}
               onChange={handleDeliveryOptionChange}
             />
-            <label htmlFor="delivery">Diantar</label>
+            <label htmlFor="delivery">Kirim ke Alamat</label>
           </div>
         </div>
-        <div className="payment-summary checkout-section">
-          <h3 className="checkout-subtitle">Ringkasan Pembayaran</h3>
-          <p>Total Harga Barang: Rp. {total}</p>
-          <p>Biaya Pengiriman: Rp. {shippingCost}</p>
-          <p>Total Pembayaran: Rp. {totalCost}</p>
-          <button className="btn btn-success" onClick={handleCheckout}>Checkout</button>
+        <div className="total-cost checkout-section">
+          <h3 className="checkout-subtitle">Total Biaya</h3>
+          <p>Total Belanja: Rp. {total}</p>
+          <p>Ongkos Kirim: Rp. {shippingCost}</p>
+          <p>Total Bayar: Rp. {totalCost}</p>
         </div>
+        <button className="btn btn-primary" onClick={handleCheckout}>Checkout</button>
       </div>
+      {showInvoiceModal && (
+        <InvoiceModal
+          show={showInvoiceModal}
+          onHide={() => setShowInvoiceModal(false)}
+          selectedItems={selectedItems}
+          totalCost={totalCost}
+          primaryAddress={primaryAddress}
+        />
+      )}
       <Footer />
     </Helmet>
   );

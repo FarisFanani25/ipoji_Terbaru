@@ -1,150 +1,57 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { Modal, Button } from 'react-bootstrap';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
-import Table from 'react-bootstrap/Table';
-import Modal from 'react-bootstrap/Modal';
-import { BiPaperPlane, BiCloudDownload } from "react-icons/bi";
 
+const InvoiceModal = ({ show, onHide, selectedItems, totalCost, primaryAddress }) => {
+  const invoiceRef = useRef();
 
-function GenerateInvoice() {
-  html2canvas(document.querySelector("#invoiceCapture")).then((canvas) => {
-    const imgData = canvas.toDataURL('image/png', 1.0);
-    const pdf = new jsPDF({
-      orientation: 'portrait',
-      unit: 'pt',
-      format: [612, 792]
-    });
-    pdf.internal.scaleFactor = 1;
-    const imgProps= pdf.getImageProperties(imgData);
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-    pdf.save('invoice-001.pdf');
-  });
-}
+  const handleDownloadInvoice = async () => {
+    const canvas = await html2canvas(invoiceRef.current);
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF();
+    pdf.addImage(imgData, 'PNG', 0, 0);
+    pdf.save('invoice.pdf');
+  };
 
-class InvoiceModal extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return(
-      <div>
-        <Modal show={this.props.showModal} onHide={this.props.closeModal} size="lg" centered>
-          <div id="invoiceCapture">
-            <div className="d-flex flex-row justify-content-between align-items-start bg-light w-100 p-4">
-              <div className="w-100">
-                <h4 className="fw-bold my-2">{this.props.info.billFrom||'John Uberbacher'}</h4>
-                <h6 className="fw-bold text-secondary mb-1">
-                  Invoice #: {this.props.info.invoiceNumber||''}
-                </h6>
-              </div>
-              <div className="text-end ms-4">
-                <h6 className="fw-bold mt-1 mb-2">Jumlah&nbsp;Yang:</h6>
-                <h5 className="fw-bold text-secondary"> {this.props.currency} {this.props.total}</h5>
-              </div>
+  useEffect(() => {
+    if (show) {
+      handleDownloadInvoice();
+    }
+  }, [show]);
+
+  return (
+    <Modal show={show} onHide={onHide}>
+      <Modal.Header closeButton>
+        <Modal.Title>Invoice</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div ref={invoiceRef} style={{ padding: '20px' }}>
+          <h1>Invoice</h1>
+          <h3>Alamat Pengiriman:</h3>
+          <p>{primaryAddress.full_name}</p>
+          <p>{primaryAddress.detailed_address}</p>
+          <p>{primaryAddress.province}, {primaryAddress.city}, {primaryAddress.district}, {primaryAddress.subdistrict}</p>
+          <h3>Produk yang Dibeli:</h3>
+          {selectedItems.map((item, index) => (
+            <div key={index}>
+              <p>{item.nama_produk} - {item.quantity} x Rp. {item.harga_produk}</p>
             </div>
-            <div className="p-4">
-              <Row className="mb-4">
-                <Col md={4}>
-                  <div className="fw-bold">Tagihan Untuk:</div>
-                  <div>{this.props.info.billTo||''}</div>
-                  <div>{this.props.info.billToAddress||''}</div>
-                  <div>{this.props.info.billToEmail||''}</div>
-                </Col>
-                <Col md={4}>
-                  <div className="fw-bold">Tagihan Dari:</div>
-                  <div>{this.props.info.billFrom||''}</div>
-                  <div>{this.props.info.billFromAddress||''}</div>
-                  <div>{this.props.info.billFromEmail||''}</div>
-                </Col>
-                <Col md={4}>
-                  <div className="fw-bold mt-2">Tanggal Tagihan:</div>
-                  <div>{this.props.info.dateOfIssue||''}</div>
-                </Col>
-              </Row>
-              <Table className="mb-0">
-                <thead>
-                  <tr>
-                    <th>Jumlah</th>
-                    <th>Produk</th>
-                    <th className="text-end">Harga</th>
-                    <th className="text-end">Total Produk</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.props.items.map((item, i) => {
-                    return (
-                      <tr id={i} key={i}>
-                        <td style={{width: '70px'}}>
-                          {item.quantity}
-                        </td>
-                        <td>
-                          {item.name} - {item.description}
-                        </td>
-                        <td className="text-end" style={{width: '100px'}}>{this.props.currency} {item.price}</td>
-                        <td className="text-end" style={{width: '100px'}}>{this.props.currency} {item.price * item.quantity}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </Table>
-              <Table>
-                <tbody>
-                  <tr>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                  </tr>
-                  <tr className="text-end">
-                    <td></td>
-                    <td className="fw-bold" style={{width: '100px'}}>SUBTOTAL PRODUK</td>
-                    <td className="text-end" style={{width: '100px'}}>{this.props.currency} {this.props.subTotal}</td>
-                  </tr>
-                  {this.props.shippingCost !== "0.00" && (
-                    <tr className="text-end"> 
-                      <td></td>
-                      <td className="fw-bold" style={{width: '100px'}}>Biaya Pengiriman</td>
-                      <td className="text-end" style={{width: '100px'}}>{this.props.currency} {this.props.shippingCost}</td>
-                    </tr>
-                  )}
-                  <tr className="text-end">
-                    <td></td>
-                    <td className="fw-bold" style={{width: '100px'}}>TOTAL</td>
-                    <td className="text-end" style={{width: '100px'}}>{this.props.currency} {this.props.total}</td>
-                  </tr>
-                </tbody>
-              </Table>
-              {this.props.info.notes &&
-                <div className="bg-light py-3 px-4 rounded">
-                  {this.props.info.notes}
-                </div>}
-            </div>
-          </div>
-          <div className="pb-4 px-4">
-            <Row>
-              <Col md={6}>
-                <Button variant="primary" className="d-block w-100" onClick={GenerateInvoice}>
-                  <BiPaperPlane style={{width: '15px', height: '15px', marginTop: '-3px'}} className="me-2"/>Kirim Invoice
-                </Button>
-              </Col>
-              <Col md={6}>
-                <Button variant="outline-primary" className="d-block w-100 mt-3 mt-md-0" onClick={GenerateInvoice}>
-                  <BiCloudDownload style={{width: '16px', height: '16px', marginTop: '-3px'}} className="me-2"/>
-                  Download Invoice
-                </Button>
-              </Col>
-            </Row>
-          </div>
-        </Modal>
-        <hr className="mt-4 mb-3"/>
-      </div>
-    )
-  }
-}
+          ))}
+          <h3>Total Biaya:</h3>
+          <p>Rp. {totalCost}</p>
+        </div>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={onHide}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={handleDownloadInvoice}>
+          Download Invoice
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+};
 
 export default InvoiceModal;
