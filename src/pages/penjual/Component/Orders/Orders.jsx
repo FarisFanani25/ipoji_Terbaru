@@ -34,7 +34,7 @@ function OrderPage() {
   const updateOrderStatus = async (orderId, status) => {
     try {
       // Panggil endpoint untuk mengubah status pesanan
-      await axios.patch(`http://localhost:8080/updateStatus/${orderId}`, { status });
+      await axios.patch(`http://localhost:8080/orders/${orderId}/status`, { status });
 
       // Ambil ulang data pesanan setelah pembaruan
       getDataOrder();
@@ -61,54 +61,51 @@ function OrderPage() {
                   <CTableDataCell>Jumlah dibeli</CTableDataCell>
                   <CTableDataCell>Total Harga</CTableDataCell>
                   <CTableDataCell>Status</CTableDataCell>
+                  <CTableDataCell>Aksi</CTableDataCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                {dataOrder &&
-                  dataOrder.length > 0 &&
-                  dataOrder.map((item, index) => (
-                    <CTableRow key={index}>
-                      <CTableDataCell>{item.name}</CTableDataCell>
-                      <CTableDataCell>{item.phone}</CTableDataCell>
-                      <CTableDataCell>{item.address}</CTableDataCell>
-                      <CTableDataCell>{item.paymentMethod}</CTableDataCell>
-                      <CTableDataCell>{item.totalAmount}</CTableDataCell>
-                      <CTableDataCell>{item.created_at}</CTableDataCell>
-                      <CTableDataCell>
-                        <ul>
-                          {item.items &&
-                            JSON.parse(item.items).map((orderItem, i) => (
-                              <li key={i}>
-                                ID: {orderItem.id}, Nama: {orderItem.title}, Quantity: {orderItem.quantity}, Harga: {orderItem.price}, Total: {orderItem.price * orderItem.quantity}
-                              </li>
-                            ))}
-                        </ul>
-                      </CTableDataCell>
-                      <CTableDataCell>{item.status}</CTableDataCell>
-                      <CTableDataCell>
-                        <div className="action-buttons">
-                          <CButton
-                            className="process-button"
-                            onClick={() => updateOrderStatus(item.id, 'Diproses')}
-                          >
-                            Diproses
-                          </CButton>
-                          <CButton
-                            className="shipped-button"
-                            onClick={() => updateOrderStatus(item.id, 'Dikirim')}
-                          >
-                            Dikirim
-                          </CButton>
-                          <CButton
-                            className="reject-button"
-                            onClick={() => updateOrderStatus(item.id, 'Ditolak')}
-                          >
-                            Ditolak
-                          </CButton>
-                        </div>
-                      </CTableDataCell>
-                    </CTableRow>
-                  ))}
+                {dataOrder.length > 0 && dataOrder.map((item, index) => (
+                  <CTableRow key={index}>
+                    <CTableDataCell>{item.name}</CTableDataCell>
+                    <CTableDataCell>{item.phone}</CTableDataCell>
+                    <CTableDataCell>{item.address}</CTableDataCell>
+                    <CTableDataCell>{item.paymentMethod}</CTableDataCell>
+                    <CTableDataCell>
+                      <ul>
+                        {item.items && JSON.parse(item.items).map((orderItem, i) => (
+                          <li key={i}>
+                            ID: {orderItem.id}, Nama: {orderItem.title}, Quantity: {orderItem.quantity}, Harga: {orderItem.price}, Total: {orderItem.price * orderItem.quantity}
+                          </li>
+                        ))}
+                      </ul>
+                    </CTableDataCell>
+                    <CTableDataCell>{item.totalAmount}</CTableDataCell>
+                    <CTableDataCell>{item.status}</CTableDataCell>
+                    <CTableDataCell>
+                      <div className="action-buttons">
+                        <CButton
+                          className="process-button"
+                          onClick={() => updateOrderStatus(item.id, 'Diproses')}
+                        >
+                          Diproses
+                        </CButton>
+                        <CButton
+                          className="shipped-button"
+                          onClick={() => updateOrderStatus(item.id, 'Dikirim')}
+                        >
+                          Dikirim
+                        </CButton>
+                        <CButton
+                          className="reject-button"
+                          onClick={() => updateOrderStatus(item.id, 'Ditolak')}
+                        >
+                          Ditolak
+                        </CButton>
+                      </div>
+                    </CTableDataCell>
+                  </CTableRow>
+                ))}
               </CTableBody>
             </CTable>
           </div>

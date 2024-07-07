@@ -19,20 +19,29 @@ const Login = () => {
       const response = await axios.post('http://localhost:8080/login', { email, password });
 
       if (response.data && response.data.token) {
-        // Simpan token ke localStorage
+        // Simpan token dan informasi pengguna ke localStorage
         localStorage.setItem('token', response.data.token);
-        // Simpan data pengguna ke localStorage (jika diperlukan)
         localStorage.setItem('user_id', response.data.user_id);
         localStorage.setItem('user_name', response.data.user_name);
         localStorage.setItem('user_email', response.data.user_email);
+        localStorage.setItem('role', response.data.user_role);
 
         console.log('Login Successful', response.data);
-        
+
         // Tampilkan alert berhasil
         window.alert('Welcome!');
 
-        // Redirect ke halaman home atau dashboard
-        navigate("/home");
+        // Redirect sesuai role pengguna
+        const userRole = response.data.user_role;
+        if (userRole === 'admin') {
+          navigate("/admin");
+        } else if (userRole === 'penjual') {
+          navigate("/penjual");
+        } else if (userRole === 'user') {
+          navigate("/home");
+        } else {
+          navigate("/home");
+        }
       } else {
         setErrorMessage('Login Gagal. Email atau password salah.');
       }
@@ -40,11 +49,6 @@ const Login = () => {
       console.error('An error occurred:', error);
       setErrorMessage('Terjadi Error. Mohon Ulangi Kembali.');
     }
-  };
-
-  // Implement logout function
-  const logout = () => {
-    navigate('/login');
   };
 
   return (
@@ -95,10 +99,6 @@ const Login = () => {
               <Link to="/signup">
                 Tidak Memiliki Akun? Daftar disini
               </Link>
-              <br />
-              {/* <button type="button" className="btn btn-danger" onClick={logout}>
-                Logout
-              </button> */}
             </div>
           </div>
         </div>
