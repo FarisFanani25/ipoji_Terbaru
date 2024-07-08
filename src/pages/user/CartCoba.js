@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Card.css';
+import './Cart.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -133,14 +133,14 @@ const Cart = () => {
   return (
     <Helmet title={"Cart"}>
       <Header />
-      <div className="container mt-5">
-        <h2 className="text-center mb-4">Keranjang</h2>
+      <div className="container mt-5 cart-container">
+        <h2 className="text-center mb-4 cart-title">Keranjang</h2>
         <div className="row">
           <div className="col-12">
-            <div className="list-group">
+            <div className="list-group cart-list">
               {cartItems.map(item => (
                 <div
-                  className={`list-group-item d-flex justify-content-between align-items-center ${selectedItems.some(selectedItem => selectedItem.id === item.id) ? 'selected' : ''}`}
+                  className={`list-group-item d-flex justify-content-between align-items-center cart-item ${selectedItems.some(selectedItem => selectedItem.id === item.id) ? 'selected' : ''}`}
                   key={item.id}
                   onClick={() => handleSelectItem(item)}
                 >
@@ -148,22 +148,21 @@ const Cart = () => {
                     <img
                       src={`http://localhost:8080/gambar/${item.gambar_produk}`}
                       alt={item.gambar_produk}
-                      style={{ width: '100px', height: '100px', marginRight: '20px' }}
+                      className="cart-item-image"
                     />
                     <div>
-                      <h5 className="mb-1">{item.nama_produk}</h5>
-                      <p className="mb-1">Rp. {item.harga_produk}</p>
+                      <h5 className="mb-1 cart-item-name">{item.nama_produk}</h5>
+                      <p className="mb-1 cart-item-price">Rp. {item.harga_produk}</p>
                     </div>
                   </div>
                   <div className="d-flex align-items-center">
                     <input
                       type="number"
-                      className="form-control mr-2"
+                      className="form-control mr-2 cart-item-quantity"
                       value={item.quantity}
                       onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}
-                      style={{ width: '80px' }}
                     />
-                    <button className="btn btn-danger" onClick={(e) => { e.stopPropagation(); toggleModal(item); }}>Remove</button>
+                    <button className="btn btn-danger cart-item-remove" onClick={(e) => { e.stopPropagation(); toggleModal(item); }}>Hapus</button>
                   </div>
                 </div>
               ))}
@@ -172,21 +171,21 @@ const Cart = () => {
         </div>
         <div className="row mt-4">
           <div className="col-12 text-right">
-            <h3>Total: Rp. {total}</h3>
-            <button className="btn btn-primary mt-3 mb-4" onClick={handleCheckout}>Checkout</button>
+            <h3 className="cart-total">Total: Rp. {total}</h3>
+            <button className="btn btn-primary mt-3 mb-4 cart-checkout" onClick={handleCheckout}>Beli Sekarang</button>
           </div>
         </div>
         {/* Toast Container */}
         <ToastContainer />
         {/* Modal for remove confirmation */}
         <Modal isOpen={modal} toggle={toggleModal}>
-          <ModalHeader toggle={toggleModal}>Confirm Removal</ModalHeader>
+          <ModalHeader toggle={toggleModal}>Konfirmasi Penghapusan</ModalHeader>
           <ModalBody>
-            Are you sure you want to remove this item from the cart?
+          Apakah Anda yakin ingin menghapus item ini dari keranjang?
           </ModalBody>
           <ModalFooter>
-            <Button color="danger" onClick={handleRemove}>Remove</Button>
-            <Button color="secondary" onClick={toggleModal}>Cancel</Button>
+            <Button color="danger" onClick={handleRemove}>Hapus</Button>
+            <Button color="secondary" onClick={toggleModal}>Batal</Button>
           </ModalFooter>
         </Modal>
       </div>
