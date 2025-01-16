@@ -53,7 +53,7 @@ const FooterAdmin = () => {
                   <span>
                     <i className="ri-map-pin-line"></i>
                   </span>
-                  <p>ds.kaligunting kec.mejayan</p>
+                  <p>Ngepoh, Metisih, Kecamatan Jiwan, Madiun</p>
                 </ListGroupItem>
 
                 <ListGroupItem className="ps-0 border-0 d-flex align-items-center gap-2">
@@ -67,7 +67,7 @@ const FooterAdmin = () => {
                   <span>
                     <i className="ri-mail-line"></i>
                   </span>
-                  <p>djakafernando01@gmail.com</p>
+                  <p>berasin_ipoji@gmail.com</p>
                 </ListGroupItem>
               </ListGroup>
             </div>

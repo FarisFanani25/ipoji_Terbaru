@@ -53,24 +53,24 @@ const Footer = () => {
                         <ListGroup className="footer__contact">
                             <ListGroupItem className="ps-0 border-0 d-flex align-items-center gap-2">
                                 <span><i className="ri-map-pin-line"></i></span>
-                                <p>ds.kaligunting kec.mejayan</p>
+                                <p>Ngepoh, Metisih, Kecamatan Jiwan, Kabupaten Madiun, Kode Pos. 63161</p>
                             </ListGroupItem>
 
                             <ListGroupItem className="ps-0 border-0 d-flex align-items-center gap-2">
                                 <span><i className="ri-phone-line"></i></span>
-                                <p>085710283688</p>
+                                <p>087848557392</p>
                             </ListGroupItem>
 
                             <ListGroupItem className="ps-0 border-0 d-flex align-items-center gap-2">
                                 <span><i className="ri-mail-line"></i></span>
-                                <p>djakafernando01@gmail.com</p>
+                                <p>Kelompok_ipoji@gmail.com</p>
                             </ListGroupItem>
                         </ListGroup>
                     </div>
                 </Col>
  
                 <Col lg='12'>
-                    <p className="footer__copyright">CopyRight {year} developed by Team Mobat-Mabit. All Right Reserved.</p>
+                    <p className="footer__copyright">CopyRight {year} developed by Team Berasin. All Right Reserved.</p>
                 </Col>
             </Row>
         </Container>

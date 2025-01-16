@@ -11,6 +11,7 @@ body {
   
   .hero__content {
     margin-bottom: 30px;
+    text-align: justify;
   }
   
   .hero__subtitle {
@@ -36,7 +37,7 @@ body {
   
   .buy__button {
     background-color: #556B2F;
-    color: #fff;
+    color: #ffffff;
     border: none;
     padding: 10px 20px;
     font-size: 16px;
